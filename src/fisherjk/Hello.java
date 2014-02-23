@@ -1,4 +1,4 @@
-package fisherjk.edu.uwec.cs;
+package fisherjk;
 
 public class Hello {
 
