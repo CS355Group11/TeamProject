@@ -5,10 +5,11 @@ import java.util.ArrayList;
 public class Rule {
 	
 	private ArrayList<ItemSet> rule;
-
-	public Rule(ArrayList<ItemSet> rule) {
-		super();
+	private double actualConfidenceLevel;//4 digits of precision
+	
+	public Rule(ArrayList<ItemSet> rule, double actualConfidenceLevel) {
 		this.rule = rule;
+		this.actualConfidenceLevel = actualConfidenceLevel;
 	}
 
 	public ArrayList<ItemSet> getRule() {
@@ -18,6 +19,16 @@ public class Rule {
 	public void setRule(ArrayList<ItemSet> rule) {
 		this.rule = rule;
 	}
+
+	public double getActualConfidenceLevel() {
+		return actualConfidenceLevel;
+	}
+
+	public void setActualConfidenceLevel(double actualConfidenceLevel) {
+		this.actualConfidenceLevel = actualConfidenceLevel;
+	}
+
+	
 
 	
 	

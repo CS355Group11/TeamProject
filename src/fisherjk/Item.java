@@ -2,19 +2,44 @@ package fisherjk;
 
 public class Item{
 
-	private String item;
+	private String itemName;
+	private String itemDesc;
+	private double itemPrice;
 	
-	public Item(String item){
-		this.item = item;
+	
+	public Item(String itemName, String itemDesc, double itemPrice){
+		this.itemName = itemName;
+		this.itemDesc = itemDesc;
+		this.itemPrice = itemPrice;
 		
 	}
 	
 	public String getItem() {
-		return item;
+		return itemName;
 	}
 
-	public void setItem(String item) {
-		this.item = item;
+	public void setItem(String itemName) {
+		this.itemName = itemName;
 	}
+
+	public String getItemDesc() {
+		return itemDesc;
+	}
+
+	public void setItemDesc(String itemDesc) {
+		this.itemDesc = itemDesc;
+	}
+
+	public double getItemPrice() {
+		return itemPrice;
+	}
+
+	public void setItemPrice(double itemPrice) {
+		this.itemPrice = itemPrice;
+	}
+	
+	
+	
+	
 
 }

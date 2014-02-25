@@ -5,8 +5,8 @@ public class AssociationRuleGenerator {
 	
 	private ItemSet x;
 	private ItemSet y;
-	private double minSupportLevel;
-	private double minConfidenceLevel;
+	private double minSupportLevel;//must have 4 digits of precision
+	private double minConfidenceLevel;//must have 4 digits of precision
 	
 	
 	public AssociationRuleGenerator(ItemSet x, ItemSet y,

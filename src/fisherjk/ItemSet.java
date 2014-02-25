@@ -7,8 +7,13 @@ public class ItemSet {//Is this a transaction?
 
 	private ArrayList<Item> itemSet;
 
+	//List of Items
 	public ItemSet(ArrayList<Item> itemSet) {
 		this.itemSet = itemSet;
+	}
+	
+	public ItemSet(){
+		this.itemSet = new ArrayList<Item>();
 	}
 
 	public ArrayList<Item> getItemSet() {
