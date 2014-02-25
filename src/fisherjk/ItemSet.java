@@ -6,9 +6,9 @@ import java.util.ArrayList;
 public class ItemSet {//Is this a transaction?
 
 	private ArrayList<Item> itemSet;
-	
-	public ItemSet (){
-		this.itemSet = new ArrayList<Item>();
+
+	public ItemSet(ArrayList<Item> itemSet) {
+		this.itemSet = itemSet;
 	}
 
 	public ArrayList<Item> getItemSet() {

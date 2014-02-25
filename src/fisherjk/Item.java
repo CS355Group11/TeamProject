@@ -4,6 +4,11 @@ public class Item{
 
 	private String item;
 	
+	public Item(String item){
+		this.item = item;
+		
+	}
+	
 	public String getItem() {
 		return item;
 	}
@@ -12,8 +17,4 @@ public class Item{
 		this.item = item;
 	}
 
-	public Item(String item){
-		this.item = item;
-	
-	}
 }
