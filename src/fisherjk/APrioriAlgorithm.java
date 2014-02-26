@@ -3,12 +3,25 @@ package fisherjk;
 public class APrioriAlgorithm {
 
 
-public static TransactionSet APriori(TransactionSet transactionSet, double minSupportLevel){
+public static ItemSetCollection DoApriori(ItemSetCollection db, double supportThreshold){
 	
+	/*
 	ItemSet I = transactionSet.getUniqueItems();//create this
 	Transaction L = new Transaction();//resultant large itemsets
 	Transaction Li = new Transaction();//large itemset in each iteration
 	Transaction Ci = new Transaction();//candidate item set in each iteration
+	*/
+	
+	ItemSet I = db.GetUniqueItems();//eventual call to database
+	ItemSetCollection L = new ItemSetCollection(); //resultant large itemsets
+	ItemSetCollection Li = new ItemSetCollection(); //large itemset in each iteration
+	ItemSetCollection Ci = new ItemSetCollection(); //candidate itemset in each iteration
+	
+	
+	
+	
+	return Ci;
+	
 	
 	
 	
@@ -21,6 +34,10 @@ public static TransactionSet APriori(TransactionSet transactionSet, double minSu
 	 * {E}
 	 * Essentially generate a list of unique items in a transaction set
 	 */
+	
+	
+	
+	
 	
 	
 	/*Part 2: Scan transaction set for count of each candidate single-item set

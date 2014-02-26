@@ -30,7 +30,7 @@ public class AssociationRuleGenerator {
 	 * Support_count(X) = number of transactions containing all elements in X
 	 */
 	
-	/*More to discuss
+	/*More to discuss*/
 
 	
 	
