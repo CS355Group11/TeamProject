@@ -11,12 +11,23 @@ public class TransactionSet {
 		this.transactionSet = transactionSet;
 	}
 
+	public TransactionSet() {
+		// TODO Auto-generated constructor stub
+		this.transactionSet = transactionSet;
+	}
+
 	public ArrayList<Transaction> getTransactionSet() {
 		return transactionSet;
 	}
 
 	public void setTransactionSet(ArrayList<Transaction> transactionSet) {
 		this.transactionSet = transactionSet;
+	}
+
+	//START WORKING HERE
+	public ItemSet GetUniqueItems() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -110,7 +110,19 @@ public class Main {
 		System.out.println("T9: " + trans9.getTransactionItems());
 		// End of Transaction 8
 
-		// APrioriAlgorithm.DoApriori(db, 0);
+		//ArrayList<Transaction> transSet = new ArrayList<Transaction>();
+		//transSet.add(trans1);
+		TransactionSet transSet = new TransactionSet();
+		transSet.getTransactionSet().add(trans1);
+		transSet.getTransactionSet().add(trans2);
+		transSet.getTransactionSet().add(trans3);
+		transSet.getTransactionSet().add(trans4);
+		transSet.getTransactionSet().add(trans5);
+		transSet.getTransactionSet().add(trans6);
+		transSet.getTransactionSet().add(trans7);
+		transSet.getTransactionSet().add(trans8);
+		transSet.getTransactionSet().add(trans9);
+		APrioriAlgorithm.DoApriori(transSet, 2.0);
 
 		// TODO: set up to read input from a file
 

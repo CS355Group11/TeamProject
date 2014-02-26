@@ -3,7 +3,7 @@ package fisherjk;
 public class APrioriAlgorithm {
 
 
-public static ItemSetCollection DoApriori(ItemSetCollection db, double supportThreshold){
+public static TransactionSet DoApriori(TransactionSet transSet, double supportThreshold){
 	
 	/*
 	ItemSet I = transactionSet.getUniqueItems();//create this
@@ -12,7 +12,7 @@ public static ItemSetCollection DoApriori(ItemSetCollection db, double supportTh
 	Transaction Ci = new Transaction();//candidate item set in each iteration
 	*/
 	
-	ItemSet I = db.GetUniqueItems();//eventual call to database
+	ItemSet I = transSet.GetUniqueItems();//eventual call to database
 	ItemSetCollection L = new ItemSetCollection(); //resultant large itemsets
 	ItemSetCollection Li = new ItemSetCollection(); //large itemset in each iteration
 	ItemSetCollection Ci = new ItemSetCollection(); //candidate itemset in each iteration
@@ -20,7 +20,7 @@ public static ItemSetCollection DoApriori(ItemSetCollection db, double supportTh
 	
 	
 	
-	return Ci;
+	
 	
 	
 	
@@ -135,7 +135,11 @@ public static ItemSetCollection DoApriori(ItemSetCollection db, double supportTh
 	 * Remember that for every candidate item set at level k, each level k-1 sub-combination must also be a frequent item set
 	 *
 	 */
+	return null;
 }
+
+
+
 
 	
 }
