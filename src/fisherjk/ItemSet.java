@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class ItemSet {//Is this a transaction?
 
 	private ArrayList<Item> itemSet;
+	private double itemSetSupport;
 
 	//List of Items
 	public ItemSet(ArrayList<Item> itemSet) {
@@ -24,6 +25,17 @@ public class ItemSet {//Is this a transaction?
 		
 		this.itemSet = itemSet;
 	}
+
+	public double getItemSetSupport() {
+		return itemSetSupport;
+	}
+
+	public void setSupport(double itemSetSupport) {
+		this.itemSetSupport = itemSetSupport;
+	}
+	
+	
+	
 
 	
 	

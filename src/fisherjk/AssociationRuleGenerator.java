@@ -16,6 +16,26 @@ public class AssociationRuleGenerator {
 		this.minSupportLevel = minSupportLevel;
 		this.minConfidenceLevel = minConfidenceLevel;
 	}
+	
+	
+	/*Part 1: First generate possible association rules from final frequent item set collection – all permutations
+	 * 
+	 */
+	
+	
+	/*Part 2: Calculating Confidence
+	 * 
+	 * Confidence(X => Y) = P(Y|X) = ( Support_count(X U Y) / Support_count (X) )
+	 * Support_count(X U Y) = number of transactions containing all elements in X and Y
+	 * Support_count(X) = number of transactions containing all elements in X
+	 */
+	
+	/*More to discuss
+
+	
+	
+	
+	
 
 
 	public ItemSet getX() {
