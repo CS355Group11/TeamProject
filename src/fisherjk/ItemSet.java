@@ -33,6 +33,11 @@ public class ItemSet {//Is this a transaction?
 	public void setSupport(double itemSetSupport) {
 		this.itemSetSupport = itemSetSupport;
 	}
+
+	@Override
+	public String toString() {
+		return "ItemSet [itemSet=" + itemSet + "]";
+	}
 	
 	
 	

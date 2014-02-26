@@ -58,23 +58,25 @@ public class ItemSetCollection extends ItemSet {
 		list.getItemSet().add(A);
 		list.getItemSet().add(C);
 		this.itemSetCollection.add(list);
-		ArrayList<ItemSet> uniqueItems = new ArrayList<ItemSet>();
+		ArrayList<Item> uniqueItems = new ArrayList<Item>();
 		
-		/*
-		for(int i = 0; i < itemSetCollection.getItemSet().size(); i++){
+		
+		for(int i = 0; i < itemSetCollection.size(); i++){
 			Item item = itemSetCollection.get(i).getItemSet().get(i);
 			System.out.println("item: " + item);
-			if(!uniqueItems.contains(item.getItemSet()
+			if(!uniqueItems.contains(item)){
+				uniqueItems.add(item);
+			}
 		}
-		*/
 		
+		/*
 		for(ItemSet item :this.itemSetCollection){
 			System.out.println("item: " + item);
 			if(!uniqueItems.contains(item.getItemSet())){//if doesn't contain item then add it
 				uniqueItems.add(item);
 			}
 		}
-		
+		*/
 		
 		return null;
 	}
