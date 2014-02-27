@@ -114,5 +114,14 @@ public class TransactionSet {
 		}
 		return count;
 	}
-
+	
+	
+	public int Count(){
+		return this.transactionSet.size();
+		
+	}
+	
+	
+	
+	
 }
