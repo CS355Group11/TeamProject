@@ -15,16 +15,52 @@ public class APrioriAlgorithm {
 		 */
 
 		ItemSet I = transSet.GetUniqueItems();// eventual call to database
-		ItemSetCollection L = new ItemSetCollection(); // resultant large
+		TransactionSet L = new TransactionSet(); // resultant large
 														// itemsets
-		ItemSetCollection Li = new ItemSetCollection(); // large itemset in each
+		TransactionSet Li = new TransactionSet(); // large itemset in each
 														// iteration
-		ItemSetCollection Ci = new ItemSetCollection(); // candidate itemset in
+		TransactionSet Ci = new TransactionSet(); // candidate itemset in
 														// each iteration
 		
 		transSet.getUniqueItemCounts(I);
 	
-
+		//first iteration (1-item itemsets)
+		for(int i = 0; i < I.getItemSet().size(); i++){
+			Item candidateItem = I.getItemSet().get(i);
+			ItemSet candidateItemSet = new ItemSet();
+			candidateItemSet.getItemSet().add(candidateItem);
+			//System.out.println(candidateItemSet.getItemSet().get(i));
+			Transaction candidateTrans = new Transaction(candidateItemSet);
+			candidateTrans.toString();
+			
+			Ci.getTransactionSet().add(candidateTrans);
+		}
+		
+		System.out.println(Ci.toString());
+		//next iterations
+		int k = 2;
+		//while (Ci.getTransactionSet().size()!=0){
+			
+			//set Li from Ci (pruning)
+			//Li.getTransactionSet().clear();
+			int CalcSupport = 0;
+			for(int i = 0; i < Ci.getTransactionSet().size(); i++){
+				CalcSupport = transSet.FindSupport(Ci.getTransactionSet().get(i));
+				
+				System.out.println("Calc Support: " + CalcSupport);
+				//Ci.getTransactionSet().get(i).getTransaction().setSupport(CalcSupport);
+				
+				//setItemSetSupport() = transSet.FindSupport(Ci.getTransactionSet().get(i));
+			}
+			
+			
+			
+			
+			
+		//}
+		
+		
+		
 		/*
 		 * Part 1: Generate all candidate single-item sets {A} similar to {beer}
 		 * {B} {cheese} {C} {bread} {D} ... {E} Essentially generate a list of

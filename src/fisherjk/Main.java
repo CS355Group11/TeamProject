@@ -31,7 +31,7 @@ public class Main {
 		list1.add(E);
 		ItemSet set1 = new ItemSet(list1);
 		Transaction trans1 = new Transaction(set1);
-		System.out.println("T1: " + trans1.printTransactionItems());
+		System.out.println("T1: " + trans1.toString());
 		// End of Creating Transaction 1
 
 		// Creating Transaction 2
@@ -40,7 +40,7 @@ public class Main {
 		list2.add(D);
 		ItemSet set2 = new ItemSet(list2);
 		Transaction trans2 = new Transaction(set2);
-		System.out.println("T2: " + trans2.printTransactionItems());
+		System.out.println("T2: " + trans2.toString());
 		// End of Transaction 2
 
 		// Creating Transaction 3
@@ -49,7 +49,7 @@ public class Main {
 		list3.add(C);
 		ItemSet set3 = new ItemSet(list3);
 		Transaction trans3 = new Transaction(set3);
-		System.out.println("T3: " + trans3.printTransactionItems());
+		System.out.println("T3: " + trans3.toString());
 		// End of Transaction 3
 
 		// Creating Transaction 4
@@ -59,7 +59,7 @@ public class Main {
 		list4.add(D);
 		ItemSet set4 = new ItemSet(list4);
 		Transaction trans4 = new Transaction(set4);
-		System.out.println("T4: " + trans4.printTransactionItems());
+		System.out.println("T4: " + trans4.toString());
 		// End of Transaction 4
 
 		// Creating Transaction 5
@@ -68,7 +68,7 @@ public class Main {
 		list5.add(C);
 		ItemSet set5 = new ItemSet(list5);
 		Transaction trans5 = new Transaction(set5);
-		System.out.println("T5: " + trans5.printTransactionItems());
+		System.out.println("T5: " + trans5.toString());
 		// End of Transaction 5
 
 		// Creating Transaction 6
@@ -77,7 +77,7 @@ public class Main {
 		list6.add(C);
 		ItemSet set6 = new ItemSet(list6);
 		Transaction trans6 = new Transaction(set6);
-		System.out.println("T6: " + trans6.printTransactionItems());
+		System.out.println("T6: " + trans6.toString());
 		// End of Transaction 6
 
 		// Creating Transaction 7
@@ -86,7 +86,7 @@ public class Main {
 		list7.add(C);
 		ItemSet set7 = new ItemSet(list7);
 		Transaction trans7 = new Transaction(set7);
-		System.out.println("T7: " + trans7.printTransactionItems());
+		System.out.println("T7: " + trans7.toString());
 		// End of Transaction 7
 
 		// Creating Transaction 8
@@ -97,7 +97,7 @@ public class Main {
 		list8.add(E);
 		ItemSet set8 = new ItemSet(list8);
 		Transaction trans8 = new Transaction(set8);
-		System.out.println("T8: " + trans8.printTransactionItems());
+		System.out.println("T8: " + trans8.toString());
 		// End of Transaction 8
 
 		// Creating Transaction 8
@@ -107,7 +107,7 @@ public class Main {
 		list9.add(C);
 		ItemSet set9 = new ItemSet(list9);
 		Transaction trans9 = new Transaction(set9);
-		System.out.println("T9: " + trans9.printTransactionItems());
+		System.out.println("T9: " + trans9.toString());
 		// End of Transaction 8
 
 		ArrayList<Transaction> transSet = new ArrayList<Transaction>();
@@ -122,6 +122,8 @@ public class Main {
 		transSet.add(trans8);
 		transSet.add(trans9);
 		tSet.setTransactionSet(transSet);
+		System.out.println(tSet.toString());
+		System.out.println();
 		
 		//TransactionSet transSet = new TransactionSet();
 		/*

@@ -48,19 +48,20 @@ public class Transaction {
 	
 	
 	
-
-	public String printTransactionItems() {//Essentially a specializied toString
+	@Override
+	public String toString() {//Essentially a specializied toString
 		// TODO Auto-generated method stub
-		int num = this.transaction.getItemSet().size();
+		
 		String transactionItems  = "";
-		//for(int j = 0; j < this.transaction.size(); j++){
+		int num = this.transaction.getItemSet().size();
 			for(int i = 0; i < num; i++){
-				String item = this.transaction.getItemSet().get(i).getItem();
+				String item = this.transaction.getItemSet().get(i).toString();
 				transactionItems = transactionItems + item;
 				if(i < num-1){
 					transactionItems = transactionItems +",";
 				}
-		//}
+				
+
 		
 	}
 		return "{"+transactionItems+"}";
