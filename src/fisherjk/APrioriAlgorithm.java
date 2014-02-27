@@ -37,55 +37,70 @@ public class APrioriAlgorithm {
 		System.out.println(Ci.toString());
 		// next iterations
 		int k = 2;
-		//while(Ci.getTransactionSet().size() !=0){
-		System.out.println("Ci Count: "  + Ci.Count());
-		while(Ci.Count() !=0){
-		Li.getTransactionSet().clear();
+		while (k < 4) {//fix this
+			System.out.println("Ci Count: " + Ci.Count());
+			// while(Ci.Count() !=0){
+			Li.getTransactionSet().clear();
 
-		/*
-		 * Part 2: Scan transaction set for count of each candidate single-item
-		 * set {A} – 6 {B} – 7 {C} – 6 {D} – 2 {E} – 2 Read As: A was present 6
-		 * times in the transaction set
-		 */
-		System.out
-				.println("Part 2: Scan transaction set for count of each candidate single-item set");
-		for (Transaction transaction : Ci.getTransactionSet()) {
-			int findSupport = transSet
-					.findSupport(transaction.getTransaction());
-			transaction.getTransaction().setItemSetSupport(findSupport);
-			System.out.println(transaction.toString() + "-" + findSupport);
 			/*
-			 * Part 3: Filter candidate one-item sets with min. support to get
-			 * frequent one-item sets {A} – 6 {B} – 7 {C} – 6 {D} – 2 {E} – 2 In
-			 * this case no items are filtered since support level >=2
+			 * Part 2: Scan transaction set for count of each candidate
+			 * single-item set {A} – 6 {B} – 7 {C} – 6 {D} – 2 {E} – 2 Read As:
+			 * A was present 6 times in the transaction set
 			 */
-			if (transaction.getTransaction().getItemSetSupport() >= supportThreshold) {
-				System.out.println("Adding: " + (transaction.toString()));
-				Li.getTransactionSet().add(transaction);
-				L.getTransactionSet().add(transaction);
+			System.out
+					.println("Part 2: Scan transaction set for count of each candidate single-item set");
+			for (Transaction transaction : Ci.getTransactionSet()) {
+				int findSupport = transSet.findSupport(transaction
+						.getTransaction());
+				transaction.getTransaction().setItemSetSupport(findSupport);
+				System.out.print("Before: ");
+				System.out.println(transaction.toString() + "-" + findSupport);
+				/*
+				 * Part 3: Filter candidate one-item sets with min. support to
+				 * get frequent one-item sets {A} – 6 {B} – 7 {C} – 6 {D} – 2
+				 * {E} – 2 In this case no items are filtered since support
+				 * level >=2
+				 */
+				if (transaction.getTransaction().getItemSetSupport() >= supportThreshold) {
+					System.out.print("Passed: ");
+					System.out.println(transaction.toString() + "-"
+							+ findSupport);
+					Li.getTransactionSet().add(transaction);
+					L.getTransactionSet().add(transaction);
+				}
+
 			}
 
+			/*
+			 * Part 4: Generate all candidate two-item sets from frequent
+			 * one-item sets {A, B} {A, C} {A, D} {A, E} {B, C} {B, D} {B, E}
+			 * {C, D} {C, E} {D, E} All combinations
+			 */
+			Ci.getTransactionSet().clear();
+			System.out.println("Cleared: " + Ci.toString());
+
+			Ci = (FindAllSubsets(Li.GetUniqueItems(), k));// ADD RANGE
+			
+			/*
+			for (int i = 0; i < Ci.getTransactionSet().size(); i++) {
+				for (int j = 0; j < Ci.getTransactionSet().get(i).getTransaction().getItemSet().size(); j++) {
+					ItemSet toRemove = new ItemSet();
+					toRemove.setItemSet(Ci.getTransactionSet().get(i).getTransaction().getItemSet());
+					
+				if (Ci.getTransactionSet().get(i).getTransaction().getItemSet()
+						.size() != k) {
+					System.out.println("Removing: " + toRemove.toString());
+					Ci.getTransactionSet().get(i).getTransaction().getItemSet().remove(toRemove);
+				}
+			}
+			}
+			*/
+			System.out.println(Ci.toString());
+			k += 1;
+
 		}
 
-		/*
-		 * Part 4: Generate all candidate two-item sets from frequent one-item
-		 * sets {A, B} {A, C} {A, D} {A, E} {B, C} {B, D} {B, E} {C, D} {C, E}
-		 * {D, E} All combinations
-		 */
-		Ci.getTransactionSet().clear();
-		
-		
-		
-		Ci = (FindAllSubsets(Li.GetUniqueItems(), k));//ADD RANGE
-		k+=1;
-	
-		}
-		
 		return L;
-
-
-
-
 
 		/*
 		 * Part 5: Remove any candidate two-item sets for which any subset
@@ -128,9 +143,9 @@ public class APrioriAlgorithm {
 		 * at level k, each level k-1 sub-combination must also be a frequent
 		 * item set
 		 */
-		
+
 	}
-	
+
 	public static int GetBit(int value, int position) {
 		int bit = value & (int) Math.pow(2, position);
 		return (bit > 0 ? 1 : 0);
@@ -140,22 +155,23 @@ public class APrioriAlgorithm {
 		TransactionSet allSubsets = new TransactionSet();
 		System.out.println("k: " + k);
 		System.out.println("ItemSet Size: " + itemset.getItemSet().size());
-		int subsetCount = (int) Math.pow(2,itemset.getItemSet().size());//itemset.getItemSet().size()
+		int subsetCountK = (int) Math.pow(2,k);
+		int subsetCount = (int) Math.pow(2, itemset.getItemSet().size());// itemset.getItemSet().size()
 		System.out.println("subsetCount: " + subsetCount);
 		for (int i = 0; i < subsetCount; i++) {
 			ItemSet subset = new ItemSet();
 			for (int bitIndex = 0; bitIndex < itemset.getItemSet().size(); bitIndex++) {
 				if (GetBit(i, bitIndex) == 1) {
+					
 					subset.getItemSet().add(itemset.getItemSet().get(bitIndex));
 				}
 			}
-
+			if(subset.getItemSet().size()==k-1){//does this solve anything
 			allSubsets.getTransactionSet().add(new Transaction(subset));
+			}
 		}
 
 		return (allSubsets);
 	}
-
-	
 
 }
