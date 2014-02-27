@@ -1,19 +1,18 @@
 package fisherjk;
 
-public class Item{
+public class Item {
 
 	private String itemName;
 	private String itemDesc;
 	private double itemPrice;
-	
-	
-	public Item(String itemName){
+
+	public Item(String itemName) {
 		this.itemName = itemName;
 		this.itemDesc = itemDesc;
 		this.itemPrice = itemPrice;
-		
+
 	}
-	
+
 	public String getItem() {
 		return itemName;
 	}
@@ -47,11 +46,11 @@ public class Item{
 	public boolean equals(Object obj) {
 		// TODO Auto-generated method stub
 		Item item = (Item) obj;
-		if(this.itemName.equalsIgnoreCase(item.itemName)){
+		if (this.itemName.equalsIgnoreCase(item.itemName)) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
-	
+
 }

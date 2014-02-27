@@ -1,20 +1,19 @@
 package fisherjk;
 
-
 import java.util.ArrayList;
 
-public class ItemSet {//Is this a transaction?
+public class ItemSet {// Is this a transaction?
 
 	private ArrayList<Item> itemSet;
 	private double itemSetSupport;
 
-	//List of Items
+	// List of Items
 	public ItemSet(ArrayList<Item> itemSet) {
 		this.itemSet = itemSet;
 		this.itemSetSupport = 0;
 	}
-	
-	public ItemSet(){
+
+	public ItemSet() {
 		this.itemSet = new ArrayList<Item>();
 		this.itemSetSupport = 0;
 	}
@@ -24,7 +23,7 @@ public class ItemSet {//Is this a transaction?
 	}
 
 	public void setItemSet(ArrayList<Item> itemSet) {
-		
+
 		this.itemSet = itemSet;
 	}
 
@@ -32,7 +31,7 @@ public class ItemSet {//Is this a transaction?
 		return itemSetSupport;
 	}
 
-	public void setSupport(double itemSetSupport) {
+	public void setItemSetSupport(double itemSetSupport) {
 		this.itemSetSupport = itemSetSupport;
 	}
 
@@ -40,48 +39,46 @@ public class ItemSet {//Is this a transaction?
 	public String toString() {
 		String itemSetContents = "";
 		int num = this.itemSet.size();
-		for(int i = 0; i < this.itemSet.size(); i++){
+		for (int i = 0; i < this.itemSet.size(); i++) {
 			itemSetContents = itemSetContents + this.itemSet.get(i).toString();
-			System.out.println("i: " + i);
-			if(i < num-1){
-				itemSetContents = itemSetContents +",";
+			if (i < num - 1) {
+				itemSetContents = itemSetContents + ",";
 			}
 		}
-		
-		return "{"+itemSetContents+"}";
-	}
-	
-	
-	
-	public boolean equals(ItemSet obj) {
-		// TODO Auto-generated method stub
-		ItemSet itemSet = (ItemSet) obj;
-		if(this.itemSet.contains(itemSet)){
-			System.out.println("true");
-			return true;
-		}else{
-			System.out.println("false");
-			return false;
-		}
+
+		return "{" + itemSetContents + "}" + "-" + (this.itemSetSupport);
 	}
 
-	public boolean contains(ArrayList<Item> itemSet2) {
+	@Override
+	public boolean equals(Object obj) {// necessary for the contains method
+		// TODO Auto-generated method stub
+		ItemSet itemSet = (ItemSet) obj;
+		if (this.itemSet.size() == itemSet.getItemSet().size()) {
+			for (int i = 0; i < this.itemSet.size(); i++) {
+				if (!this.itemSet
+						.get(i)
+						.getItem()
+						.equalsIgnoreCase(itemSet.getItemSet().get(i).getItem())) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+		return false;
+	}
+
+	public boolean contains(ArrayList<Item> itemSet2) {// uses the equals method
 		System.out.println("In contains");
 		boolean match = false;
-		for(int i = 0; i < this.itemSet.size(); i++){
-			if(this.itemSet.get(i).getItem().equals(itemSet2.get(i).getItem())){
+		for (int i = 0; i < this.itemSet.size(); i++) {
+			if (this.itemSet.get(i).getItem().equals(itemSet2.get(i).getItem())) {
 				match = true;
-			}else
+			} else
 				match = false;
-			
+
 		}
 		return match;
 	}
-	
-	
-	
-	
 
-	
-	
 }

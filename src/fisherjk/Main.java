@@ -124,19 +124,19 @@ public class Main {
 		tSet.setTransactionSet(transSet);
 		System.out.println(tSet.toString());
 		System.out.println();
-		
-		//TransactionSet transSet = new TransactionSet();
+
+		// TransactionSet transSet = new TransactionSet();
 		/*
-		transSet.getTransactionSet().add(trans1);
-		transSet.getTransactionSet().add(trans2);
-		transSet.getTransactionSet().add(trans3);
-		transSet.getTransactionSet().add(trans4);
-		transSet.getTransactionSet().add(trans5);
-		transSet.getTransactionSet().add(trans6);
-		transSet.getTransactionSet().add(trans7);
-		transSet.getTransactionSet().add(trans8);
-		transSet.getTransactionSet().add(trans9);
-		*/
+		 * transSet.getTransactionSet().add(trans1);
+		 * transSet.getTransactionSet().add(trans2);
+		 * transSet.getTransactionSet().add(trans3);
+		 * transSet.getTransactionSet().add(trans4);
+		 * transSet.getTransactionSet().add(trans5);
+		 * transSet.getTransactionSet().add(trans6);
+		 * transSet.getTransactionSet().add(trans7);
+		 * transSet.getTransactionSet().add(trans8);
+		 * transSet.getTransactionSet().add(trans9);
+		 */
 		APrioriAlgorithm.DoApriori(tSet, 2.0);
 
 		// TODO: set up to read input from a file
