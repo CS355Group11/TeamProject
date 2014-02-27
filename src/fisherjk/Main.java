@@ -23,7 +23,7 @@ public class Main {
 		Item C = new Item("C");
 		Item D = new Item("D");
 		Item E = new Item("E");
-		System.out.println("Items in each transaction:");
+		System.out.println("Part 0: Insert items into each transaction:");
 		// Creating Transaction 1
 		ArrayList<Item> list1 = new ArrayList<Item>();
 		list1.add(A);
@@ -31,7 +31,7 @@ public class Main {
 		list1.add(E);
 		ItemSet set1 = new ItemSet(list1);
 		Transaction trans1 = new Transaction(set1);
-		System.out.println("T1: " + trans1.getTransactionItems());
+		System.out.println("T1: " + trans1.printTransactionItems());
 		// End of Creating Transaction 1
 
 		// Creating Transaction 2
@@ -40,7 +40,7 @@ public class Main {
 		list2.add(D);
 		ItemSet set2 = new ItemSet(list2);
 		Transaction trans2 = new Transaction(set2);
-		System.out.println("T2: " + trans2.getTransactionItems());
+		System.out.println("T2: " + trans2.printTransactionItems());
 		// End of Transaction 2
 
 		// Creating Transaction 3
@@ -49,7 +49,7 @@ public class Main {
 		list3.add(C);
 		ItemSet set3 = new ItemSet(list3);
 		Transaction trans3 = new Transaction(set3);
-		System.out.println("T3: " + trans3.getTransactionItems());
+		System.out.println("T3: " + trans3.printTransactionItems());
 		// End of Transaction 3
 
 		// Creating Transaction 4
@@ -59,7 +59,7 @@ public class Main {
 		list4.add(D);
 		ItemSet set4 = new ItemSet(list4);
 		Transaction trans4 = new Transaction(set4);
-		System.out.println("T4: " + trans4.getTransactionItems());
+		System.out.println("T4: " + trans4.printTransactionItems());
 		// End of Transaction 4
 
 		// Creating Transaction 5
@@ -68,7 +68,7 @@ public class Main {
 		list5.add(C);
 		ItemSet set5 = new ItemSet(list5);
 		Transaction trans5 = new Transaction(set5);
-		System.out.println("T5: " + trans5.getTransactionItems());
+		System.out.println("T5: " + trans5.printTransactionItems());
 		// End of Transaction 5
 
 		// Creating Transaction 6
@@ -77,7 +77,7 @@ public class Main {
 		list6.add(C);
 		ItemSet set6 = new ItemSet(list6);
 		Transaction trans6 = new Transaction(set6);
-		System.out.println("T6: " + trans6.getTransactionItems());
+		System.out.println("T6: " + trans6.printTransactionItems());
 		// End of Transaction 6
 
 		// Creating Transaction 7
@@ -86,7 +86,7 @@ public class Main {
 		list7.add(C);
 		ItemSet set7 = new ItemSet(list7);
 		Transaction trans7 = new Transaction(set7);
-		System.out.println("T7: " + trans7.getTransactionItems());
+		System.out.println("T7: " + trans7.printTransactionItems());
 		// End of Transaction 7
 
 		// Creating Transaction 8
@@ -97,7 +97,7 @@ public class Main {
 		list8.add(E);
 		ItemSet set8 = new ItemSet(list8);
 		Transaction trans8 = new Transaction(set8);
-		System.out.println("T8: " + trans8.getTransactionItems());
+		System.out.println("T8: " + trans8.printTransactionItems());
 		// End of Transaction 8
 
 		// Creating Transaction 8
@@ -107,12 +107,24 @@ public class Main {
 		list9.add(C);
 		ItemSet set9 = new ItemSet(list9);
 		Transaction trans9 = new Transaction(set9);
-		System.out.println("T9: " + trans9.getTransactionItems());
+		System.out.println("T9: " + trans9.printTransactionItems());
 		// End of Transaction 8
 
-		//ArrayList<Transaction> transSet = new ArrayList<Transaction>();
-		//transSet.add(trans1);
-		TransactionSet transSet = new TransactionSet();
+		ArrayList<Transaction> transSet = new ArrayList<Transaction>();
+		TransactionSet tSet = new TransactionSet();
+		transSet.add(trans1);
+		transSet.add(trans2);
+		transSet.add(trans3);
+		transSet.add(trans4);
+		transSet.add(trans5);
+		transSet.add(trans6);
+		transSet.add(trans7);
+		transSet.add(trans8);
+		transSet.add(trans9);
+		tSet.setTransactionSet(transSet);
+		
+		//TransactionSet transSet = new TransactionSet();
+		/*
 		transSet.getTransactionSet().add(trans1);
 		transSet.getTransactionSet().add(trans2);
 		transSet.getTransactionSet().add(trans3);
@@ -122,7 +134,8 @@ public class Main {
 		transSet.getTransactionSet().add(trans7);
 		transSet.getTransactionSet().add(trans8);
 		transSet.getTransactionSet().add(trans9);
-		APrioriAlgorithm.DoApriori(transSet, 2.0);
+		*/
+		APrioriAlgorithm.DoApriori(tSet, 2.0);
 
 		// TODO: set up to read input from a file
 

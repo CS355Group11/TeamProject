@@ -49,7 +49,7 @@ public class Transaction {
 	
 	
 
-	public String getTransactionItems() {//Essentially a specializied toString
+	public String printTransactionItems() {//Essentially a specializied toString
 		// TODO Auto-generated method stub
 		int num = this.transaction.getItemSet().size();
 		String transactionItems  = "";

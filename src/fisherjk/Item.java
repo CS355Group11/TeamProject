@@ -37,6 +37,26 @@ public class Item{
 	public void setItemPrice(double itemPrice) {
 		this.itemPrice = itemPrice;
 	}
+
+	@Override
+	public String toString() {
+		return "Item [itemName=" + itemName + "]";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		Item item = (Item) obj;
+		if(this.itemName.equalsIgnoreCase(item.itemName)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	
+	
+	
 	
 	
 	
