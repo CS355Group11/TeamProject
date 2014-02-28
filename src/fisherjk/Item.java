@@ -1,18 +1,20 @@
 package fisherjk;
 
+/* Class for holding singular Item information*/
 public class Item {
 
-	private String itemName;
-	private String itemDesc;
-	private double itemPrice;
+	private String itemName;//unique item name
+	private String itemDesc;//unique item description
+	private double itemPrice;//unique item price
 
 	public Item(String itemName) {
 		this.itemName = itemName;
-		this.itemDesc = itemDesc;
-		this.itemPrice = itemPrice;
+		this.itemDesc = itemDesc;	//unused at the moment
+		this.itemPrice = itemPrice; //unused at the moment
 
 	}
-
+	
+/*Respective getter's and setters for each item's private instance variables*/
 	public String getItem() {
 		return itemName;
 	}
@@ -37,11 +39,13 @@ public class Item {
 		this.itemPrice = itemPrice;
 	}
 
+	/*Override the Item's class toString since it will be called by later classes*/
 	@Override
 	public String toString() {
 		return itemName;
 	}
 
+	/*Override the Item's equals method to allow the ItemSet class contain's method to be run*/
 	@Override
 	public boolean equals(Object obj) {
 		// TODO Auto-generated method stub

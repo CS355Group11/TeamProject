@@ -1,173 +1,89 @@
 package fisherjk;
 
-import java.util.ArrayList;
 
+/*Class to Run the Part I of the A Priori Algorithm */
 public class APrioriAlgorithm {
 
 	public static TransactionSet DoApriori(TransactionSet transSet,
 			double supportThreshold) {
 
-		/*
-		 * Part 1: Generate all candidate single-item sets {A} similar to {beer}
-		 * {B} {cheese} {C} {bread} {D} ... {E} Essentially generate a list of
-		 * unique items in a transaction set
-		 */
-		ItemSet I = transSet.GetUniqueItems();// eventual call to database
-		TransactionSet L = new TransactionSet(); // resultant large
-													// itemsets
-		TransactionSet Li = new TransactionSet(); // large itemset in each
-													// iteration
-		TransactionSet Ci = new TransactionSet(); // candidate itemset in
-													// each iteration
+		ItemSet initialItemSet = transSet.GetUniqueItems();//get all singular unique items and put them into a ItemSet object
+		TransactionSet finalLargeItemSet = new TransactionSet(); // resultant large itemsets
+		TransactionSet LargeItemSet = new TransactionSet(); // large itemset in each iteration
+		TransactionSet CandidateItemSet = new TransactionSet(); // candidate itemset in each iteration
 
-		// transSet.getUniqueItemCounts(I);
 
 		// first iteration (1-item itemsets)
-		for (int i = 0; i < I.getItemSet().size(); i++) {
-			Item candidateItem = I.getItemSet().get(i);
+		for (int i = 0; i < initialItemSet.getItemSet().size(); i++) {
+			Item candidateItem = initialItemSet.getItemSet().get(i);
 			ItemSet candidateItemSet = new ItemSet();
 			candidateItemSet.getItemSet().add(candidateItem);
-			// System.out.println(candidateItemSet.getItemSet().get(i));
 			Transaction candidateTrans = new Transaction(candidateItemSet);
-			candidateTrans.toString();
+			//candidateTrans.toString();
 
-			Ci.getTransactionSet().add(candidateTrans);
+			CandidateItemSet.getTransactionSet().add(candidateTrans);
 		}
 
-		// System.out.println(Ci.toString());
 		// next iterations
 		int k = 2;
-		while (Ci.getTransactionSet().size() != 0) {// fix this GOOD
-			// while(k < 5){
-			// while(Ci.Count() !=0){
-			System.out.println("k: " + k);
-			// System.out.println("Ci Count: " + Ci.Count());
-			Li.getTransactionSet().clear();
-			System.out.println("Ci at start of while loop: \n" + Ci.toString());
-			System.out.println("Li at start of while loop: \n" + Li.toString());
-			/*
-			 * Part 2: Scan transaction set for count of each candidate
-			 * single-item set {A} – 6 {B} – 7 {C} – 6 {D} – 2 {E} – 2 Read As:
-			 * A was present 6 times in the transaction set
-			 */
-			System.out
-					.println("Part 2: Scan transaction set for count of each candidate single-item set");
-			for (Transaction transaction : Ci.getTransactionSet()) {
-				int findSupport = transSet.findSupport(transaction
-						.getTransaction());
-				transaction.getTransaction().setItemSetSupport(findSupport);
+		while (CandidateItemSet.getTransactionSet().size() != 0) {
+			//set LargeItemSetIteration from CandidateItemSet (pruning)
+			LargeItemSet.getTransactionSet().clear();
+			for (Transaction transaction : CandidateItemSet.getTransactionSet()) {//loop through each transaction in each TransactionSet
+				int findSupport = transSet.findSupport(transaction.getTransaction());//calculate and find each successive support level for an transaction (remember it is an itemSet)
+				transaction.getTransaction().setItemSetSupport(findSupport);//Set each successive support level for its respective transaction (remember it is an itemSet)
 
-				// System.out.println(transaction.toString() + "-" +
-				// findSupport);
-				/*
-				 * Part 3: Filter candidate one-item sets with min. support to
-				 * get frequent one-item sets {A} – 6 {B} – 7 {C} – 6 {D} – 2
-				 * {E} – 2 In this case no items are filtered since support
-				 * level >=2
-				 */
-				if (transaction.getTransaction().getItemSetSupport() >= supportThreshold) {
-					System.out.print("Passed: ");
-					System.out.println(transaction.toString() + "-"
-							+ findSupport);
-					System.out.println("Transaction to add: " + transaction);
-					Li.getTransactionSet().add(transaction);
+				
+				if (transaction.getTransaction().getItemSetSupport() >= supportThreshold) {//Determine if the itemSet's support level meets or exceeds the supportThreshold to filter out
+					
+					System.out.println(transaction.toString() + "-" + findSupport);//debugging info
+					
+					LargeItemSet.getTransactionSet().add(transaction);
 					if (transaction.getTransaction().getItemSet().size() > 1) {// this might not work in the long run
-						L.getTransactionSet().add(transaction);
+						finalLargeItemSet.getTransactionSet().add(transaction);//add the resultingLargeItemSet of final 
 					}
 				}
 
 			}
 
-			/*
-			 * Part 4: Generate all candidate two-item sets from frequent
-			 * one-item sets {A, B} {A, C} {A, D} {A, E} {B, C} {B, D} {B, E}
-			 * {C, D} {C, E} {D, E} All combinations
-			 */
 
-			Ci.getTransactionSet().clear();
-
-			System.out.println("Cleared: \n" + Ci.toString());
-
-			Ci = (FindAllSubsets(Li.GetUniqueItems(), k));// ADD RANGE
-
-			System.out.println(Ci.toString());
+			CandidateItemSet.getTransactionSet().clear();//clear up the candidates to prep for finding all subsets
+			CandidateItemSet = (FindAllSubsets(LargeItemSet.GetUniqueItems(), k));//Add all the combinations of subsets for a given set of unique items/ItemSets
 			k += 1;
 
 		}
-		System.out.println("Final Set: \n" + L.toString());
-		return L;
+		System.out.println("Final Set: \n" + finalLargeItemSet.toString());
+		return finalLargeItemSet;//final returned value
 
-		/*
-		 * Part 5: Remove any candidate two-item sets for which any subset
-		 * single-item set is not itself a frequent set {A, B} {A, C} {A, D} {A,
-		 * E} {B, C} {B, D} {B, E} {C, D} {C, E} {D, E} Here, no two-item
-		 * candidate sets are removed, as all five single-item sets are frequent
-		 */
-
-		/*
-		 * Part 6: Scan database to get count of all candidate two-item sets {A,
-		 * B} - 4 {A, C} - 4 {A, D} - 1 {A, E} - 2 {B, C} - 4 {B, D} - 2 {B, E}
-		 * - 2 {C, D} - 0 {C, E} - 1 {D, E} - 0 read: A and B are present
-		 * together in 4 transactions
-		 */
-
-		/*
-		 * Part 7: Can now filter the candidate two-item sets using the support
-		 * level to get frequent two-item sets {A, B} - 4 {A, B} - 4 {A, C} - 4
-		 * {A, C} - 4 {A, D} - 1 turns into -> {A, E} - 2 {A, E} - 2 {B, C} - 4
-		 * {B, C} - 4 {B, D} - 2 {B, D} - 2 {B, E} - 2 {B, E} - 2 {C, D} - 0 {C,
-		 * E} - 1 {D, E} - 0
-		 */
-
-		/*
-		 * Part 8: Keep going for each K-item set... Combine where first K-2
-		 * elements are common to avoid duplicates Remove any candidates for
-		 * which any possible subset two-item set is not frequent Example – if
-		 * candidate is {A, B, C}, then {A, B}, {B, C}, {A, C} must all be
-		 * frequent Note: will go from 6 to 2 Scan database (transaction set)
-		 * for count of each candidate three-item set
-		 * 
-		 * Compare candidate three-item sets with min. support count, and remove
-		 * those not meeting min.Algorithm stops when you reach a level where
-		 * there are no frequent-item sets
-		 */
-
-		/*
-		 * NOTES: Overall result is the union of all frequent item sets found at
-		 * each level k where k >= 2 Remember that for every candidate item set
-		 * at level k, each level k-1 sub-combination must also be a frequent
-		 * item set
-		 */
 
 	}
 
+	/*Necessary for determining subsets based on the bits of an index*/
 	public static int GetBit(int value, int position) {
 		int bit = value & (int) Math.pow(2, position);
 		return (bit > 0 ? 1 : 0);
 	}
 
-	public static TransactionSet FindAllSubsets(ItemSet itemset, int k) {
-		TransactionSet allSubsets = new TransactionSet();
-		System.out.println("k: " + k);
-		System.out.println("ItemSet Size: " + itemset.getItemSet().size());
-		// int subsetCountK = (int) Math.pow(2, k);
-		int subsetCount = (int) Math.pow(2, itemset.getItemSet().size());// itemset.getItemSet().size()
-		// System.out.println("subsetCount: " + subsetCount);
+	
+	/*Determines and returns all possible combinations of subsets based on a given itemSet. This allows filtering to take place as the next loop iteration starts up */
+	public static TransactionSet FindAllSubsets(ItemSet itemSet, int k) {
+		TransactionSet allSubsets = new TransactionSet();//New subset of transactions to return in a TransactionSet
+		int subsetCount = (int) Math.pow(2, itemSet.getItemSet().size());//index control for loop
+		int itemSetSize = itemSet.getItemSet().size();//size control for inner loop
 		for (int i = 0; i < subsetCount; i++) {
 			ItemSet subset = new ItemSet();
-			for (int bitIndex = 0; bitIndex < itemset.getItemSet().size(); bitIndex++) {
+			for (int bitIndex = 0; bitIndex < itemSetSize; bitIndex++) {
 				if (GetBit(i, bitIndex) == 1) {
 
-					subset.getItemSet().add(itemset.getItemSet().get(bitIndex));
+					subset.getItemSet().add(itemSet.getItemSet().get(bitIndex));
 				}
 			}
-			if (subset.getItemSet().size() == k - 1) {// does this solve
-														// anything?
-				allSubsets.getTransactionSet().add(new Transaction(subset));
+			if (subset.getItemSet().size() == k - 1) {//accounting for missing Bit class. Seems to correct off-by indexing
+				allSubsets.getTransactionSet().add(new Transaction(subset));//add the new transaction subset
 			}
 		}
 
-		return (allSubsets);
+		return (allSubsets);//final combination of all possible subsets based on the size of k
 	}
 
 }

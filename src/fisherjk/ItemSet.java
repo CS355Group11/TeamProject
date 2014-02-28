@@ -2,12 +2,13 @@ package fisherjk;
 
 import java.util.ArrayList;
 
-public class ItemSet {// Is this a transaction?
+/* Class for holding information about a set of items known as an ItemSet*/
+public class ItemSet {
 
-	private ArrayList<Item> itemSet;
-	private double itemSetSupport;
+	private ArrayList<Item> itemSet;//unique ItemSet private variable placeholder
+	private double itemSetSupport;//unique ItemSet support level. Essentially a frequency count to be used by the toString and findSupport method
 
-	// List of Items
+	//ItemSet Constructors with initial values
 	public ItemSet(ArrayList<Item> itemSet) {
 		this.itemSet = itemSet;
 		this.itemSetSupport = 0;
@@ -18,6 +19,8 @@ public class ItemSet {// Is this a transaction?
 		this.itemSetSupport = 0;
 	}
 
+	
+	/*ItemSet's respective private instance variable getters and setters*/
 	public ArrayList<Item> getItemSet() {
 		return itemSet;
 	}
@@ -35,6 +38,7 @@ public class ItemSet {// Is this a transaction?
 		this.itemSetSupport = itemSetSupport;
 	}
 
+	/* Override the ItemSet toString to display itemSet contents with support level tagged on at the very end*/
 	@Override
 	public String toString() {
 		String itemSetContents = "";
@@ -49,12 +53,11 @@ public class ItemSet {// Is this a transaction?
 		return "{" + itemSetContents + "}" + "-" + (this.itemSetSupport);
 	}
 
+	/*Override the ItemSet equals method to be used for a later contains method call*/
 	@Override
-	public boolean equals(Object obj) {// necessary for the contains method
+	public boolean equals(Object obj) {
 		System.out.println("called equals in itemset");
-		// TODO Auto-generated method stub
-		ItemSet itemSet = (ItemSet) obj;
-		// if (this.itemSet.size() == itemSet.getItemSet().size()) {
+		ItemSet itemSet = (ItemSet) obj;//necessary casting
 		for (int i = 0; i < this.itemSet.size(); i++) {
 			if (!this.itemSet.get(i).getItem()
 					.equalsIgnoreCase(itemSet.getItemSet().get(i).getItem())) {
@@ -63,49 +66,37 @@ public class ItemSet {// Is this a transaction?
 		}
 
 		return true;
-		// }
-		// return false;
 	}
 
 	public boolean contains(ArrayList<Item> itemSet2) {// uses the equals method
 
-		// System.out.println("In contains");
-		// System.out.println("First: "+ this.itemSet);
-		// System.out.println("Next: "+ itemSet2);
+		
 		boolean match = false;
-		for (int i = 0; i < this.itemSet.size(); i++) {
-			// System.out.println("i: " + i + " " +this.
-			// itemSet.get(i).getItem());
+		for (int i = 0; i < this.itemSet.size(); i++) {//
+			
 			for (int j = 0; j < itemSet2.size(); j++) {
-				// System.out.println("j: " + j + " " +
-				// itemSet2.get(j).getItem());
-				// System.out.println(this.itemSet.get(i).getItem() + " " +
-				// itemSet2.get(i).getItem());
+				
 				if (itemSet2.get(j).getItem()
 						.equals(this.itemSet.get(i).getItem())) {
-					// System.out.println(this.itemSet.get(i).getItem() +
-					// " vs. " + itemSet2.get(j).getItem());
 					match = true;
 				}
 			}
 		}
-		// System.out.print("-> ItemSet Content Match?: " + match +"\n");
+		
 		return match;
 	}
 
-	public boolean containsItemSet(ArrayList<Item> itemSet2) {
-		for (int i = 0; i < this.itemSet.size(); i++) {
-		
-			for (int j = 0; j < itemSet2.size(); j++) {
-				Item item = itemSet2.get(j);
-				if (!this.itemSet.contains(item)) {
+	/*Improved contains method to check if a given itemSet2 is a subset of itemSet*/
+	public boolean containsItemSet(ArrayList<Item> subItemSet) {
+		for (int i = 0; i < this.itemSet.size(); i++) {//loop through biggest itemSet
+			for (int j = 0; j < subItemSet.size(); j++) {//check against inner subset
+				Item item = subItemSet.get(j);
+				if (!this.itemSet.contains(item)) {//does this item set contain this item -> if at any point it fails then we know to return false
 					return false;
 				}
 			}
 		}
-		// System.out.print("-> ItemSet Content Match?: " + match +"\n");
 		return true;
-		
 	}
 
 }

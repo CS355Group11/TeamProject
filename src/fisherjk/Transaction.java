@@ -1,24 +1,27 @@
 package fisherjk;
 
-import java.util.ArrayList;
+
 import java.util.Date;
 
+/*Class for holding singular ItemSet records*/
 public class Transaction {
 
-	private ItemSet transaction;
-	private Date transactionDate;
-	private double transactionTotalPrice;
+	private ItemSet transaction;//A transaction is essentially an itemSet
+	private Date transactionDate;//A transaction's timestamp variable 
+	private double transactionTotalPrice;//A transaction total price
 
-	// List of ItemSets
+	/*Constructors for Transaction Class*/
 	public Transaction(ItemSet transaction) {
 		this.transaction = transaction;
-		this.transactionDate = transactionDate;
+		this.transactionDate = transactionDate;//unused at the moment
 	}
 
+	/*Creating a new transaction creates a new ItemSet. An ItemSet is a list of Items*/
 	public Transaction() {
 		this.transaction = new ItemSet();
 	}
 
+	/*Respective getters and setters*/
 	public ItemSet getTransaction() {
 		return transaction;
 	}
@@ -39,16 +42,16 @@ public class Transaction {
 		return transactionTotalPrice;
 
 	}
+	
+	public void setTransactionTotalPrice(double transactionTotalPrice) {
+		this.transactionTotalPrice = transactionTotalPrice;
 
-	public ItemSet getUniqueItems() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
-	@Override
-	public String toString() {// Essentially a specializied toString
-		// TODO Auto-generated method stub
 
+	/*Override the Transaction's toString to call the ItemSet's to String which calls an Item toString*/
+	@Override
+	public String toString() {
 		String transactionItems = "";
 		int num = this.transaction.getItemSet().size();
 		for (int i = 0; i < num; i++) {
@@ -59,62 +62,8 @@ public class Transaction {
 			}
 
 		}
-		return "{" + transactionItems + "}";
+		return "{" + transactionItems + "}";//don't forget the opening and closing braces
 
 	}
 	
-	
-	
-	
-	@Override
-	public boolean equals(Object obj) {// necessary for the contains method
-		// TODO Auto-generated method stub
-		boolean equivalent = false;
-		Transaction transaction = (Transaction) obj;
-		//if (this.transaction.getItemSet().size() == itemSet.getItemSet().size()) {
-			for (int i = 0; i < this.transaction.getItemSet().size(); i++) {
-				if (!this.transaction.getItemSet()
-						.equals(transaction.getTransaction())) {
-					equivalent =  false;
-				}
-			}
-
-			equivalent =  true;
-		//}
-			System.out.println("equivalent");
-		return equivalent;
-	}
-	/*
-	public boolean contains(ArrayList<ItemSet> itemSet2) {// uses the equals method
-
-		System.out.println("In contains");
-		boolean match = false;
-		for (int i = 0; i < this.transaction.getItemSet().size(); i++) {
-			if (this.transaction.getItemSet().get(i).getItem().equals(itemSet2.get(i).getItemSet().get(i).getItem())) {
-				match = true;
-			} else
-				match = false;
-
-		}
-		System.out.println("Match?: " + match);
-		return match;
-	}
-	*/
-	public boolean contains(ItemSet itemSupport) {
-		//System.out.println("In contains");
-		boolean match = false;
-		//for (int i = 0; i < this.transaction.getItemSet().size(); i++) {
-			//System.out.println("in for loop");
-			if (this.transaction.equals(itemSupport)) {
-				match = true;
-			} else
-				match = false;
-		//}
-		System.out.println("Trans Match?: " + match);
-		return match;
-	
-	}
-
-	
-
 }
