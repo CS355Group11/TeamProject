@@ -51,9 +51,10 @@ public class ItemSet {// Is this a transaction?
 
 	@Override
 	public boolean equals(Object obj) {// necessary for the contains method
+		System.out.println("called equals in itemset");
 		// TODO Auto-generated method stub
 		ItemSet itemSet = (ItemSet) obj;
-		if (this.itemSet.size() == itemSet.getItemSet().size()) {
+		//if (this.itemSet.size() == itemSet.getItemSet().size()) {
 			for (int i = 0; i < this.itemSet.size(); i++) {
 				if (!this.itemSet
 						.get(i)
@@ -64,20 +65,25 @@ public class ItemSet {// Is this a transaction?
 			}
 
 			return true;
-		}
-		return false;
+		//}
+		//return false;
 	}
 
+
 	public boolean contains(ArrayList<Item> itemSet2) {// uses the equals method
-		System.out.println("In contains");
+
+		//System.out.println("In contains");
 		boolean match = false;
-		for (int i = 0; i < this.itemSet.size(); i++) {
-			if (this.itemSet.get(i).getItem().equals(itemSet2.get(i).getItem())) {
+		for (int i = 0; i < itemSet2.size(); i++) {
+			//System.out.println(this.itemSet.get(i).getItem() + " " + 
+			//		itemSet2.get(i).getItem());
+			if (this.itemSet.get(i).getItem().equals((itemSet2.get(i).getItem()))) {
 				match = true;
 			} else
 				match = false;
 
 		}
+		System.out.print("-> ItemSet Content Match?: " + match +"\n");
 		return match;
 	}
 

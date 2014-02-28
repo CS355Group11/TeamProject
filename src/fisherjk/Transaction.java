@@ -62,6 +62,58 @@ public class Transaction {
 		return "{" + transactionItems + "}";
 
 	}
+	
+	
+	
+	
+	@Override
+	public boolean equals(Object obj) {// necessary for the contains method
+		// TODO Auto-generated method stub
+		boolean equivalent = false;
+		Transaction transaction = (Transaction) obj;
+		//if (this.transaction.getItemSet().size() == itemSet.getItemSet().size()) {
+			for (int i = 0; i < this.transaction.getItemSet().size(); i++) {
+				if (!this.transaction.getItemSet()
+						.equals(transaction.getTransaction())) {
+					equivalent =  false;
+				}
+			}
+
+			equivalent =  true;
+		//}
+			System.out.println("equivalent");
+		return equivalent;
+	}
+	/*
+	public boolean contains(ArrayList<ItemSet> itemSet2) {// uses the equals method
+
+		System.out.println("In contains");
+		boolean match = false;
+		for (int i = 0; i < this.transaction.getItemSet().size(); i++) {
+			if (this.transaction.getItemSet().get(i).getItem().equals(itemSet2.get(i).getItemSet().get(i).getItem())) {
+				match = true;
+			} else
+				match = false;
+
+		}
+		System.out.println("Match?: " + match);
+		return match;
+	}
+	*/
+	public boolean contains(ItemSet itemSupport) {
+		//System.out.println("In contains");
+		boolean match = false;
+		//for (int i = 0; i < this.transaction.getItemSet().size(); i++) {
+			//System.out.println("in for loop");
+			if (this.transaction.equals(itemSupport)) {
+				match = true;
+			} else
+				match = false;
+		//}
+		System.out.println("Trans Match?: " + match);
+		return match;
+	
+	}
 
 	
 

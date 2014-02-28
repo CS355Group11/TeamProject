@@ -65,8 +65,8 @@ public class TransactionSet {
 				}
 
 			}
-			System.out.println("{" + I.getItemSet().get(i).getItem() + "}-"
-					+ (itemCounts.get(i)));
+			// System.out.println("{" + I.getItemSet().get(i).getItem() + "}-"
+			// + (itemCounts.get(i)));
 		}
 	}
 
@@ -89,10 +89,12 @@ public class TransactionSet {
 
 	}
 
-	public int findSupport(ItemSet itemSupport) {// get the individual support
+	public int findSupportOld1(ItemSet itemSupport) {// get the individual
+													// support
 													// for each itemSet
 		// System.out.println("itemSuppot: " + itemSupport.toString());
 		int count = 0;
+		boolean found = false;
 		int num = this.transactionSet.size();
 		// System.out.println("Transaction set size: " + num);
 		for (int i = 0; i < transactionSet.size(); i++) {
@@ -100,9 +102,9 @@ public class TransactionSet {
 				// System.out.println("Transaction: " +
 				// this.transactionSet.get(k).getTransaction().toString() +
 				// " ");
-				// System.out.println(itemSupport.getItemSet() +
-				// " Comparing against: " +
-				// this.transactionSet.get(i).getTransaction().getItemSet());
+				System.out.println(this.transactionSet.get(i).getTransaction()
+						.getItemSet()
+						+ " contains? " + itemSupport.getItemSet());
 				if (this.transactionSet.get(i).getTransaction().getItemSet()
 						.contains(itemSupport.getItemSet().get(k))) {
 					count++;
@@ -114,14 +116,78 @@ public class TransactionSet {
 		}
 		return count;
 	}
-	
-	
-	public int Count(){
-		return this.transactionSet.size();
-		
+
+	public int findSupportOld(ItemSet itemSupport) {// get the individual
+													// support
+		// for each itemSet
+		// System.out.println("itemSuppot: " + itemSupport.toString());
+		int count = 0;
+		boolean found = false;
+		int num = this.transactionSet.size();
+		// System.out.println("Transaction set size: " + num);
+		for (int i = 0; i < transactionSet.size(); i++) {
+			for (int k = 0; k < itemSupport.getItemSet().size(); k++) {
+				// System.out.println("Transaction: " +
+				// this.transactionSet.get(k).getTransaction().toString() +
+				// " ");
+				System.out.println(this.transactionSet.get(i).getTransaction()
+						+ " contains? " + itemSupport.getItemSet());
+				/*
+				if (this.transactionSet.get(i)
+						.contains(itemSupport.getTransaction())) {
+				*/
+				if (this.transactionSet.get(i).getTransaction().contains(itemSupport.getItemSet())) {
+					
+					count++;
+
+				}
+
+			}
+
+		}
+		return count;
 	}
-	
-	
-	
-	
+
+	public int findSupport(Transaction itemSupport) {// get the individual
+														// support
+		// for each itemSet
+		// System.out.println("itemSuppot: " + itemSupport.toString());
+		int count = 0;
+		int num = this.transactionSet.size();
+		// System.out.println("Transaction set size: " + num);
+		for (int i = 0; i < transactionSet.size(); i++) {
+			for (int k = 0; k < itemSupport.getTransaction().getItemSet()
+					.size(); k++) {
+				// System.out.println("Transaction: " +
+				// this.transactionSet.get(k).getTransaction().toString() +
+				// " ");
+				// System.out.println(this.transactionSet.get(i).getTransaction()
+				// .getItemSet()
+				// + " contains? " + itemSupport.getTransaction().getItemSet());
+
+				System.out.println(this.transactionSet.get(i).getTransaction()
+						+ " contains? "
+						+ itemSupport.getTransaction().getItemSet());
+				if (this.transactionSet
+						.get(i)
+						.getTransaction()
+						.getItemSet()
+						.contains(
+								itemSupport.getTransaction().getItemSet()
+										.get(k))) {
+					count++;
+
+				}
+
+			}
+
+		}
+		return count;
+	}
+
+	public int Count() {
+		return this.transactionSet.size();
+
+	}
+
 }

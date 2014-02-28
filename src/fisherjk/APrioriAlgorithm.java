@@ -34,14 +34,17 @@ public class APrioriAlgorithm {
 			Ci.getTransactionSet().add(candidateTrans);
 		}
 
-		System.out.println(Ci.toString());
+		//System.out.println(Ci.toString());
 		// next iterations
 		int k = 2;
-		while (k < 4) {//fix this
-			System.out.println("Ci Count: " + Ci.Count());
+		while (Ci.getTransactionSet().size()!=0) {// fix this GOOD
+			//while(k < 5){
 			// while(Ci.Count() !=0){
+			System.out.println("k: " + k);
+			System.out.println("Ci Count: " + Ci.Count());
 			Li.getTransactionSet().clear();
-
+			System.out.println("Ci at start of while loop: \n" + Ci.toString());
+			System.out.println("Li at start of while loop: \n" + Li.toString());
 			/*
 			 * Part 2: Scan transaction set for count of each candidate
 			 * single-item set {A} – 6 {B} – 7 {C} – 6 {D} – 2 {E} – 2 Read As:
@@ -50,11 +53,10 @@ public class APrioriAlgorithm {
 			System.out
 					.println("Part 2: Scan transaction set for count of each candidate single-item set");
 			for (Transaction transaction : Ci.getTransactionSet()) {
-				int findSupport = transSet.findSupport(transaction
-						.getTransaction());
+				int findSupport = transSet.findSupportOld(transaction.getTransaction());
 				transaction.getTransaction().setItemSetSupport(findSupport);
-				System.out.print("Before: ");
-				System.out.println(transaction.toString() + "-" + findSupport);
+				
+				//System.out.println(transaction.toString() + "-" + findSupport);
 				/*
 				 * Part 3: Filter candidate one-item sets with min. support to
 				 * get frequent one-item sets {A} – 6 {B} – 7 {C} – 6 {D} – 2
@@ -76,25 +78,28 @@ public class APrioriAlgorithm {
 			 * one-item sets {A, B} {A, C} {A, D} {A, E} {B, C} {B, D} {B, E}
 			 * {C, D} {C, E} {D, E} All combinations
 			 */
-			Ci.getTransactionSet().clear();
-			System.out.println("Cleared: " + Ci.toString());
+			//if (k > 2) {
+				Ci.getTransactionSet().clear();
+			//}
+			
+			System.out.println("Cleared: \n" + Ci.toString());
 
 			Ci = (FindAllSubsets(Li.GetUniqueItems(), k));// ADD RANGE
-			
+
 			/*
-			for (int i = 0; i < Ci.getTransactionSet().size(); i++) {
-				for (int j = 0; j < Ci.getTransactionSet().get(i).getTransaction().getItemSet().size(); j++) {
-					ItemSet toRemove = new ItemSet();
-					toRemove.setItemSet(Ci.getTransactionSet().get(i).getTransaction().getItemSet());
-					
-				if (Ci.getTransactionSet().get(i).getTransaction().getItemSet()
-						.size() != k) {
-					System.out.println("Removing: " + toRemove.toString());
-					Ci.getTransactionSet().get(i).getTransaction().getItemSet().remove(toRemove);
-				}
-			}
-			}
-			*/
+			 * for (int i = 0; i < Ci.getTransactionSet().size(); i++) { for
+			 * (int j = 0; j <
+			 * Ci.getTransactionSet().get(i).getTransaction().getItemSet
+			 * ().size(); j++) { ItemSet toRemove = new ItemSet();
+			 * toRemove.setItemSet
+			 * (Ci.getTransactionSet().get(i).getTransaction().getItemSet());
+			 * 
+			 * if (Ci.getTransactionSet().get(i).getTransaction().getItemSet()
+			 * .size() != k) { System.out.println("Removing: " +
+			 * toRemove.toString());
+			 * Ci.getTransactionSet().get(i).getTransaction
+			 * ().getItemSet().remove(toRemove); } } }
+			 */
 			System.out.println(Ci.toString());
 			k += 1;
 
@@ -155,19 +160,20 @@ public class APrioriAlgorithm {
 		TransactionSet allSubsets = new TransactionSet();
 		System.out.println("k: " + k);
 		System.out.println("ItemSet Size: " + itemset.getItemSet().size());
-		int subsetCountK = (int) Math.pow(2,k);
+		int subsetCountK = (int) Math.pow(2, k);
 		int subsetCount = (int) Math.pow(2, itemset.getItemSet().size());// itemset.getItemSet().size()
 		System.out.println("subsetCount: " + subsetCount);
 		for (int i = 0; i < subsetCount; i++) {
 			ItemSet subset = new ItemSet();
 			for (int bitIndex = 0; bitIndex < itemset.getItemSet().size(); bitIndex++) {
 				if (GetBit(i, bitIndex) == 1) {
-					
+
 					subset.getItemSet().add(itemset.getItemSet().get(bitIndex));
 				}
 			}
-			if(subset.getItemSet().size()==k-1){//does this solve anything
-			allSubsets.getTransactionSet().add(new Transaction(subset));
+			if (subset.getItemSet().size() == k - 1) {// does this solve
+														// anything?
+				allSubsets.getTransactionSet().add(new Transaction(subset));
 			}
 		}
 
