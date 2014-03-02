@@ -64,7 +64,7 @@ public class AssociationRule {
 
 	@Override
 	public String toString() {
-		return "IF " +  this.x + " THEN " + this.y + " (" + minConfidenceLevel + ")";
+		return "IF " +  this.x + " THEN " + this.y + " (" + minConfidenceLevel + ") Support:" + minSupportLevel;
 	}
 	
 	

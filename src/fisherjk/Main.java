@@ -122,7 +122,7 @@ public class Main {
 		TransactionSet input = APrioriAlgorithm.DoApriori(tSet, 2.0);
 		System.out.println("Finished APriori");
 		System.out.println("Starting Generating Rules");
-		APrioriAlgorithm.GenerateRulesOld(tSet, input, 0.5);
+		APrioriAlgorithm.GenerateRules(tSet, input, (2/9));
 		System.out.println("Finished Generating Rules");
 		
 	}

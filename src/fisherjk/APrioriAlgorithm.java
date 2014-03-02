@@ -69,7 +69,7 @@ public class APrioriAlgorithm {
 	
 	
 	
-	public static List<AssociationRule> GenerateRulesOld(TransactionSet transSet, TransactionSet finalLargeItemSet, double confidenceThreshold){
+public static List<AssociationRule> GenerateRulesOld(TransactionSet transSet, TransactionSet finalLargeItemSet, double confidenceThreshold){
 	    System.out.println("Inside Generating rule's method");
 		List<AssociationRule> allRules = new ArrayList<AssociationRule>();
 	 
@@ -114,26 +114,51 @@ public class APrioriAlgorithm {
 	    
 	    return (allRules);
 }
+
+
+public static List<AssociationRule> GenerateRules(TransactionSet transSet, TransactionSet finalLargeItemSet, double confidenceThreshold){
+    System.out.println("Inside Generating rule's method");
+	List<AssociationRule> allRules = new ArrayList<AssociationRule>();
 	
+	
+ 
+	 for (Transaction itemset : finalLargeItemSet.getTransactionSet()){
+		 TransactionSet subsets = findKItemSubsets(itemset.getTransaction(), 0); //get all subsets
+		 System.out.println("subsets: \n" + subsets.toString());
+		 for (Transaction subset : subsets.getTransactionSet()){
+		 
+			 double confidencePart1 = transSet.findSupport(itemset.getTransaction());
+			 double confidencePart2 = transSet.findSupport(subset.getTransaction());
+			 double confidence = (confidencePart1 / confidencePart2) * 100.0;
+			 if (confidence >= confidenceThreshold){
+				 AssociationRule rule = new AssociationRule();
+	             ItemSet X = subset.getTransaction();
+	             rule.getX().getItemSet().addAll((subset.getTransaction().getItemSet()));
+	             //System.out.println("TO REMOVE: " + itemset.remove(subset));
+	             rule.getY().setItemSet(itemset.remove(subset).getItemSet());
+	             //System.out.println("RULE GET X\n" + rule.getX().toString());
+	             rule.setMinSupportLevel(transSet.findSupport(itemset.getTransaction()));
+	             rule.setMinConfidenceLevel(confidence);
+	             
+	             
+	             if (rule.getX().getItemSet().size() > 0 && rule.getY().getItemSet().size() >0){//may need to fix{
+	                    allRules.add(rule);
+	                    System.out.println(rule.toString());
+	             }
+			 }
+		 }
+	 }
+	 
+	 
+	 for(int i = 0; i < allRules.size(); i++){
+	    	System.out.println("Rule " + i + ": " + allRules.get(i).toString());
+	    }
+	
+	return allRules;
+	
+}
 	
 
-	public static List<AssociationRule> GenerateRulesPPT(TransactionSet transSet, TransactionSet finalLargeItemSet, double confidenceThreshold){
-	
-		TransactionSet associationCandidates = new TransactionSet();
-		//associationCandidates = (findKItemSubsets2(finalLargeItemSet.GetUniqueItems(),0));//generate all sets
-		
-		for (Transaction itemset : finalLargeItemSet.getTransactionSet()){//get ready to generate all possible association rules for final set
-			associationCandidates = (findKItemSubsets2(itemset.getTransaction(),0));
-		}
-			//double confidence = ((transSet.findSupport(itemset.getTransaction())) / transSet.findSupport(subset.getTransaction())) * 100.0;
-        
-		
-		System.out.println(associationCandidates.toString());
-		return null;
-	
-		
-		
-	}
 
 	/*Necessary for determining subsets based on the bits of an index*/
 	public static int GetBit(int value, int position) {
@@ -253,30 +278,7 @@ public class APrioriAlgorithm {
         }
            
 	
-	/*Determines and returns all possible combinations of subsets based on a given itemSet. This allows filtering to take place as the next loop iteration starts up */
-	public static TransactionSet findAllSubsetsRule(ItemSet itemSet, int k) {
-		TransactionSet allSubsets = new TransactionSet();//New subset of transactions to return in a TransactionSet
-		int subsetCount = (int) Math.pow(2, itemSet.getItemSet().size());//index control for loop
-		int itemSetSize = itemSet.getItemSet().size();//size control for inner loop
-		System.out.println("subset count: " + subsetCount);
-		System.out.println("itemSetSize: " + itemSetSize);
-		for (int i = 0; i < subsetCount; i++) {
-			ItemSet subset = new ItemSet();
-			for (int bitIndex = 0; bitIndex < itemSetSize; bitIndex++) {
-				if (GetBit(i, bitIndex) == 1) {
-
-					subset.getItemSet().add(itemSet.getItemSet().get(bitIndex));
-				}
-			}
-			//if (subset.getItemSet().size() <= k - 1) {//accounting for missing Bit class. Seems to correct off-by indexing
-			//if(!itemSet.getItemSet().contains(subset.getItemSet().get(i).getItem())){
-			//if(subset.getItemSet().size() > 1){
-			allSubsets.getTransactionSet().add(new Transaction(subset));//add the new transaction subset
-			//}
-		}
-
-		return (allSubsets);//final combination of all possible subsets based on the size of k
-	}
+	
 
 
 }
