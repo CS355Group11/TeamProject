@@ -1,6 +1,7 @@
 package fisherjk;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /*Class for holding singular ItemSet records*/
@@ -65,5 +66,13 @@ public class Transaction {
 		return "{" + transactionItems + "}";//don't forget the opening and closing braces
 
 	}
+
+	public ItemSet remove(Transaction subset) {
+			this.transaction.getItemSet().remove(subset);
+			return this.transaction;
+			
+	}
+
+	
 	
 }

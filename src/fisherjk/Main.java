@@ -9,21 +9,14 @@ public class Main {
 		// input minSupportLevel
 		// input minConfidenceLevel
 		// input name of file holding transaction set
-		/*
-		 * System.out.println("Running Main"); ItemSet list = new ItemSet();
-		 * Item A = new Item("Apples"); Item B= new Item("Beer"); Item C = new
-		 * Item("Cheese"); list.getItemSet().add(A);//could be simplified much
-		 * further but proving case in point list.getItemSet().add(B);
-		 * list.getItemSet().add(A); list.getItemSet().add(C); ItemSetCollection
-		 * db = new ItemSetCollection(); db.getItemSetCollection().add(list);
-		 */
+		
 		// Products
 		Item A = new Item("A");
 		Item B = new Item("B");
 		Item C = new Item("C");
 		Item D = new Item("D");
 		Item E = new Item("E");
-		System.out.println("Part 0: Insert items into each transaction:");
+		//System.out.println("Part 0: Insert items into each transaction:");
 		// Creating Transaction 1
 		ArrayList<Item> list1 = new ArrayList<Item>();
 		list1.add(A);
@@ -122,25 +115,16 @@ public class Main {
 		transSet.add(trans8);
 		transSet.add(trans9);
 		tSet.setTransactionSet(transSet);
-		System.out.println(tSet.toString());
+		System.out.println("Input TransactionSet: \n" + tSet.toString());
 		System.out.println();
 
-		// TransactionSet transSet = new TransactionSet();
-		/*
-		 * transSet.getTransactionSet().add(trans1);
-		 * transSet.getTransactionSet().add(trans2);
-		 * transSet.getTransactionSet().add(trans3);
-		 * transSet.getTransactionSet().add(trans4);
-		 * transSet.getTransactionSet().add(trans5);
-		 * transSet.getTransactionSet().add(trans6);
-		 * transSet.getTransactionSet().add(trans7);
-		 * transSet.getTransactionSet().add(trans8);
-		 * transSet.getTransactionSet().add(trans9);
-		 */
-		APrioriAlgorithm.DoApriori(tSet, 2.0);
-
-		// TODO: set up to read input from a file
-
+		System.out.println("Starting APriori");
+		TransactionSet input = APrioriAlgorithm.DoApriori(tSet, 2.0);
+		System.out.println("Finished APriori");
+		System.out.println("Starting Generating Rules");
+		APrioriAlgorithm.GenerateRulesOld(tSet, input, 0.5);
+		System.out.println("Finished Generating Rules");
+		
 	}
 
 }

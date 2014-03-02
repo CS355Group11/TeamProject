@@ -31,10 +31,10 @@ public class TransactionSet {
 	public ItemSet GetUniqueItems() {
 		ItemSet uniqueItems = new ItemSet();//uniquely constructed itemSet
 		for (int j = 0; j < transactionSet.size(); j++) {//loop through the first transactionSet object
-			for (int i = 0; i < transactionSet.get(j).getTransaction()
-					.getItemSet().size(); i++) {//doubly loop through each respective itemset in a transactionSet
+			for (int i = 0; i < transactionSet.get(j).getTransaction().getItemSet().size(); i++) {//doubly loop through each respective itemset in a transactionSet
 				Item item = transactionSet.get(j).getTransaction().getItemSet()
 						.get(i);
+				//System.out.println("Get unique Item: " + item);
 				if (!uniqueItems.getItemSet().contains(item)) {//Only add items if not already within the unique list. Otherwise do nothing.
 					//System.out.println("{" + item.getItem() + "}");
 					uniqueItems.getItemSet().add(item);
@@ -42,9 +42,20 @@ public class TransactionSet {
 
 			}
 		}
+		
+		
 
 		return uniqueItems;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	/*Override the TransactionSet's toString to call the Transaction's to String*/
 	@Override
@@ -78,6 +89,9 @@ public class TransactionSet {
 		}
 		return supportCount;
 	}
+	
+	
+	
 
 	
 }
