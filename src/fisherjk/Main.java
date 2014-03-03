@@ -11,6 +11,7 @@ public class Main {
 		// input name of file holding transaction set
 		
 		// Products
+		/*
 		Item A = new Item("A");
 		Item B = new Item("B");
 		Item C = new Item("C");
@@ -124,7 +125,20 @@ public class Main {
 		System.out.println("Starting Generating Rules");
 		APrioriAlgorithm.GenerateRules(tSet, input, (2/9));
 		System.out.println("Finished Generating Rules");
-		
+		*/
+		System.out.println("Starting Reading File");
+		TransactionSet tSet2 = new TransactionSet();
+		tSet2 = FileUtilities.readFile("test.txt");
+		System.out.println("Finished Reading File");
+		System.out.println("Starting APriori 2");
+		TransactionSet input = APrioriAlgorithm.DoApriori(tSet2, 2.0);
+		System.out.println("Finished APriori 2 ");
+		//System.out.println("Starting Generating Rules");
+		//APrioriAlgorithm.GenerateRules(tSet2, input, .5);
+		//System.out.println("Finished Generating Rules");
+		System.out.println("Starting Writing File");
+		FileUtilities.writeFile("output.txt");
+		System.out.println("Finished Writing File");
 	}
 
 }
