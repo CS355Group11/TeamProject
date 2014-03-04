@@ -1,5 +1,6 @@
 package fisherjk;
 
+import java.awt.List;
 import java.util.ArrayList;
 
 public class Main {
@@ -128,16 +129,21 @@ public class Main {
 		*/
 		System.out.println("Starting Reading File");
 		TransactionSet tSet2 = new TransactionSet();
-		tSet2 = FileUtilities.readFile("test.txt");
+		tSet2 = FileUtilities.readFile("large_test.txt");
 		System.out.println("Finished Reading File");
 		System.out.println("Starting APriori 2");
+		Timer timer = new Timer();
+		timer.startTimer();
+		
 		TransactionSet input = APrioriAlgorithm.DoApriori(tSet2, 2.0);
 		System.out.println("Finished APriori 2 ");
 		//System.out.println("Starting Generating Rules");
-		//APrioriAlgorithm.GenerateRules(tSet2, input, .5);
+		ArrayList<AssociationRule> ruleSets = APrioriAlgorithm.GenerateRules(tSet2, input, .5);
 		//System.out.println("Finished Generating Rules");
+		timer.stopTimer();
+		System.out.println("elapsed time in msec.: "  + timer.getTotal());
 		System.out.println("Starting Writing File");
-		FileUtilities.writeFile("output.txt");
+		FileUtilities.writeFile(ruleSets, "large_output.txt");
 		System.out.println("Finished Writing File");
 	}
 

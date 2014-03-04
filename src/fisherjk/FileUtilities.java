@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -94,14 +95,17 @@ public class FileUtilities {
     }
 	
 	
-	public static void writeFile(String fileOutputName){
+	public static void writeFile(List<AssociationRule> ruleSets, String fileOutputName){
 		// The name of the file to open.
         fileOutputName = "src/" +fileOutputName;
 
         try {
         	PrintWriter writer = new PrintWriter(fileOutputName);
-        	writer.println("The first line");
-        	writer.println("The second line");
+        	for(int i = 0; i < ruleSets.size(); i++){
+        		writer.println(ruleSets.get(i));
+        	}
+        	//writer.println("The first line");
+        	//writer.println("The second line");
         	writer.close();
         }
         catch(IOException ex) {
@@ -122,7 +126,8 @@ public class FileUtilities {
 		 * Output items
 		 * 
 		 * 1. a collection of rule objects within the program, where each rule
-		 * has an antecedent and consequent that contain one or more items2. a
+		 * has an antecedent and consequent that contain one or more items
+		 * 2. a
 		 * text file containing the rules in the format: If ProductA and
 		 * ProductB THEN ProductC and ProductD (confidence: 0.78), where again
 		 * the antecedent and consequent may each contain one or more product

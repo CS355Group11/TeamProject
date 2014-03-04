@@ -116,9 +116,9 @@ public static List<AssociationRule> GenerateRulesOld(TransactionSet transSet, Tr
 }
 
 
-public static List<AssociationRule> GenerateRules(TransactionSet transSet, TransactionSet finalLargeItemSet, double confidenceThreshold){
+public static ArrayList<AssociationRule> GenerateRules(TransactionSet transSet, TransactionSet finalLargeItemSet, double confidenceThreshold){
     System.out.println("Inside Generating rule's method");
-	List<AssociationRule> allRules = new ArrayList<AssociationRule>();
+	ArrayList<AssociationRule> allRules = new ArrayList<AssociationRule>();
 	
 	
  
