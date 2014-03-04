@@ -2,11 +2,13 @@ package fisherjk;
 
 import java.util.ArrayList;
 
+/*Class to store the complete set of rules after running the APrioriAlgorithm*/
 public class RuleSet {
 
-	private ArrayList<Rule> ruleSet;
+	private ArrayList<Rule> ruleSet;//instance variable to access the ruleSet
 
-	//List of Rules
+	
+	/*Constructors*/
 	public RuleSet(ArrayList<Rule> ruleSet) {
 		this.ruleSet = ruleSet;
 	}
@@ -15,6 +17,7 @@ public class RuleSet {
 		this.ruleSet = new ArrayList<Rule>();
 	}
 
+	/*Respective Getters and Setters*/
 	public ArrayList<Rule> getRuleSet() {
 		return ruleSet;
 	}
@@ -29,13 +32,7 @@ public class RuleSet {
 		for(int i = 0; i < this.ruleSet.size(); i++){
 			strRuleSets = strRuleSets + this.ruleSet.get(i).toString() + "\n"; 
 		}
-		
-		
-		
 		return strRuleSets;
 	}
-	
-	
-
-	
+		
 }

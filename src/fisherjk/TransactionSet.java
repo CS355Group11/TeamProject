@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class TransactionSet {
 
 	
-	private ArrayList<Transaction> transactionSet;//A transactionSet private instance variable is an ArrayList of individual Transactions
+	private ArrayList<Transaction> transactionSet;/*A transactionSet private instance variable is an ArrayList of individual Transactions*/
 
 	/*TransactionSet constructors*/
 	public TransactionSet(ArrayList<Transaction> transactionSet) {
@@ -29,14 +29,13 @@ public class TransactionSet {
 	
 	/*Returns an itemSet containing a set of unique items found in a transactionSet which consists of Transactions*/
 	public ItemSet GetUniqueItems() {
-		ItemSet uniqueItems = new ItemSet();//uniquely constructed itemSet
-		for (int j = 0; j < transactionSet.size(); j++) {//loop through the first transactionSet object
-			for (int i = 0; i < transactionSet.get(j).getTransaction().getItemSet().size(); i++) {//doubly loop through each respective itemset in a transactionSet
+		ItemSet uniqueItems = new ItemSet();/*uniquely constructed itemSet*/
+		for (int j = 0; j < transactionSet.size(); j++) {/*loop through the first transactionSet object*/
+			for (int i = 0; i < transactionSet.get(j).getTransaction().getItemSet().size(); i++) {/*doubly loop through each respective itemset in a transactionSet*/
 				Item item = transactionSet.get(j).getTransaction().getItemSet()
 						.get(i);
-				//System.out.println("Get unique Item: " + item);
-				if (!uniqueItems.getItemSet().contains(item)) {//Only add items if not already within the unique list. Otherwise do nothing.
-					//System.out.println("{" + item.getItem() + "}");
+				
+				if (!uniqueItems.getItemSet().contains(item)) {/*Only add items if not already within the unique list. Otherwise do nothing.*/
 					uniqueItems.getItemSet().add(item);
 				}
 
@@ -47,14 +46,6 @@ public class TransactionSet {
 
 		return uniqueItems;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 
 	/*Override the TransactionSet's toString to call the Transaction's to String*/
@@ -78,8 +69,8 @@ public class TransactionSet {
 
 	/*Returns the frequency support count for an individual itemSet*/
 	/*ItemSet's can be one to many items in size*/
-	public double findSupport(ItemSet itemSupport) {// get the individual
-		double supportCount = 0;//keep track of the counte
+	public double findSupport(ItemSet itemSupport) {
+		double supportCount = 0;/*keep track of the count for support of an itemSet*/
 		int num = this.transactionSet.size();
 		for (int i = 0; i < num; i++) {
 				if (this.transactionSet.get(i).getTransaction().containsItemSet(itemSupport.getItemSet())) {
@@ -91,15 +82,14 @@ public class TransactionSet {
 	}
 	
 	
-	/*Determines and returns all possible combinations of subsets based on a given itemSet. This allows filtering to take place as the next loop iteration starts up */
+	/*Determines and returns all possible combinations of  k-item subsets based on a given itemSet. This allows filtering to take place as the next loop iteration starts up */
 	public TransactionSet findKItemSubsets(ItemSet itemSet, int k) {
-		TransactionSet allSubsets = new TransactionSet();//New subset of transactions to return in a TransactionSet
-		int subsetCount = (int) Math.pow(2, itemSet.getItemSet().size());//index control for loop
-		int itemSetSize = itemSet.getItemSet().size();//size control for inner loop
+		TransactionSet allSubsets = new TransactionSet();/*New subset of transactions to return in a TransactionSet*/
+		int subsetCount = (int) Math.pow(2, itemSet.getItemSet().size());/*index control for loop*/
+		int itemSetSize = itemSet.getItemSet().size();/*size control for inner loop*/
 		for (int i = 0; i < subsetCount; i++) {
 			
 			if (k == 0 || GetOnCount(i, itemSet.getItemSet().size()) == k){
-                String binary = DecimalToBinary(i, itemSet.getItemSet().size());
 			
 			ItemSet subset = new ItemSet();
 			
@@ -108,26 +98,16 @@ public class TransactionSet {
 					subset.getItemSet().add(itemSet.getItemSet().get(bitIndex));
 				}
 			}
-			//if(binary)
 			
-			
-			//if (subset.getItemSet().size() == k - 1) {//accounting for missing Bit class. Seems to correct off-by indexing
 				allSubsets.getTransactionSet().add(new Transaction(subset));//add the new transaction subset
-			//}
 			}
 		}
 
-		return (allSubsets);//final combination of all possible subsets based on the size of k
+		return (allSubsets);/*final combination of all possible subsets based on the size of k*/
 	}
 	
-	
-	
-	
 
-	
-	
-	
-	/*Necessary for determining subsets based on the bits of an index*/
+	/*Necessary for functions to determine subsets based on the bits of an index*/
 	public static int GetBit(int value, int position) {
 		int bit = value & (int) Math.pow(2, position);
 		return (bit > 0 ? 1 : 0);

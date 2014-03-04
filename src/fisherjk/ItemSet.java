@@ -57,6 +57,21 @@ public class ItemSet {
 
 		return "{" + itemSetContents + "}" + "-" + (this.itemSetSupport);
 	}
+	
+	
+	/*Record support for itemset*/
+	public String toStringWithoutSupport() {
+		String itemSetContents = "";
+		int num = this.itemSet.size();
+		for (int i = 0; i < this.itemSet.size(); i++) {
+			itemSetContents = itemSetContents + this.itemSet.get(i).toString();
+			if (i < num - 1) {
+				itemSetContents = itemSetContents + " AND ";
+			}
+		}
+
+		return "{"+itemSetContents+"}";
+	}
 
 	/*
 	 * Override the ItemSet equals method to be used for a later contains method
@@ -78,20 +93,7 @@ public class ItemSet {
 		return false;
 	}
 
-	/*
-	 * public boolean contains(ArrayList<Item> itemSet2) {// uses the equals
-	 * method
-	 * 
-	 * 
-	 * boolean match = false; for (int i = 0; i < this.itemSet.size(); i++) {//
-	 * 
-	 * for (int j = 0; j < itemSet2.size(); j++) {
-	 * 
-	 * if (itemSet2.get(j).getItem() .equals(this.itemSet.get(i).getItem())) {
-	 * match = true; } } }
-	 * 
-	 * return match; }
-	 */
+	
 	/*
 	 * Improved contains method to check if a given itemSet2 is a subset of
 	 * itemSet

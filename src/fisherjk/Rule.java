@@ -1,14 +1,14 @@
 package fisherjk;
 
-import java.util.ArrayList;
-
+/*Class to hold information about individual Rules for a transaction*/
 public class Rule {
 
-	private ItemSet antecedent;
-	private ItemSet consequent;
+	private ItemSet antecedent;//IF part of the rule
+	private ItemSet consequent;//THEN part of the rule
 	private double minSupportLevel;// must have 4 digits of precision
 	private double actualConfidenceLevel;// must have 4 digits of precision
 
+	/*Constructors*/
 	public Rule(ItemSet antecedent, ItemSet consequent, double minSupportLevel,
 			double actualConfidenceLevel) {
 		this.antecedent = antecedent;
@@ -24,6 +24,7 @@ public class Rule {
 		this.actualConfidenceLevel = 0;
 	}
 
+	/*Respective Getters and Setters*/
 	public ItemSet getX() {
 		return antecedent;
 	}
@@ -48,7 +49,6 @@ public class Rule {
 		this.minSupportLevel = minSupportLevel;
 	}
 
-	
 	public double getActualConfidenceLevel() {
 		return actualConfidenceLevel;
 	}
@@ -59,9 +59,11 @@ public class Rule {
 
 	@Override
 	public String toString() {
-		return "IF " + this.antecedent + " THEN " + this.consequent + " (" + this.actualConfidenceLevel
-				+ ")";
+		this.actualConfidenceLevel = Math.round(this.actualConfidenceLevel *10000.0);
+		this.actualConfidenceLevel = (this.actualConfidenceLevel /10000.0);
+		return "IF " + this.antecedent.toStringWithoutSupport() + " THEN "
+				+ this.consequent.toStringWithoutSupport() + " ("
+				+ this.actualConfidenceLevel + ")";
 	}
-
 
 }

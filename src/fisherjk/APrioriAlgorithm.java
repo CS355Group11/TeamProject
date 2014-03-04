@@ -63,8 +63,8 @@ public class APrioriAlgorithm {
 
 	}
 	
-	
-	public static RuleSet GenerateRuleSets(TransactionSet transSet, TransactionSet finalLargeItemSet,double confidenceThreshold) {
+	/*Method to generate individual ruleSets give an initial transactionSet, a transactionSet from running the APriori Algorithm, and a specified minimumConfidenceLevel*/
+	public static RuleSet GenerateRuleSets(TransactionSet transSet, TransactionSet finalLargeItemSet,double minConfidenceLevel) {
 		RuleSet allRuleSets = new RuleSet(new ArrayList<Rule>());
 		
 		for (Transaction itemset : finalLargeItemSet.getTransactionSet()) {
@@ -78,7 +78,7 @@ public class APrioriAlgorithm {
 				double confidencePart1 = transSet.findSupport(itemset.getTransaction());
 				double confidencePart2 = transSet.findSupport(subset);
 				double confidence = (confidencePart1 / confidencePart2) * 100.0;
-				if (confidence >= confidenceThreshold) {
+				if (confidence >= minConfidenceLevel) {
 					
 					Rule rule = new Rule();
 					
