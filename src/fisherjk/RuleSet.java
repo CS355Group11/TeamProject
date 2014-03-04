@@ -23,5 +23,19 @@ public class RuleSet {
 		this.ruleSet = ruleSet;
 	}
 
+	@Override
+	public String toString() {
+		String strRuleSets = "";
+		for(int i = 0; i < this.ruleSet.size(); i++){
+			strRuleSets = strRuleSets + this.ruleSet.get(i).toString() + "\n"; 
+		}
+		
+		
+		
+		return strRuleSets;
+	}
+	
+	
+
 	
 }

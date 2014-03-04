@@ -3,23 +3,52 @@ package fisherjk;
 import java.util.ArrayList;
 
 public class Rule {
-	
-	private ArrayList<ItemSet> rule;
-	private double actualConfidenceLevel;//4 digits of precision
-	
-	public Rule(ArrayList<ItemSet> rule, double actualConfidenceLevel) {
-		this.rule = rule;
+
+	private ItemSet antecedent;
+	private ItemSet consequent;
+	private double minSupportLevel;// must have 4 digits of precision
+	private double actualConfidenceLevel;// must have 4 digits of precision
+
+	public Rule(ItemSet antecedent, ItemSet consequent, double minSupportLevel,
+			double actualConfidenceLevel) {
+		this.antecedent = antecedent;
+		this.consequent = consequent;
+		this.minSupportLevel = minSupportLevel;
 		this.actualConfidenceLevel = actualConfidenceLevel;
 	}
 
-	public ArrayList<ItemSet> getRule() {
-		return rule;
+	public Rule() {
+		this.antecedent = new ItemSet();
+		this.consequent = new ItemSet();
+		this.minSupportLevel = 0;
+		this.actualConfidenceLevel = 0;
 	}
 
-	public void setRule(ArrayList<ItemSet> rule) {
-		this.rule = rule;
+	public ItemSet getX() {
+		return antecedent;
 	}
 
+	public void setX(ItemSet x) {
+		this.antecedent = x;
+	}
+
+	public ItemSet getY() {
+		return consequent;
+	}
+
+	public void setY(ItemSet y) {
+		this.consequent = y;
+	}
+
+	public double getMinSupportLevel() {
+		return minSupportLevel;
+	}
+
+	public void setMinSupportLevel(double minSupportLevel) {
+		this.minSupportLevel = minSupportLevel;
+	}
+
+	
 	public double getActualConfidenceLevel() {
 		return actualConfidenceLevel;
 	}
@@ -28,9 +57,11 @@ public class Rule {
 		this.actualConfidenceLevel = actualConfidenceLevel;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "IF " + this.antecedent + " THEN " + this.consequent + " (" + this.actualConfidenceLevel
+				+ ")";
+	}
 
-	
-	
 
 }

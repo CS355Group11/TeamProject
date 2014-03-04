@@ -138,7 +138,7 @@ public class Main {
 		TransactionSet input = APrioriAlgorithm.DoApriori(tSet2, 2.0);
 		System.out.println("Finished APriori 2 ");
 		//System.out.println("Starting Generating Rules");
-		ArrayList<AssociationRule> ruleSets = APrioriAlgorithm.GenerateRuleSets(tSet2, input, 50.00);
+		RuleSet ruleSets = APrioriAlgorithm.GenerateRuleSets(tSet2, input, 50.00);
 		//System.out.println("Finished Generating Rules");
 		timer.stopTimer();
 		System.out.println("elapsed time in msec.: "  + timer.getTotal());
