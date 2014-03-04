@@ -34,7 +34,7 @@ public class APrioriAlgorithm {
 			LargeItemSet.getTransactionSet().clear();
 			System.out.println("START");
 			for (Transaction transaction : CandidateItemSet.getTransactionSet()) {//loop through each transaction in each TransactionSet
-				int findSupport = transSet.findSupport(transaction.getTransaction());//calculate and find each successive support level for an transaction (remember it is an itemSet)
+				double findSupport = transSet.findSupport(transaction.getTransaction());//calculate and find each successive support level for an transaction (remember it is an itemSet)
 				transaction.getTransaction().setItemSetSupport(findSupport);//Set each successive support level for its respective transaction (remember it is an itemSet)
 
 				
@@ -55,7 +55,7 @@ public class APrioriAlgorithm {
 
 			CandidateItemSet.getTransactionSet().clear();//clear up the candidates to prep for finding all subsets
 			System.out.println("AFTER CLEAR candidate item set size: " + CandidateItemSet.getTransactionSet().size());
-			CandidateItemSet = (findKItemSubsets(LargeItemSet.GetUniqueItems(), k));//Add all the combinations of subsets for a given set of unique items/ItemSets
+			CandidateItemSet = (CandidateItemSet.findKItemSubsets(LargeItemSet.GetUniqueItems(), k));//Add all the combinations of subsets for a given set of unique items/ItemSets
 			//System.out.println("GET UNIQUE ITEMS: \n" + LargeItemSet.GetUniqueItemSets().toString());
 			k += 1;
 			System.out.println("END");
@@ -68,7 +68,7 @@ public class APrioriAlgorithm {
 	}
 	
 	
-	
+/*
 public static List<AssociationRule> GenerateRulesOld(TransactionSet transSet, TransactionSet finalLargeItemSet, double confidenceThreshold){
 	    System.out.println("Inside Generating rule's method");
 		List<AssociationRule> allRules = new ArrayList<AssociationRule>();
@@ -158,16 +158,19 @@ public static ArrayList<AssociationRule> GenerateRules(TransactionSet transSet, 
 	
 }
 	
+*/
 
 
 	/*Necessary for determining subsets based on the bits of an index*/
+	/*
 	public static int GetBit(int value, int position) {
 		int bit = value & (int) Math.pow(2, position);
 		return (bit > 0 ? 1 : 0);
 	}
-
+	 */
 	
 	/*Determines and returns all possible combinations of subsets based on a given itemSet. This allows filtering to take place as the next loop iteration starts up */
+	/*
 	public static TransactionSet findAllSubsets(ItemSet itemSet, int k) {
 		TransactionSet allSubsets = new TransactionSet();//New subset of transactions to return in a TransactionSet
 		int subsetCount = (int) Math.pow(2, itemSet.getItemSet().size());//index control for loop
@@ -189,8 +192,9 @@ public static ArrayList<AssociationRule> GenerateRules(TransactionSet transSet, 
 	}
 	
 	
-	
+	*/
 	/*Determines and returns all possible combinations of subsets based on a given itemSet. This allows filtering to take place as the next loop iteration starts up */
+	/*
 	public static TransactionSet findKItemSubsets(ItemSet itemSet, int k) {
 		TransactionSet allSubsets = new TransactionSet();//New subset of transactions to return in a TransactionSet
 		int subsetCount = (int) Math.pow(2, itemSet.getItemSet().size());//index control for loop
@@ -220,9 +224,10 @@ public static ArrayList<AssociationRule> GenerateRules(TransactionSet transSet, 
 	}
 	
 	
-	
+	*/
 	
 	/*Determines and returns all possible combinations of subsets based on a given itemSet. This allows filtering to take place as the next loop iteration starts up */
+	/*
 	public static TransactionSet findKItemSubsets2(ItemSet itemSet, int k) {
 		TransactionSet allSubsets = new TransactionSet();//New subset of transactions to return in a TransactionSet
 		int subsetCount = (int) Math.pow(2, itemSet.getItemSet().size());//index control for loop
@@ -277,8 +282,106 @@ public static ArrayList<AssociationRule> GenerateRules(TransactionSet transSet, 
            return count;
         }
            
+	*/
+	
+	public static ArrayList<AssociationRule> GenerateRuleSets(TransactionSet transSet, TransactionSet finalLargeItemSet,double confidenceThreshold) {
+		ArrayList<AssociationRule> allRules = new ArrayList<AssociationRule>();
+		//int i =0;
+		for (Transaction itemset : finalLargeItemSet.getTransactionSet()) {
+			System.out.println("itemSet ->" + itemset.toString());
+			ArrayList<ItemSet> possibleRules = new ArrayList<ItemSet>();
+			System.out.println("PASSED INTO FIND RULE SUBSETS: " + itemset.getTransaction());
+			possibleRules = findRuleSubsets(itemset.getTransaction(), possibleRules);
+			//for(int k = 0; k < possibleRules.size(); k++){
+			//	System.out.println("possible rules: " + possibleRules.get(k));
+			//}
+			System.out.println("POSSIBLE: " + possibleRules);
+			//TransactionSet subsets = transSet.findKItemSubsets(itemset.getTransaction(), 0); // get all subsets
+			
+			
+			
+			//System.out.println("subsets: \n" + subsets.toString());
+			
+			for (ItemSet subset : possibleRules) {
+				System.out.println("CREATED POSSIBLE RULES: " + possibleRules);
+				double confidencePart1 = transSet.findSupport(itemset.getTransaction());
+				double confidencePart2 = transSet.findSupport(subset);
+				double confidence = (confidencePart1 / confidencePart2) * 100.0;
+				System.out.println(subset + "-->" + confidencePart2 +"/"+ confidencePart1);
+				if (confidence >= confidenceThreshold) {
+					//System.out.println("THIS: " + subset +": " + confidence);
+					AssociationRule rule = new AssociationRule();
+					//System.out.println("subset before set x: " + subset);
+					rule.setX(subset);
+					//System.out.println("AFTER SET X: " + rule);
+					ArrayList<Item> items = new ArrayList<Item>(itemset.getTransaction().getItemSet());
+					ItemSet consequent = new ItemSet(items);
+					//System.out.println("consequent after set x:" + consequent);
+					//System.out.println("RULE.Y"+rule.y.getItemSet());
+					//System.out.println("size: " + subset.getItemSet().size());
+					System.out.println("CREATED SUBSET: " + subset);
+					for(int j = 0; j < subset.getItemSet().size(); j++){
+						//System.out.println("Removing from subset: " + subset.getItemSet().get(j));
+						consequent.getItemSet().remove(subset.getItemSet().get(j));
+					}
+					rule.setY(consequent);
+					//System.out.println("AFTER SET Y: " + rule.toString());
+					System.out.println("CREATED RULE: " + rule);
+					rule.setMinSupportLevel(transSet.findSupport(itemset.getTransaction()));
+					rule.setMinConfidenceLevel(confidence);
+					if(rule.getX().getItemSet().size() > 0  && rule.getY().getItemSet().size() > 0){
+						allRules.add(rule);
+				}
+				
+			}
+		
+			//i++;
+			}
+			//i=0;
+		}		
+		System.out.println("All Rules: \n" + allRules.toString());
+
+		for (int j = 0; j < allRules.size(); j++) {
+			System.out.println("Rule " + j + ": " + allRules.get(j).toString());
+		}
+		return allRules;
+	}
+
 	
 	
-
-
+	
+	public static ArrayList<ItemSet> findRuleSubsets(ItemSet candidates, ArrayList<ItemSet> sets){
+		//System.out.println("set passed in: " + sets);
+		ArrayList<ItemSet> allRuleSets = sets;
+		//System.out.println("BEFORE: " + allRuleSets);
+		System.out.println("candidates: " + candidates);
+		int into = 0;
+		for(int count = 0; count < allRuleSets.size(); count++){
+		System.out.println("CURRENT ALLRULESETS CONTENTS: " + allRuleSets.get(count).getItemSet());
+		}
+		if(!allRuleSets.contains(candidates)){
+			//System.out.println("adding: " + candidates.getItemSet());
+			allRuleSets.add(candidates);
+			//System.out.println("AFTER:" + allRuleSets);
+			into++;
+			System.out.println("INTO: " + into);
+		}
+		
+		for(int i = 0; i < candidates.getItemSet().size();i++){
+			//System.out.println("candidate size: " + candidates.getItemSet().size());
+			ArrayList<Item> subset = new ArrayList<Item>(candidates.getItemSet());
+			//System.out.println("subset: " + subset);
+			//System.out.println("Removing: " + subset.get(i));
+			subset.remove(i);
+			System.out.println("INDEX: " + i);
+			
+			
+			ItemSet newSet = new ItemSet(subset);
+			findRuleSubsets(newSet, allRuleSets);
+			
+		}
+		//System.out.println("FINAL: " + allRuleSets);
+		return allRuleSets;
+	}
+	
 }

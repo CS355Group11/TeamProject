@@ -56,18 +56,21 @@ public class ItemSet {
 	/*Override the ItemSet equals method to be used for a later contains method call*/
 	@Override
 	public boolean equals(Object obj) {
-		System.out.println("called equals in itemset");
+		System.out.println("Calling overridden equals itemset");
+		//System.out.println("called equals in itemset");
 		ItemSet itemSet = (ItemSet) obj;//necessary casting
+		if(this.itemSet.size() == itemSet.getItemSet().size()){
 		for (int i = 0; i < this.itemSet.size(); i++) {
-			if (!this.itemSet.get(i).getItem()
-					.equalsIgnoreCase(itemSet.getItemSet().get(i).getItem())) {
+			if (!this.itemSet.get(i).getItem().equals(itemSet.getItemSet().get(i).getItem())) {
 				return false;
 			}
 		}
 
 		return true;
+		}
+		return false;
 	}
-
+/*
 	public boolean contains(ArrayList<Item> itemSet2) {// uses the equals method
 
 		
@@ -85,7 +88,7 @@ public class ItemSet {
 		
 		return match;
 	}
-
+	*/
 	/*Improved contains method to check if a given itemSet2 is a subset of itemSet*/
 	public boolean containsItemSet(ArrayList<Item> subItemSet) {
 		for (int i = 0; i < this.itemSet.size(); i++) {//loop through biggest itemSet
@@ -97,6 +100,15 @@ public class ItemSet {
 			}
 		}
 		return true;
+	}
+
+	public void remove(Item item) {
+		// TODO Auto-generated method stub
+		this.itemSet.remove(item);
+		//for(int i = 0; i < this.itemSet.size(); i++){
+		//	this.itemSet.remove(i);
+		//}
+		
 	}
 
 	

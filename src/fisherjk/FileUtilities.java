@@ -39,7 +39,7 @@ public class FileUtilities {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             int i = 0;
             while((line = bufferedReader.readLine()) != null) {
-                System.out.println("line # "+ i + " " + line);
+               // System.out.println("line # "+ i + " " + line);
                 //read input to ultimately return a TransactionSet
                 String patternInsideBrackets = "(?<=\\{)(.*)(?=\\})";
                 String findBrackets = "\\{|\\}";
@@ -49,12 +49,12 @@ public class FileUtilities {
                 Pattern p = Pattern.compile(findCommas);
                 Matcher m = p.matcher(line);
                 line = m.replaceAll(" ");//strip commas
-                System.out.println("line is now: " + line);
+                //System.out.println("line is now: " + line);
                 
                 Pattern p2 = Pattern.compile(findBrackets);
                 Matcher m2 = p2.matcher(line);
                 line = m2.replaceAll("");//strip brackets
-                System.out.println("line is now: " + line);
+                //System.out.println("line is now: " + line);
                 
                 Pattern p3 = Pattern.compile(findItem);
                 Matcher m3 = p3.matcher(line);//find individual items
@@ -63,7 +63,7 @@ public class FileUtilities {
                 while(m3.find()){//loop until we don't have any more matches in the groupings
                 	
                 	Item item = new Item(m3.group(0));
-                	System.out.println("Transaction # " + i + " Item # " + itemCount + ": " + item.getItem());
+                	//System.out.println("Transaction # " + i + " Item # " + itemCount + ": " + item.getItem());
                 	itemSet.getItemSet().add(item);//add item to new itemset
                 	itemCount++;
                 }

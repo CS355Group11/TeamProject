@@ -49,8 +49,9 @@ public class Item {
 	@Override
 	public boolean equals(Object obj) {
 		// TODO Auto-generated method stub
+		//System.out.println("calling overridden equals method");
 		Item item = (Item) obj;
-		if (this.itemName.equalsIgnoreCase(item.itemName)) {
+		if (this.itemName.equals(item.itemName)) {
 			return true;
 		} else {
 			return false;
