@@ -3,6 +3,7 @@ package fisherjk;
 import java.awt.List;
 import java.util.ArrayList;
 
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -127,6 +128,7 @@ public class Main {
 		APrioriAlgorithm.GenerateRules(tSet, input, (2/9));
 		System.out.println("Finished Generating Rules");
 		*/
+		/*
 		System.out.println("Starting Reading File");
 		TransactionSet tSet2 = new TransactionSet();
 		tSet2 = FileUtilities.readFile("test.txt");
@@ -137,9 +139,34 @@ public class Main {
 		
 		TransactionSet input = APrioriAlgorithm.DoApriori(tSet2, 2.0);
 		System.out.println("Finished APriori 2 ");
-		//System.out.println("Starting Generating Rules");
+		System.out.println("Starting Generating Rules");
 		RuleSet ruleSets = APrioriAlgorithm.GenerateRuleSets(tSet2, input, 50.00);
-		//System.out.println("Finished Generating Rules");
+		System.out.println("Finished Generating Rules");
+		timer.stopTimer();
+		System.out.println("elapsed time in msec.: "  + timer.getTotal());
+		System.out.println("Starting Writing File");
+		FileUtilities.writeFile(ruleSets, "output.txt");
+		System.out.println("Finished Writing File");
+		*/
+		
+		System.out.println("Starting Reading File");
+		TransactionSet transactionSet = new TransactionSet();
+		transactionSet = FileUtilities.readFile("test.txt");
+		double transactionSetSize = transactionSet.getTransactionSet().size();
+		double numTransContainsOfItemSet = 2.0;
+		double minSupportLevel = ((numTransContainsOfItemSet/transactionSetSize ))*(transactionSetSize);
+		System.out.println("minSupportLevel: " + minSupportLevel);
+		double minConfidenceLevel = 0.5;
+		System.out.println("Finished Reading File");
+		System.out.println("Starting APriori");
+		Timer timer = new Timer();
+		timer.startTimer();
+		
+		TransactionSet input = APrioriAlgorithm.DoApriori(transactionSet, minSupportLevel);
+		System.out.println("Finished APriori");
+		System.out.println("Starting Generating Rules");
+		RuleSet ruleSets = APrioriAlgorithm.GenerateRuleSets(transactionSet, input, minConfidenceLevel);
+		System.out.println("Finished Generating Rules");
 		timer.stopTimer();
 		System.out.println("elapsed time in msec.: "  + timer.getTotal());
 		System.out.println("Starting Writing File");

@@ -59,11 +59,20 @@ public class Rule {
 
 	@Override
 	public String toString() {
-		this.actualConfidenceLevel = Math.round(this.actualConfidenceLevel *10000.0);
-		this.actualConfidenceLevel = (this.actualConfidenceLevel /10000.0);
+		String strConfidence = this.actualConfidenceLevel+"";
+		int zeroes = 0;
+		if(strConfidence.length()!=5){
+			zeroes = 5 - strConfidence.length();
+		for(int i = 0; i < zeroes; i++){
+			strConfidence = strConfidence + "0";
+			
+		}
+		}
+		
+		
 		return "IF " + this.antecedent.toStringWithoutSupport() + " THEN "
 				+ this.consequent.toStringWithoutSupport() + " ("
-				+ this.actualConfidenceLevel + ")";
+				+ strConfidence + ")";
 	}
 
 }

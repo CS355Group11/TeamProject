@@ -8,7 +8,10 @@ import java.util.List;
 public class APrioriAlgorithm {
 
 	public static TransactionSet DoApriori(TransactionSet transSet,
-			double supportThreshold) {
+			double minSupportLevel) {
+		
+		
+		
 
 		ItemSet initialItemSet = transSet.GetUniqueItems();//get all singular unique items and put them into a ItemSet object
 		TransactionSet finalLargeItemSet = new TransactionSet(); // resultant large itemsets
@@ -38,8 +41,8 @@ public class APrioriAlgorithm {
 				transaction.getTransaction().setItemSetSupport(findSupport);//Set each successive support level for its respective transaction (remember it is an itemSet)
 
 				
-				if (transaction.getTransaction().getItemSetSupport() >= supportThreshold) {//Determine if the itemSet's support level meets or exceeds the supportThreshold to filter out
-					//System.out.println("k = " + k);
+				if (transaction.getTransaction().getItemSetSupport() >= minSupportLevel) {//Determine if the itemSet's support level meets or exceeds the supportThreshold to filter out
+					
 					System.out.println(transaction.toString() + "-" + findSupport);//debugging info
 					
 					LargeItemSet.getTransactionSet().add(transaction);
@@ -77,7 +80,8 @@ public class APrioriAlgorithm {
 				
 				double confidencePart1 = transSet.findSupport(itemset.getTransaction());
 				double confidencePart2 = transSet.findSupport(subset);
-				double confidence = (confidencePart1 / confidencePart2) * 100.0;
+				double confidence = (confidencePart1 / confidencePart2);
+				//System.out.println("confidence: " + confidence);
 				if (confidence >= minConfidenceLevel) {
 					
 					Rule rule = new Rule();
@@ -90,9 +94,14 @@ public class APrioriAlgorithm {
 					for(int j = 0; j < subset.getItemSet().size(); j++){
 						consequent.getItemSet().remove(subset.getItemSet().get(j));
 					}
+					/*Format to 4 decimal places */
+					//System.out.println("Confidence: " + confidence);
+					double formatConfidence = Math.round(confidence*10000.0)/10000.0;
+					//System.out.println("format: " + formatConfidence);
+					
 					rule.setY(consequent);
 					rule.setMinSupportLevel(transSet.findSupport(itemset.getTransaction()));
-					rule.setActualConfidenceLevel(confidence);
+					rule.setActualConfidenceLevel(formatConfidence);
 					if(rule.getX().getItemSet().size() > 0  && rule.getY().getItemSet().size() > 0){
 						allRuleSets.getRuleSet().add(rule);
 				}

@@ -70,7 +70,7 @@ public class ItemSet {
 			}
 		}
 
-		return "{"+itemSetContents+"}";
+		return itemSetContents;
 	}
 
 	/*
