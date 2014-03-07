@@ -1,13 +1,15 @@
 package fisherjk;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /* Class for holding information about a set of transactions in a TransactionSet*/
 public class TransactionSet {
 
 	
 	private ArrayList<Transaction> transactionSet;/*A transactionSet private instance variable is an ArrayList of individual Transactions*/
-
+	private Date transactionDate;
+	
 	/*TransactionSet constructors*/
 	public TransactionSet(ArrayList<Transaction> transactionSet) {
 		this.transactionSet = transactionSet;
@@ -25,8 +27,16 @@ public class TransactionSet {
 	public void setTransactionSet(ArrayList<Transaction> transactionSet) {
 		this.transactionSet = transactionSet;
 	}
-
 	
+	/*
+	public Date getTransactionDate() {
+		return transactionDate;
+	}
+
+	public void setTransactionDate(Date transactionDate) {
+		this.transactionDate = transactionDate;
+	}
+	 */
 	/*Returns an itemSet containing a set of unique items found in a transactionSet which consists of Transactions*/
 	public ItemSet GetUniqueItems() {
 		ItemSet uniqueItems = new ItemSet();/*uniquely constructed itemSet*/

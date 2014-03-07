@@ -38,7 +38,7 @@ public class APrioriAlgorithm {
 			System.out.println("START");
 			for (Transaction transaction : CandidateItemSet.getTransactionSet()) {//loop through each transaction in each TransactionSet
 				double findSupport = transSet.findSupport(transaction.getTransaction());//calculate and find each successive support level for an transaction (remember it is an itemSet)
-				transaction.getTransaction().setItemSetSupport(findSupport);//Set each successive support level for its respective transaction (remember it is an itemSet)
+				transaction.getTransaction().setItemSetSupport(findSupport/(transSet.getTransactionSet().size()));//Set each successive support level for its respective transaction (remember it is an itemSet)
 
 				
 				if (transaction.getTransaction().getItemSetSupport() >= minSupportLevel) {//Determine if the itemSet's support level meets or exceeds the supportThreshold to filter out
