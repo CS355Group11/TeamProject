@@ -1,0 +1,4 @@
+Apples, Beer, Cheese}
+{Beer, Diapers
+{Apples, Beer, Diapers}
+{Apples}
