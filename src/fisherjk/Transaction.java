@@ -1,7 +1,6 @@
 package fisherjk;
 
 
-import java.util.ArrayList;
 import java.util.Date;
 
 /*Class for holding singular ItemSet records*/
@@ -14,7 +13,7 @@ public class Transaction {
 	/*Constructors for Transaction Class*/
 	public Transaction(ItemSet transaction) {
 		this.transaction = transaction;
-		this.transactionDate = transactionDate;//unused at the moment
+		//this.transactionDate = transactionDate;//unused at the moment
 	}
 
 	/*Creating a new transaction creates a new ItemSet. An ItemSet is a list of Items*/

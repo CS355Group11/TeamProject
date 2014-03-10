@@ -1,24 +1,15 @@
 package fisherjk;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /*IMPLEMENTED TO WITHSTANd TEST CASES AS BEST AS POSSIBLE*/
 public class FileUtilities {
-
-	// TODO Auto-generated method stub
 
 	/*
 	 * input parameters 1. a minimum support level (as a real number,
@@ -28,6 +19,8 @@ public class FileUtilities {
 	 * holding a transaction set in the specified format previously discussed
 	 */
 
+
+	/* READING FILE CONTENTS*/
 	public static TransactionSet readFile(String fileInputName) {
 		fileInputName = "src/" + fileInputName;
 		String line = "";
@@ -36,100 +29,21 @@ public class FileUtilities {
 			// FileReader reads text files in the default encoding.
 			FileReader fileReader = new FileReader(fileInputName);
 
-			// Always wrap FileReader in BufferedReader.
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
-			int i = 0;
-			// use a scanner with a delimeter and a hasnext
-
-			while ((line = bufferedReader.readLine()) != null) {
-				// System.out.println("line # "+ i + " " + line);
-				// read input to ultimately return a TransactionSet
-				String patternInsideBrackets = "(?<=\\{)(.*)(?=\\})";
-				String findBrackets = "\\{|\\}";
-				String findCommas = "\\,";
-				String findItem = "(\\w)";
-
-				Pattern p = Pattern.compile(findCommas);
-				Matcher m = p.matcher(line);
-				line = m.replaceAll(" ");// strip commas
-				System.out.println("line is now: " + line);
-
-				Pattern p2 = Pattern.compile(findBrackets);
-				Matcher m2 = p2.matcher(line);
-				line = m2.replaceAll("");// strip brackets
-				System.out.println("line is now: " + line);
-
-				Pattern p3 = Pattern.compile(findItem);
-				Matcher m3 = p3.matcher(line);// find individual items
-				int itemCount = 0;
-				ItemSet itemSet = new ItemSet();// create a new itemSet
-				while (m3.find()) {// loop until we don't have any more matches
-									// in the groupings
-
-					Item item = new Item(m3.group(0));
-					System.out.println("Transaction # " + i + " Item # "
-							+ itemCount + ": " + item.getItem());
-					itemSet.getItemSet().add(item);// add item to new itemset
-					itemCount++;
-				}
-				Transaction transaction = new Transaction(itemSet);// create a
-																	// new
-																	// transaction
-				transactionSet.getTransactionSet().add(transaction);// append
-																	// transaction
-																	// to
-																	// overall
-																	// transactionSet
-
-				i++;
-			}
-
-			System.out.println(transactionSet.getTransactionSet().toString());
-			// Always close files.
-			bufferedReader.close();
-		} catch (FileNotFoundException ex) {
-			System.out.println("Unable to open file '" + fileInputName + "'");
-		} catch (IOException ex) {
-			System.out.println("Error reading file '" + fileInputName + "'");
-			// Or we could just do this:
-			// ex.printStackTrace();
-		}
-		return transactionSet;
-
-	}
-
-	/* READING FILE WITH NEW METHOD */
-	public static TransactionSet readFile2(String fileInputName) {
-		fileInputName = "src/" + fileInputName;
-		String line = "";
-		TransactionSet transactionSet = new TransactionSet();
-		try {
-			// FileReader reads text files in the default encoding.
-			FileReader fileReader = new FileReader(fileInputName);
-
-			// Always wrap FileReader in BufferedReader.
+			
 			Scanner scanner = new Scanner(fileReader);
-			int transactionCount = 0;
-			// use a scanner with a delimeter and a hasnext
-			String patternInBrackets = "(?<=\\{)(.*)(?=\\})";// unused at the
-																// moment
+			//int transactionCount = 0;
+			//String patternInBrackets = "(?<=\\{)(.*)(?=\\})";// unused at the moment
 			String findVendor = "(?<=\\})?(.*)";// regex to find vendor name
-			String findDate = "[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}";// regex to find
-																// the date
-			String findBrackets = "\\{|\\}";// regex to find brackets for
-											// eventual removal
-			String findInBrackets = "\\{(.*)\\}";// regex to find content within
-													// brackets
-			String findCommas = "\\,\\s?";// regex to find commas and any white
-											// space immediately after it
-			String findItem = "(\\w+)";
+			String findDate = "[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}";// regex to find the date
+			String findBrackets = "\\{|\\}";// regex to find brackets for eventual removal
+			String findInBrackets = "\\{(.*)\\}";// regex to find content within  brackets
+			String findCommas = "\\,\\s?";// regex to find commas and any white space immediately after it
+			//String findItem = "(\\w+)";
 			String findDescItem = "(.*)[^\\n]";// regex to find items
 			String findLeftBrace = "\\{";
 			String findRightBrace = "\\}";
 			
 			
-			ArrayList<String> dates = new ArrayList<String>();
-
 			while (scanner.hasNextLine()) {
 
 				line = scanner.nextLine();
@@ -143,11 +57,7 @@ public class FileUtilities {
 				Pattern datePattern = Pattern.compile(findDate);
 				Matcher dateMatcher = datePattern.matcher(line);
 				
-				
-				//Pattern contentPattern = Pattern.compile(findInBrackets);
-				//Matcher contentMatcher = contentPattern.matcher(line);
-				
-				if (dateMatcher.find()) {
+				if (dateMatcher.find()) {/*determine if we found a date string*/
 					System.out.println("date is: " + line);
 
 				} else {
@@ -159,73 +69,49 @@ public class FileUtilities {
 					Matcher leftBraceMatcher = leftBracePattern.matcher(line);
 					Matcher rightBraceMatcher = rightBracePattern.matcher(line);
 
-					if (leftBraceMatcher.find() && rightBraceMatcher.find()) {
+					if (leftBraceMatcher.find() && rightBraceMatcher.find()) {/*Determine if a left or right brace is missing*/
 						
-						// fix by catching error
-
 						Pattern contentPattern = Pattern.compile(findInBrackets);
 						Matcher contentMatcher = contentPattern.matcher(line);
 						if (contentMatcher.find()) {
 							//May need to fix spacing check
 							if(contentMatcher.group(1).contentEquals(" ") || contentMatcher.group(1).contentEquals("")){//check to see if empty transaction {} or { }
-								System.out.println(contentMatcher.group(1).contentEquals(" "));
-								System.out.println(contentMatcher.group(1).contentEquals(""));
+								System.out.println(contentMatcher.group(1).contentEquals(" "));//space
+								System.out.println(contentMatcher.group(1).contentEquals(""));//empty
 								System.out.println("Content: " + contentMatcher.group(1));
 								System.out.println("Found an empty transaction");
 							}else{
 							// System.out.println("line contents"+ line);
-							Pattern bracketPattern = Pattern.compile(findBrackets);
-							Matcher bracketMatcher = bracketPattern.matcher(line);
-							line = bracketMatcher.replaceAll("");// strip
-																	// brackets
-							// System.out.println("line is now: " + line);
+								Pattern bracketPattern = Pattern.compile(findBrackets);
+								Matcher bracketMatcher = bracketPattern.matcher(line);
+								line = bracketMatcher.replaceAll("");// strip brackets
+								// System.out.println("line is now: " + line);
+	
+								Pattern commaPattern = Pattern.compile(findCommas);
+								Matcher commaMatcher = commaPattern.matcher(line);
+								line = commaMatcher.replaceAll("\n");// strip commas and replace with new lines
+								// System.out.println("line is now: " + line);
+	
+								Pattern itemPattern = Pattern.compile(findDescItem);
+								Matcher itemMatcher = itemPattern.matcher(line);// find individual items on a new line basis
+								//int itemCount = 0;
+								ItemSet itemSet = new ItemSet();// create a new ItemSet
+								while (itemMatcher.find()) {// loop until we don't have any more matches in the groupings
+									Item item = new Item(itemMatcher.group(0));
+									// System.out.println("Transaction # " +
+									// transactionCount + " Item # " + itemCount +
+									// ": " + item.getItem());
+									itemSet.getItemSet().add(item);// add item to
+																	// new itemset
+									//itemCount++;
+								}
+								Transaction transaction = new Transaction(itemSet);// create a new transaction
+								transactionSet.getTransactionSet().add(transaction);// append to overall transaction set
 
-							Pattern commaPattern = Pattern.compile(findCommas);
-							Matcher commaMatcher = commaPattern.matcher(line);
-							line = commaMatcher.replaceAll("\n");// strip commas
-																	// and
-																	// replace
-																	// with new
-																	// lines
-							// System.out.println("line is now: " + line);
-
-							Pattern itemPattern = Pattern.compile(findDescItem);
-							Matcher itemMatcher = itemPattern.matcher(line);// find
-																			// individual
-																			// items
-																			// based
-																			// on
-																			// new
-																			// line
-																			// basis
-							int itemCount = 0;
-							ItemSet itemSet = new ItemSet();// create a new
-															// itemSet
-							while (itemMatcher.find()) {// loop until we don't
-														// have any more matches
-														// in the groupings
-								Item item = new Item(itemMatcher.group(0));
-								// System.out.println("Transaction # " +
-								// transactionCount + " Item # " + itemCount +
-								// ": " + item.getItem());
-								itemSet.getItemSet().add(item);// add item to
-																// new itemset
-								itemCount++;
-							}
-							Transaction transaction = new Transaction(itemSet);// create
-																				// a
-																				// new
-																				// transaction
-							transactionSet.getTransactionSet().add(transaction);// append
-																				// transaction
-																				// to
-																				// overall
-																				// transactionSet
-
-							transactionCount++;// increment the transcation
+							//transactionCount++;// increment the transcation
 												// count
 
-						}
+							}
 						}
 					
 					} else {
@@ -255,8 +141,6 @@ public class FileUtilities {
 			System.out.println("Unable to open file '" + fileInputName + "'");
 		} catch (IOException ex) {
 			System.out.println("Error reading file '" + fileInputName + "'");
-			// Or we could just do this:
-			// ex.printStackTrace();
 		}
 		return transactionSet;
 
@@ -280,9 +164,7 @@ public class FileUtilities {
 		try {
 			PrintWriter writer = new PrintWriter(fileOutputName);
 			for (int i = 0; i < ruleSets.getRuleSet().size(); i++) {
-				writer.println(ruleSets.getRuleSet().get(i));// get each rule
-																// set and print
-																// the result
+				writer.println(ruleSets.getRuleSet().get(i));// get each rule set and print the result
 			}
 			writer.close();
 		} catch (IOException ex) {

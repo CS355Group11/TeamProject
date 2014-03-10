@@ -1,14 +1,14 @@
 package fisherjk;
 
 import java.util.ArrayList;
-import java.util.Date;
+//import java.util.Date;
 
 /* Class for holding information about a set of transactions in a TransactionSet*/
 public class TransactionSet {
 
 	
 	private ArrayList<Transaction> transactionSet;/*A transactionSet private instance variable is an ArrayList of individual Transactions*/
-	private Date transactionDate;
+	//private Date transactionDate;
 	
 	/*TransactionSet constructors*/
 	public TransactionSet(ArrayList<Transaction> transactionSet) {
@@ -123,7 +123,7 @@ public class TransactionSet {
 		return (bit > 0 ? 1 : 0);
 	}
 	
-	
+	/*helper method to findKItemSubsets which are based on an index of the item*/
 	public static String DecimalToBinary(int value, int length){
         String binary = "";
         for (int position = 0; position < length; position++){
@@ -132,6 +132,7 @@ public class TransactionSet {
         return binary;
     }
 
+	/*helper method to findKItemSubsets which look at the items in the set*/
     public static int GetOnCount(int value, int length){
         String binary = DecimalToBinary(value, length);
         char[] binaryChar = binary.toCharArray();

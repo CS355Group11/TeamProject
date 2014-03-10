@@ -1,18 +1,13 @@
 package fisherjk;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /*Class to Run the Part I of the A Priori Algorithm */
 public class APrioriAlgorithm {
 
-	public static TransactionSet DoApriori(TransactionSet transSet,
-			double minSupportLevel) {
+	public static TransactionSet DoApriori(TransactionSet transSet,double minSupportLevel) {
 		
-		
-		
-
 		ItemSet initialItemSet = transSet.GetUniqueItems();//get all singular unique items and put them into a ItemSet object
 		TransactionSet finalLargeItemSet = new TransactionSet(); // resultant large itemsets
 		TransactionSet LargeItemSet = new TransactionSet(); // large itemset in each iteration
@@ -58,7 +53,7 @@ public class APrioriAlgorithm {
 			CandidateItemSet = (CandidateItemSet.findKItemSubsets(LargeItemSet.GetUniqueItems(), k));//Add all the combinations of subsets for a given set of unique items/ItemSets
 			k += 1;
 			System.out.println("END");
-		}
+		}//end of while loop brace
 		System.out.println("Final Set: \n" + finalLargeItemSet.toString());
 		
 		return finalLargeItemSet;//final returned value
@@ -81,7 +76,6 @@ public class APrioriAlgorithm {
 				double confidencePart1 = transSet.findSupport(itemset.getTransaction());
 				double confidencePart2 = transSet.findSupport(subset);
 				double confidence = (confidencePart1 / confidencePart2);
-				//System.out.println("confidence: " + confidence);
 				if (confidence >= minConfidenceLevel) {
 					
 					Rule rule = new Rule();
@@ -95,18 +89,16 @@ public class APrioriAlgorithm {
 						consequent.getItemSet().remove(subset.getItemSet().get(j));
 					}
 					/*Format to 4 decimal places */
-					//System.out.println("Confidence: " + confidence);
 					double formatConfidence = Math.round(confidence*10000.0)/10000.0;
-					//System.out.println("format: " + formatConfidence);
 					
 					rule.setY(consequent);
 					rule.setMinSupportLevel(transSet.findSupport(itemset.getTransaction()));
 					rule.setActualConfidenceLevel(formatConfidence);
 					if(rule.getX().getItemSet().size() > 0  && rule.getY().getItemSet().size() > 0){
 						allRuleSets.getRuleSet().add(rule);
-				}
+					}
 				
-			}
+				}
 		
 			
 			}
@@ -114,14 +106,14 @@ public class APrioriAlgorithm {
 		}		
 		
 		
-			System.out.println("RuleSets:\n" + allRuleSets.toString());
+		System.out.println("RuleSets:\n" + allRuleSets.toString());
 		
 		return allRuleSets;
 	}
 
 	
 	
-	
+	/*method to find all combinations of rule subsets to help trim the final rule set generation*/
 	public static ArrayList<ItemSet> findRuleSubsets(ItemSet candidates, ArrayList<ItemSet> sets){
 		
 		ArrayList<ItemSet> allRuleSets = sets;

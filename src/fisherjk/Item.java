@@ -9,8 +9,8 @@ public class Item {
 
 	public Item(String itemName) {
 		this.itemName = itemName;
-		this.itemDesc = itemDesc;	//unused at the moment
-		this.itemPrice = itemPrice; //unused at the moment
+		//this.itemDesc = itemDesc;	//unused at the moment
+		//this.itemPrice = itemPrice; //unused at the moment
 
 	}
 	
@@ -48,7 +48,6 @@ public class Item {
 	/*Override the Item's equals method to allow the ItemSet class contain's method to be run*/
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
 		//System.out.println("calling overridden equals method");
 		Item item = (Item) obj;
 		if (this.itemName.equals(item.itemName)) {

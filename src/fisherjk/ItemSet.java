@@ -116,11 +116,8 @@ public class ItemSet {
 	}
 
 	public void remove(Item item) {
-		// TODO Auto-generated method stub
 		this.itemSet.remove(item);
-		// for(int i = 0; i < this.itemSet.size(); i++){
-		// this.itemSet.remove(i);
-		// }
+
 
 	}
 

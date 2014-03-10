@@ -26,6 +26,7 @@ public class RuleSet {
 		this.ruleSet = ruleSet;
 	}
 
+	/*Override the toString to carefuly print each ruleSets content*/
 	@Override
 	public String toString() {
 		String strRuleSets = "";

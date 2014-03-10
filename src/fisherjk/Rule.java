@@ -57,6 +57,7 @@ public class Rule {
 		this.actualConfidenceLevel = actualConfidenceLevel;
 	}
 
+	/*Override to correctly display rule set with confidence level to 4 decimal places of precision*/
 	@Override
 	public String toString() {
 		String strConfidence = this.actualConfidenceLevel+"";
