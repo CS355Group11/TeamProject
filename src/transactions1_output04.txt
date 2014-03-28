@@ -1,0 +1,2 @@
+IF Cheese  THEN Beer (1.000)
+IF Beer THEN Cheese  (1.000)
