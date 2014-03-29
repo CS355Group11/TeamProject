@@ -1,5 +1,9 @@
 package fisherjk;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 
 public class Main {
 
@@ -30,6 +34,11 @@ public class Main {
 		//runTest("transactions6.txt", "transactions6_output.txt", 0.014, 0.2);//1000 transactions with 100 items
 		//runTest("transactions7.txt", "transactions7_output.txt", 0.12, 0.6);//10000 transactions with 1000 items
 		
+		
+		
+
+		
+		/*END OF DAO MAIN*/
 	}
 	
 	/*Method to run various tests with different parameters quickly"*/
@@ -80,4 +89,33 @@ public class Main {
 		}
 		return message;
 	}
+	
+	
+	/*DAO MAIN*/
+public void DAOController (TransactionSet transactionSet, RuleSet ruleSet){
+	TransactionPersistenceController tpc = new TransactionPersistenceController();		// controller for delegating transaction persistence
+	RulePersistenceController rpc = new RulePersistenceController();		// controller for delegating transaction persistence
+	String daoString = null;
+    InputStreamReader unbuffered = new InputStreamReader( System.in );
+    BufferedReader keyboard = new BufferedReader( unbuffered );
+	try {
+		System.out.println("Use (Mock) DAO or (MySQL) DAO? Mock");
+		daoString = keyboard.readLine();
+	}
+	catch (IOException error) {
+		System.err.println("Error reading input");
+	}
+
+	tpc.setDAO(daoString);
+	//iterate through tranactionset to get individual transactions
+	for (Transaction transaction : transactionSet.getTransactionSet()) {
+		tpc.persistTransaction(transaction);
+	}
+	rpc.setDAO(daoString);
+	//iterate through ruleset to get individual rules
+	for (Rule rule : ruleSet.getRuleSet()) {
+		rpc.persistRule(rule);
+	}
+	
+}		
 }

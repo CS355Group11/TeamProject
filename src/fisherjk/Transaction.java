@@ -7,7 +7,7 @@ import java.util.Date;
 public class Transaction {
 
 	private ItemSet transaction;//A transaction is essentially an itemSet
-	private Date transactionDate;//A transaction's timestamp variable 
+	private String transactionDate;//A transaction's timestamp variable 
 	private double transactionTotalPrice;//A transaction total price
 
 	/*Constructors for Transaction Class*/
@@ -30,11 +30,11 @@ public class Transaction {
 		this.transaction = transaction;
 	}
 
-	public Date getTransactionDate() {
+	public String getTransactionDate() {
 		return transactionDate;
 	}
 
-	public void setTransactionDate(Date transactionDate) {
+	public void setTransactionDate(String transactionDate) {
 		this.transactionDate = transactionDate;
 	}
 
