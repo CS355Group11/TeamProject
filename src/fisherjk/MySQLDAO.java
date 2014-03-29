@@ -89,6 +89,42 @@ public class MySQLDAO implements DAOInterface {
 		return errorCode;
 	}
 	
+	public int executeResultSet(String query) {
+		int id = 0;
+		System.out.println("MySQL DAO execute");
+		 // --- 3) prepare and execute statement
+		   stmt = null;		// SQL statement object
+		   rset = null;		// statement result set object
+		   //    get resultset
+		   try
+		   {
+			  stmt = conn.createStatement();
+			  rset = stmt.executeQuery(query);
+		   }
+		   catch (Exception e)
+		   {
+			   System.out.println("Could not execute SQL statement");
+			   System.out.println(e.getMessage());
+			   
+			   System.exit(1);
+		   }
+		// use connection to execute query,
+		// --- 4) process result set
+		// process resultset
+		   try {
+			   while (rset.next()) {
+				   id = rset.getInt(0);
+			   }     // --- end - while
+		   }
+		   catch (SQLException sqle) {
+			   System.out.println("Could not process result set");
+			   System.out.println(sqle.getMessage());
+			   System.exit(1);
+		   }
+		// set errorCode
+		return id;
+	}
+	
 	public void disconnect() {
 		// disconnect MySQL connection, statement, resultset
 		 // --- 5) clean up statement and connection
@@ -105,4 +141,6 @@ public class MySQLDAO implements DAOInterface {
 		   
 		   System.exit(0);
 	}
+
+	
 }

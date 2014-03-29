@@ -6,18 +6,18 @@
 package fisherjk;
 
 
-public class RulePersistenceController {
+public class RuleSetPersistenceController {
 	// data
 	//private Rule rule;		// student being worked with
 	private DAOInterface dao;		// the Data Access Object (DAO) being used
 	
 	// methods
 	// persistStudent - overall method to persist a single student object
-	public void persistRule(Rule rule) {
+	public void persistRuleSet(RuleSet ruleSet) {
 		String sqlStatement;		// SQL statement to persist the student
 		
 			// could pass a student object in as parameter to this method
-		sqlStatement = generateInsertStmt(rule);
+		sqlStatement = generateInsertStmt(ruleSet);
 		dao.connect();
 		dao.execute(sqlStatement);
 		dao.disconnect();
@@ -34,16 +34,12 @@ public class RulePersistenceController {
 	}
 	
 	// generateInsertStmt - generate an SQL insert statement for a particular rule object
-	public String generateInsertStmt(Rule rule) {
+	public String generateInsertStmt(RuleSet ruleSet) {
 		String result = null;
-		double ruleActualConfidence = rule.getActualConfidenceLevel();
-		String ruleAntecedent = rule.getX().toString();
-		String ruleConsequent = rule.getY().toString();
-	    int ruleGenerator = 1;
-		String query = "SELECT RuleSet_ID FROM RuleSet WHERE RuleSet_ID =" +rule.getRuleSet_ID();
-		int ruleRuleSet_ID =  dao.executeResultSet(query);
+		String ruleSetDateTime = ruleSet.getDatetime();
+		String ruleSetTransactionSet_ID = "";
 		// TODO: code to convert rule object to SQL insert statement string for that rule
-		String insert = "INSERT INTO RULE (RuleActualConfidence, RuleAntecedent_ID, RuleConsequent_ID, RuleGenerator_ID, RuleRuleSet_ID VALUES ("+ruleActualConfidence+","+ruleAntecedent+","+ruleConsequent +","+ruleGenerator +","+ruleRuleSet_ID+")";
+		String insert = "INSERT INTO RULE (RuleActualDateTime, RuleSetTransactionSet_ID VALUES ("+ruleSetDateTime+","+ruleSetTransactionSet_ID+")";
 		result = insert;
 		return result;
 	}

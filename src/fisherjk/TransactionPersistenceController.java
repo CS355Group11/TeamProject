@@ -8,7 +8,7 @@ package fisherjk;
 
 public class TransactionPersistenceController {
 	// data
-	private Transaction transaction;		// student being worked with
+	//private Transaction transaction;		// student being worked with
 	private DAOInterface dao;		// the Data Access Object (DAO) being used
 	
 	// methods
@@ -16,7 +16,7 @@ public class TransactionPersistenceController {
 	public void persistTransaction(Transaction transaction) {
 		String sqlStatement;		// SQL statement to persist the student
 		
-		transaction = new Transaction();	// could pass a student object in as parameter to this method
+			// could pass a student object in as parameter to this method
 		sqlStatement = generateInsertStmt(transaction);
 		dao.connect();
 		dao.execute(sqlStatement);
@@ -39,9 +39,11 @@ public class TransactionPersistenceController {
 		String result = null;
 		String transactionDateTime = transaction.getTransactionDate();
 		String transactionItemSet = transaction.getTransaction().toString();
-		String transactionTransactionSet = "";
+		
+		String query = "SELECT TransactionSet_ID FROM TransactionSet WHERE TranscationSet_ID =" + transaction.getTransactionSet_ID();
+		int transactionTransactionSet_ID =  dao.executeResultSet(query);
 		String transactionVendor = "Paul Mart";
-		String insert= "INSERT INTO Transaction (TransactionDateTime, TransactionItemSetID, TransactionTransactionSetID, TransactionVendor_ID) VALUES(" + transactionDateTime +","+transactionItemSet+","+transactionTransactionSet+","+transactionVendor+")";
+		String insert= "INSERT INTO Transaction (TransactionDateTime, TransactionItemSetID, TransactionTransactionSetID, TransactionVendor_ID) VALUES(" + transactionDateTime +","+transactionItemSet+","+transactionTransactionSet_ID+","+transactionVendor+")";
 		result = insert;
 		return result;
 	}

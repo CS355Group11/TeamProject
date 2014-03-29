@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class RuleSet {
 
 	private ArrayList<Rule> ruleSet;//instance variable to access the ruleSet
+	private String datetime;
 
 	
 	/*Constructors*/
@@ -24,6 +25,15 @@ public class RuleSet {
 
 	public void setRuleSet(ArrayList<Rule> ruleSet) {
 		this.ruleSet = ruleSet;
+	}
+	
+
+	public String getDatetime() {
+		return datetime;
+	}
+
+	public void setDatetime(String datetime) {
+		this.datetime = datetime;
 	}
 
 	/*Override the toString to carefuly print each ruleSets content*/

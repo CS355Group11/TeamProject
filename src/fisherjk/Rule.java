@@ -7,6 +7,7 @@ public class Rule {
 	private ItemSet consequent;//THEN part of the rule
 	private double minSupportLevel;// must have 4 digits of precision
 	private double actualConfidenceLevel;// must have 4 digits of precision
+	private int ruleSet_ID = 0;
 
 	/*Constructors*/
 	public Rule(ItemSet antecedent, ItemSet consequent, double minSupportLevel,
@@ -55,6 +56,16 @@ public class Rule {
 
 	public void setActualConfidenceLevel(double actualConfidenceLevel) {
 		this.actualConfidenceLevel = actualConfidenceLevel;
+	}
+	
+	
+
+	public int getRuleSet_ID() {
+		return ruleSet_ID;
+	}
+
+	public void setRuleSet_ID(int ruleSet_ID) {
+		this.ruleSet_ID = ruleSet_ID;
 	}
 
 	/*Override to correctly display rule set with confidence level to 4 decimal places of precision*/

@@ -2,12 +2,12 @@ package fisherjk;
 
 import java.util.ArrayList;
 //import java.util.Date;
-
 /* Class for holding information about a set of transactions in a TransactionSet*/
 public class TransactionSet {
 
 	
 	private ArrayList<Transaction> transactionSet;/*A transactionSet private instance variable is an ArrayList of individual Transactions*/
+	private String datetime;
 	//private Date transactionDate;
 	
 	/*TransactionSet constructors*/
@@ -28,6 +28,15 @@ public class TransactionSet {
 		this.transactionSet = transactionSet;
 	}
 	
+	
+	public String getDatetime() {
+		return datetime;
+	}
+
+	public void setDatetime(String datetime) {
+		this.datetime = datetime;
+	}
+
 	/*
 	public Date getTransactionDate() {
 		return transactionDate;

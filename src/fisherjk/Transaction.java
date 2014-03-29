@@ -9,6 +9,7 @@ public class Transaction {
 	private ItemSet transaction;//A transaction is essentially an itemSet
 	private String transactionDate;//A transaction's timestamp variable 
 	private double transactionTotalPrice;//A transaction total price
+	private int transactionSet_ID = 0;
 
 	/*Constructors for Transaction Class*/
 	public Transaction(ItemSet transaction) {
@@ -47,7 +48,15 @@ public class Transaction {
 		this.transactionTotalPrice = transactionTotalPrice;
 
 	}
+	
 
+	public int getTransactionSet_ID() {
+		return transactionSet_ID;
+	}
+
+	public void setTransactionSet_ID(int transactionSet_ID) {
+		this.transactionSet_ID = transactionSet_ID;
+	}
 
 	/*Override the Transaction's toString to call the ItemSet's to String which calls an Item toString*/
 	@Override

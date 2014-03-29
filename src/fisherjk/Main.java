@@ -62,14 +62,15 @@ public class Main {
 		TransactionSet input = APrioriAlgorithm.DoApriori(transactionSet, minSupportLevel);
 		System.out.println("Finished APriori");
 		System.out.println("Starting Generating Rules");
-		RuleSet ruleSets = APrioriAlgorithm.GenerateRuleSets(transactionSet, input, minConfidenceLevel);
+		RuleSet ruleSet = APrioriAlgorithm.GenerateRuleSets(transactionSet, input, minConfidenceLevel);
 		System.out.println("Finished Generating Rules");
 		timer.stopTimer();
 		System.out.println("elapsed time in msec.: "  + timer.getTotal());
+		/*Inserting original transactionSet and generated rule set*/
+		DAOController(transactionSet, ruleSet);
 		System.out.println("Starting Writing File");
-		FileUtilities.writeFile(ruleSets, fileOutputName);
+		FileUtilities.writeFile(ruleSet, fileOutputName);
 		System.out.println("Finished Writing File..." + fileOutputName);
-		
 		}else{
 			System.out.println("Error: " + supMsg);
 			System.out.println("Error: " + confMsg);
@@ -91,8 +92,8 @@ public class Main {
 	}
 	
 	
-	/*DAO MAIN*/
-public void DAOController (TransactionSet transactionSet, RuleSet ruleSet){
+/*DAO MAIN*/
+public static void DAOController (TransactionSet transactionSet, RuleSet ruleSet){
 	TransactionPersistenceController tpc = new TransactionPersistenceController();		// controller for delegating transaction persistence
 	RulePersistenceController rpc = new RulePersistenceController();		// controller for delegating transaction persistence
 	String daoString = null;
