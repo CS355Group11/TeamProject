@@ -22,9 +22,12 @@ public class FileUtilities {
 
 	/* READING FILE CONTENTS*/
 	public static TransactionSet readFile(String fileInputName) {
+		ErrorLogs errorLogs = new ErrorLogs();
 		fileInputName = "src/" + fileInputName;
 		String line = "";
 		TransactionSet transactionSet = new TransactionSet();
+		String formatError = "Format Error: ";
+		int errorCount = 0;
 		try {
 			// FileReader reads text files in the default encoding.
 			FileReader fileReader = new FileReader(fileInputName);
@@ -44,8 +47,8 @@ public class FileUtilities {
 			String findRightBrace = "\\}";
 			
 			
-			while (scanner.hasNextLine()) {
-
+			while (scanner.hasNextLine() &&  errorLogs.getErrorCount()==0) {
+				System.out.println("Current ErrorCount = " + errorCount);
 				line = scanner.nextLine();
 				System.out.println("line->" + line);
 				// check to find start of a new transaction set
@@ -70,9 +73,24 @@ public class FileUtilities {
 					Matcher rightBraceMatcher = rightBracePattern.matcher(line);
 
 					if (leftBraceMatcher.find() && rightBraceMatcher.find()) {/*Determine if a left or right brace is missing*/
-						
+						System.out.println("Found Left and Right Brace");
 						Pattern contentPattern = Pattern.compile(findInBrackets);
 						Matcher contentMatcher = contentPattern.matcher(line);
+						
+						if(rightBraceMatcher.find()){
+							System.out.println("Found Extra Right Brace");
+							errorLogs.getErrorMsgs().add(formatError +"Found Extra Right Brace");
+							//errorCount++;
+						}
+						
+						
+						if(leftBraceMatcher.find()){
+							System.out.println("Found Extra Left Brace");
+							errorLogs.getErrorMsgs().add(formatError +"Found Extra Left Brace");
+							//errorCount++;
+						}
+						
+						
 						if (contentMatcher.find()) {
 							//May need to fix spacing check
 							if(contentMatcher.group(1).contentEquals(" ") || contentMatcher.group(1).contentEquals("")){//check to see if empty transaction {} or { }
@@ -80,7 +98,9 @@ public class FileUtilities {
 								System.out.println(contentMatcher.group(1).contentEquals(""));//empty
 								System.out.println("Content: " + contentMatcher.group(1));
 								System.out.println("Found an empty transaction");
-							}else{
+								errorLogs.getErrorMsgs().add(formatError + "Found an empty transaction");
+								//errorCount++;
+							}else if(errorCount == 0){//while no errors found
 							// System.out.println("line contents"+ line);
 								Pattern bracketPattern = Pattern.compile(findBrackets);
 								Matcher bracketMatcher = bracketPattern.matcher(line);
@@ -122,19 +142,25 @@ public class FileUtilities {
 						
 							if (!leftBraceMatcher.find()) {
 								System.out.println("Missing Left brace");
+								errorLogs.getErrorMsgs().add(formatError +"Missing Left brace");
+								//errorCount++;
 							}
 							
 							if (!rightBraceMatcher.find()) {
 								System.out.println("Missing right brace");
+								errorLogs.getErrorMsgs().add(formatError +"Missing Right brace");
+								//errorCount++;
 							}
 						}
 					}
 				
 				}
 			}
-
+			System.out.println("Error Count: " + errorLogs.getErrorCount());
 			System.out.println(transactionSet.getTransactionSet().toString());
+			System.out.println(errorLogs.toString());
 			// Always close files.
+			/*USE A FINALLY?*/
 			fileReader.close();
 			scanner.close();
 		} catch (FileNotFoundException ex) {
@@ -142,7 +168,13 @@ public class FileUtilities {
 		} catch (IOException ex) {
 			System.out.println("Error reading file '" + fileInputName + "'");
 		}
+		//System.out.println("Error Count: " + errorCount);
+		if(errorLogs.getErrorCount() >0){
+		transactionSet = null;
+		}
+		
 		return transactionSet;
+		
 
 	}
 
@@ -160,7 +192,7 @@ public class FileUtilities {
 	public static void writeFile(RuleSet ruleSets, String fileOutputName) {
 		// The name of the file to open.
 		fileOutputName = "src/" + fileOutputName;
-
+		
 		try {
 			PrintWriter writer = new PrintWriter(fileOutputName);
 			for (int i = 0; i < ruleSets.getRuleSet().size(); i++) {
