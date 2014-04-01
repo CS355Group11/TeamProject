@@ -12,8 +12,8 @@ public class Main {
 		double minSupportLevel = 0.5;
 		double minConfidenceLevel = 0.5;
 		
-		//runTest("test.txt", "output.txt", minSupportLevel, minConfidenceLevel);//needs minSupportLevel to be 0.22 and minConfidenceLevel to be 0.5 to mimic PPT
-		//runTest("wagner_input.txt", "wagner_output.txt", minSupportLevel, minConfidenceLevel);
+		//runTest("test.txt", "output.txt", 0.22, minConfidenceLevel);//needs minSupportLevel to be 0.22 and minConfidenceLevel to be 0.5 to mimic PPT
+		runTest("wagner_input.txt", "wagner_output.txt", minSupportLevel, minConfidenceLevel);
 	    //runTest("multiproduct.txt", "multiproduct_output.txt", minSupportLevel, minConfidenceLevel);
 		//runTest("error_test.txt", "error_output.txt", minSupportLevel, minConfidenceLevel);
 		//runTest("transactions1.txt", "transactions1_output01.txt", 0.25, 0.5);
@@ -27,7 +27,7 @@ public class Main {
 		//runTest("transactions1.txt", "transactions1_output09.txt", 1.1, 0.0);//one error
 		//runTest("transactions1.txt", "transactions1_output10.txt", 0.0, 1.1);//one error
 		//runTest("transactions1.txt", "transactions1_output11.txt", 1.1, 1.1);//two errors
-		runTest("transactions2.txt", "transactions2_output.txt", 0.0, 0.0);//bad format
+		//runTest("transactions2.txt", "transactions2_output.txt", 0.0, 0.0);//bad format
 		//runTest("transactions3.txt", "transactions3_output.txt", 0.0, 0.0);//bad format
 		//runTest("transactions4.txt", "transactions4_output.txt", 0.0, 0.0);//bad format
 		//runTest("transactions5.txt", "transactions5_output.txt", 0.25, 0.5);
@@ -82,9 +82,10 @@ public class Main {
 		DAOController(transactionSet, ruleSet);
 		System.out.println("Starting Writing File");
 		FileUtilities.writeFile(ruleSet, fileOutputName);
-		System.out.println("Finished Writing File..." + fileOutputName);
-		}
+		System.out.println("Finished Writing File... " + fileOutputName);
+		}else{
 		errorLogs.getErrorMsgs().add("Format Error: Transaction Set is not well-formed");
+		}
 		}
 			
 			
@@ -111,8 +112,12 @@ public class Main {
 	
 /*DAO MAIN*/
 public static void DAOController (TransactionSet transactionSet, RuleSet ruleSet){
+	
+	System.out.println("Starting DAO Controller");
 	TransactionPersistenceController tpc = new TransactionPersistenceController();		// controller for delegating transaction persistence
 	RulePersistenceController rpc = new RulePersistenceController();		// controller for delegating transaction persistence
+	TransactionSetPersistenceController tspc = new TransactionSetPersistenceController();		// controller for delegating transaction persistence
+	RuleSetPersistenceController rspc = new RuleSetPersistenceController();		// controller for delegating transaction persistence
 	String daoString = null;
     InputStreamReader unbuffered = new InputStreamReader( System.in );
     BufferedReader keyboard = new BufferedReader( unbuffered );
@@ -124,16 +129,29 @@ public static void DAOController (TransactionSet transactionSet, RuleSet ruleSet
 		System.err.println("Error reading input");
 	}
 
+	//daoString = "MySQL";
+	tspc.setDAO(daoString);
 	tpc.setDAO(daoString);
 	//iterate through tranactionset to get individual transactions
+	int i = 0;
+	System.out.println("Starting Persist TransactionSet");
+	tspc.persistTransactionSet(transactionSet);
+	System.out.println("Finished Persist TransactionSet");
 	for (Transaction transaction : transactionSet.getTransactionSet()) {
+	System.out.println("Size: " + transactionSet.getTransactionSet().size());
+	//for(int i = 0; i < transactionSet.getTransactionSet().size(); i++){
+		System.out.println("Starting Persist Transaction: #" + i);
+		//tpc.persistTransaction(transactionSet.getTransactionSet().get(i));
 		tpc.persistTransaction(transaction);
+		i++;
+		System.out.println("Finished Persist Transaction: #" + i);
 	}
+	//}
 	rpc.setDAO(daoString);
 	//iterate through ruleset to get individual rules
-	for (Rule rule : ruleSet.getRuleSet()) {
-		rpc.persistRule(rule);
-	}
-	
+	//for (Rule rule : ruleSet.getRuleSet()) {
+	//	rpc.persistRule(rule);
+	//}
+System.out.println("Finished DAO Controller");	
 }		
 }

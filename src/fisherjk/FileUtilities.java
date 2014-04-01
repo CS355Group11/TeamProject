@@ -125,6 +125,7 @@ public class FileUtilities {
 																	// new itemset
 									//itemCount++;
 								}
+								System.out.println("Creating new Transaction Set");
 								Transaction transaction = new Transaction(itemSet);// create a new transaction
 								transactionSet.getTransactionSet().add(transaction);// append to overall transaction set
 
@@ -157,8 +158,8 @@ public class FileUtilities {
 				}
 			}
 			System.out.println("Error Count: " + errorLogs.getErrorCount());
-			System.out.println(transactionSet.getTransactionSet().toString());
-			System.out.println(errorLogs.toString());
+			System.out.println("Transaction Set: " + transactionSet.getTransactionSet().toString());
+			System.out.println("Error Logs: " + errorLogs.toString());
 			// Always close files.
 			/*USE A FINALLY?*/
 			fileReader.close();
