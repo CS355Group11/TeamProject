@@ -39,9 +39,17 @@ public class TransactionSetPersistenceController {
 		System.out.println("Generating Insert Statement for transactionSet");
 		String result = null;
 		//String transactionSetDateTime = transactionSet.getDatetime();
-		String transactionSetDateTime = "2014-04-01 12:00:00";
-		String convert_date = "STR_TO_DATE(\""+transactionSetDateTime+"\", \"%Y-%m-%d %H:%i:%S\")";
-		String insert= "INSERT INTO TransactionSet (TransactionSet_datetime) VALUES(" + convert_date +")";
+		String start = transactionSet.getStart_date();
+		String end = transactionSet.getEnd_date();
+		if(start == null || end == null){
+			start = "2014-04-01";
+			end = "2014-04-01";
+		}
+		String startDateTime = start +" 12:00:00";//think about how to get default time here and fileUtitities
+		String endDateTime = end +" 12:00:00";
+		String convert_start_date = "STR_TO_DATE(\""+startDateTime+"\", \"%Y-%m-%d %H:%i:%S\")";
+		String convert_end_date = "STR_TO_DATE(\""+endDateTime+"\", \"%Y-%m-%d %H:%i:%S\")";
+		String insert= "INSERT INTO TransactionSet (TransactionSet_start_datetime, TransactionSet_end_datetime) VALUES(" + convert_start_date +", " +convert_end_date+")";
 		result = insert;
 		System.out.println("result: " + result);
 		System.out.println("Finished Insert Statement for transactionSet");

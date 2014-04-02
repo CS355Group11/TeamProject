@@ -64,6 +64,14 @@ public class FileUtilities {
 				
 				if (dateMatcher.find()) {/*determine if we found a date string*/
 					System.out.println("date is: " + line);
+					System.out.println("GETTER: " + transactionSet.getStart_date());
+					if(transactionSet.getStart_date() == null){
+						transactionSet.setStart_date(line);
+						System.out.println("start_date is: " + line);
+					}else{
+						transactionSet.setEnd_date(line);
+						System.out.println("end_date is: " + line);
+					}
 
 				} else {
 
