@@ -40,10 +40,8 @@ public class TransactionSetPersistenceController {
 		String result = null;
 		//String transactionSetDateTime = transactionSet.getDatetime();
 		String transactionSetDateTime = "2014-04-01 12:00:00";
-		String transactionSetItems = "Apples, etc...";
 		String convert_date = "STR_TO_DATE(\""+transactionSetDateTime+"\", \"%Y-%m-%d %H:%i:%S\")";
-		int transactionSetGenerator_ID = 1;
-		String insert= "INSERT INTO TransactionSet_new (TransactionSet_datetime) VALUES(" + convert_date +")";
+		String insert= "INSERT INTO TransactionSet (TransactionSet_datetime) VALUES(" + convert_date +")";
 		result = insert;
 		System.out.println("result: " + result);
 		System.out.println("Finished Insert Statement for transactionSet");

@@ -36,10 +36,16 @@ public class RuleSetPersistenceController {
 	// generateInsertStmt - generate an SQL insert statement for a particular rule object
 	public String generateInsertStmt(RuleSet ruleSet) {
 		String result = null;
-		String ruleSetDateTime = ruleSet.getDatetime();
-		String ruleSetTransactionSet_ID = "";
+		//String ruleSetDateTime = ruleSet.getDatetime();
+		String queryID = "SELECT MAX(TransactionSet_ID) FROM TransactionSet;";
+		dao.connect();
+		int ruleSet_TransactionSet_ID =  dao.executeResultSet(queryID);
+		dao.disconnect();
+		String ruleSetDateTime = "2014-04-01 12:00:00";
+		String convert_date = "STR_TO_DATE(\""+ruleSetDateTime+"\", \"%Y-%m-%d %H:%i:%S\")";
+		String insert = "INSERT INTO RuleSet (RuleSet_datetime, RuleSet_TransactionSet_ID) VALUES ("+convert_date+", "+ruleSet_TransactionSet_ID+")";
+		result = insert;
 		// TODO: code to convert rule object to SQL insert statement string for that rule
-		String insert = "INSERT INTO RULE (RuleActualDateTime, RuleSetTransactionSet_ID VALUES ("+ruleSetDateTime+","+ruleSetTransactionSet_ID+")";
 		result = insert;
 		return result;
 	}

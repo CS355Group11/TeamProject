@@ -12,9 +12,10 @@ public class Main {
 		double minSupportLevel = 0.5;
 		double minConfidenceLevel = 0.5;
 		
-		//runTest("test.txt", "output.txt", 0.22, minConfidenceLevel);//needs minSupportLevel to be 0.22 and minConfidenceLevel to be 0.5 to mimic PPT
+		runTest("test.txt", "output.txt", 0.22, minConfidenceLevel);//needs minSupportLevel to be 0.22 and minConfidenceLevel to be 0.5 to mimic PPT
 		runTest("wagner_input.txt", "wagner_output.txt", minSupportLevel, minConfidenceLevel);
-	    //runTest("multiproduct.txt", "multiproduct_output.txt", minSupportLevel, minConfidenceLevel);
+		//runTest("test.txt", "output.txt", 0.22, minConfidenceLevel);//needs minSupportLevel to be 0.22 and minConfidenceLevel to be 0.5 to mimic PPT
+		//runTest("multiproduct.txt", "multiproduct_output.txt", minSupportLevel, minConfidenceLevel);
 		//runTest("error_test.txt", "error_output.txt", minSupportLevel, minConfidenceLevel);
 		//runTest("transactions1.txt", "transactions1_output01.txt", 0.25, 0.5);
 		//runTest("transactions1.txt", "transactions1_output02.txt", 0.5, 0.66);
@@ -88,10 +89,12 @@ public class Main {
 		}
 		}
 			
-			
+			int errorCount = errorLogs.getErrorCount();
 			System.out.println(errorLogs.toString());
-			System.out.println(errorLogs.getErrorCount() + " error(s) found. No Rules are Generated");
-			
+			if(errorCount != 0){
+			System.out.println(errorCount + " error(s) found. No Rules are  Generated");
+			}
+			System.out.println("No error(s) found. Rules are Successfully Generated");
 		
 	}
 
@@ -147,11 +150,18 @@ public static void DAOController (TransactionSet transactionSet, RuleSet ruleSet
 		System.out.println("Finished Persist Transaction: #" + i);
 	}
 	//}
+	rspc.setDAO(daoString);
 	rpc.setDAO(daoString);
+	int j = 0;
 	//iterate through ruleset to get individual rules
-	//for (Rule rule : ruleSet.getRuleSet()) {
-	//	rpc.persistRule(rule);
-	//}
+	System.out.println("Starting Persist RuleSet");
+	rspc.persistRuleSet(ruleSet);
+	System.out.println("Finished Persist RuleSet");
+	for (Rule rule : ruleSet.getRuleSet()) {
+		System.out.println("Starting Persist Rule: #" + j);
+		rpc.persistRule(rule);
+		System.out.println("Finished Persist Rule: #" + j);
+	}
 System.out.println("Finished DAO Controller");	
 }		
 }

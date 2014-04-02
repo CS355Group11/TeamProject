@@ -37,13 +37,17 @@ public class RulePersistenceController {
 	public String generateInsertStmt(Rule rule) {
 		String result = null;
 		double ruleActualConfidence = rule.getActualConfidenceLevel();
-		String ruleAntecedent = rule.getX().toString();
-		String ruleConsequent = rule.getY().toString();
+		String ruleAntecedent = rule.getX().getItemSet().toString();
+		String ruleConsequent = rule.getY().getItemSet().toString();
 	    int ruleGenerator = 1;
-		String query = "SELECT RuleSet_ID FROM RuleSet WHERE RuleSet_ID =" +rule.getRuleSet_ID();
-		int ruleRuleSet_ID =  dao.executeResultSet(query);
+		//String query = "SELECT RuleSet_ID FROM RuleSet WHERE RuleSet_ID =" +rule.getRuleSet_ID();
+		String queryID = "SELECT MAX(RuleSet_ID) FROM RuleSet;";
+		dao.connect();
+		int ruleRuleSet_ID =  dao.executeResultSet(queryID);
+		dao.disconnect();
+		//int ruleRuleSet_ID =  dao.executeResultSet(query);
 		// TODO: code to convert rule object to SQL insert statement string for that rule
-		String insert = "INSERT INTO RULE (RuleActualConfidence, RuleAntecedent_ID, RuleConsequent_ID, RuleGenerator_ID, RuleRuleSet_ID VALUES ("+ruleActualConfidence+","+ruleAntecedent+","+ruleConsequent +","+ruleGenerator +","+ruleRuleSet_ID+")";
+		String insert = "INSERT INTO RULE (Rule_antecedent, Rule_consequent, Rule_actual_confidence, Rule_RuleSet_ID) VALUES (\""+ruleAntecedent+"\",\""+ruleConsequent +"\","+ruleActualConfidence+","+ruleRuleSet_ID+")";
 		result = insert;
 		return result;
 	}
