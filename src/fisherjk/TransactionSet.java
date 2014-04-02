@@ -8,6 +8,7 @@ public class TransactionSet {
 	
 	private ArrayList<Transaction> transactionSet;/*A transactionSet private instance variable is an ArrayList of individual Transactions*/
 	private String datetime;
+	private ArrayList<Vendor> vendorSet;
 	//private Date transactionDate;
 	
 	/*TransactionSet constructors*/
@@ -35,6 +36,17 @@ public class TransactionSet {
 
 	public void setDatetime(String datetime) {
 		this.datetime = datetime;
+	}
+	
+	
+	
+
+	public ArrayList<Vendor> getVendorSet() {
+		return vendorSet;
+	}
+
+	public void setVendorSet(ArrayList<Vendor> vendorSet) {
+		this.vendorSet = vendorSet;
 	}
 
 	/*

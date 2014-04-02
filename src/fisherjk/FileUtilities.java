@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,6 +23,7 @@ public class FileUtilities {
 
 	/* READING FILE CONTENTS*/
 	public static TransactionSet readFile(String fileInputName) {
+		ArrayList<Vendor> av = new ArrayList<Vendor>();
 		ErrorLogs errorLogs = new ErrorLogs();
 		fileInputName = "src/" + fileInputName;
 		String line = "";
@@ -131,14 +133,19 @@ public class FileUtilities {
 
 							//transactionCount++;// increment the transcation
 												// count
-
+								
 							}
 						}
 					
 					} else {
 						
-						if(vendorMatcher.find()) {
+						if(vendorMatcher.find()) {//figure out how to set vendors to transactions
 							System.out.println("Vendor is: " + line);
+							Vendor vendor = new Vendor(line);
+							av.add(vendor);
+							transactionSet.setVendorSet(av);
+							//transaction.setVendor(vendor);
+							System.out.println("MATCHER Vendor in vendor set: " + vendor.getVendor_name());
 						} else {
 						
 							if (!leftBraceMatcher.find()) {

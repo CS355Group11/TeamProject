@@ -117,6 +117,7 @@ public class Main {
 public static void DAOController (TransactionSet transactionSet, RuleSet ruleSet){
 	
 	System.out.println("Starting DAO Controller");
+	VendorPersistenceController vpc = new VendorPersistenceController();
 	TransactionPersistenceController tpc = new TransactionPersistenceController();		// controller for delegating transaction persistence
 	RulePersistenceController rpc = new RulePersistenceController();		// controller for delegating transaction persistence
 	TransactionSetPersistenceController tspc = new TransactionSetPersistenceController();		// controller for delegating transaction persistence
@@ -131,6 +132,16 @@ public static void DAOController (TransactionSet transactionSet, RuleSet ruleSet
 	catch (IOException error) {
 		System.err.println("Error reading input");
 	}
+	
+	vpc.setDAO(daoString);
+	System.out.println("Starting Persist Vendor");
+	for(int i = 0; i < transactionSet.getVendorSet().size(); i++){
+		Vendor vendor = transactionSet.getVendorSet().get(i);
+		vpc.persistVendor(vendor);
+		System.out.println("vendor " + i + " is " + vendor.getVendor_name());
+	}
+	System.out.println("Finished Persist Vendor");
+	
 
 	//daoString = "MySQL";
 	tspc.setDAO(daoString);
