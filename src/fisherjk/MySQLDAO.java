@@ -46,7 +46,7 @@ public class MySQLDAO implements DAOInterface {
 		   try
 		   {
 			  System.out.println("Connected to DB");
-			  conn = DriverManager.getConnection("jdbc:mysql://dario.cs.uwec.edu/cs355group111",user,pass);
+			  conn = DriverManager.getConnection("jdbc:mysql://dario.cs.uwec.edu/cs355group11",user,pass);
 		   }
 		   catch (SQLException sqle)
 		   {

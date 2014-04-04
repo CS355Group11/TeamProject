@@ -41,6 +41,12 @@ public class ErrorLogs {
 		}
 		return errors;
 	}
+
+	public void add(String error) {
+		this.errorMsgs.add(error); 
+	
+		
+	}
 	
 	
 	

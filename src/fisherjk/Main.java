@@ -74,6 +74,7 @@ public class Main {
 						.println("elapsed time in msec.: " + timer.getTotal());
 				/* Inserting original transactionSet and generated rule set */
 				errorLogs = DAOController(transactionSet, ruleSet);
+				System.out.println("Errors from DAO: " + errorLogs.getErrorCount());
 			} else {
 				errorLogs.getErrorMsgs().add(
 						"Format Error: Transaction Set is not well-formed");
@@ -141,7 +142,7 @@ public class Main {
 		RulePersistenceController rpc = new RulePersistenceController();
 		TransactionSetPersistenceController tspc = new TransactionSetPersistenceController();
 		RuleSetPersistenceController rspc = new RuleSetPersistenceController();
-		
+		int errorCount = 0;
 		String daoString = null;
 		InputStreamReader unbuffered = new InputStreamReader(System.in);
 		BufferedReader keyboard = new BufferedReader(unbuffered);
@@ -157,7 +158,7 @@ public class Main {
 		tpc.setDAO(daoString);
 		rspc.setDAO(daoString);
 		rpc.setDAO(daoString);
-
+		
 		System.out.println("Starting Persist Vendor");
 		for (int i = 0; i < transactionSet.getVendorSet().size(); i++) {
 			Vendor vendor = transactionSet.getVendorSet().get(i);
@@ -165,42 +166,92 @@ public class Main {
 			System.out
 					.println("vendor " + i + " is " + vendor.getVendor_name());
 		}
+		int vpc_errors = vpc.getErrorLogs().getErrorMsgs().size();
 		System.out.println("Finished Persist Vendor");
+		errorCount += vpc_errors;
+		if(errorCount != 0){
+			errorLogs.add("DATABASE ERROR: VENDOR TABLE");
+			errorLogs.add(vpc.getErrorLogs());
+			System.out.println("size: " + errorLogs.getErrorMsgs().size());
+			return errorLogs;
+		}
 
 		// daoString = "MySQL";
 		// iterate through tranactionset to get individual transactions
 		int i = 0;
-		System.out.println("Starting Persist TransactionSet");
-		tspc.persistTransactionSet(transactionSet);
-		System.out.println("Finished Persist TransactionSet");
-		for (Transaction transaction : transactionSet.getTransactionSet()) {
-			System.out.println("Size: "
-					+ transactionSet.getTransactionSet().size());
-			// for(int i = 0; i < transactionSet.getTransactionSet().size();
-			// i++){
-			System.out.println("Starting Persist Transaction: #" + i);
-			// tpc.persistTransaction(transactionSet.getTransactionSet().get(i));
-			tpc.persistTransaction(transaction);
-			i++;
-			System.out.println("Finished Persist Transaction: #" + i);
+		
+			System.out.println("Starting Persist TransactionSet");
+			tspc.persistTransactionSet(transactionSet);
+			int tspc_errors = tspc.getErrorLogs().getErrorMsgs().size();
+			errorCount += tspc_errors;
+			System.out.println("Finished Persist TransactionSet");
+		if(errorCount != 0){
+			errorLogs.add("DATABASE ERROR: TRANSACTIONSET TABLE");
+			errorLogs.add(tspc.getErrorLogs());
+			System.out.println("size: " + errorLogs.getErrorMsgs().size());
+			return errorLogs;
 		}
+		System.out.println("errorCount: " + errorCount);
+	
+			for (Transaction transaction : transactionSet.getTransactionSet()) {
+				System.out.println("Size: "
+						+ transactionSet.getTransactionSet().size());
+				// for(int i = 0; i < transactionSet.getTransactionSet().size();
+				// i++){
+				System.out.println("Starting Persist Transaction: #" + i);
+				// tpc.persistTransaction(transactionSet.getTransactionSet().get(i));
+				tpc.persistTransaction(transaction);
+				i++;
+				System.out.println("Finished Persist Transaction: #" + i);
+			}
+			int tpc_errors = tpc.getErrorLogs().getErrorMsgs().size();
+			errorCount += tpc_errors;
+			System.out.println("errorCount: " + errorCount);
+			
+			if(errorCount != 0){
+			errorLogs.add("DATABASE ERROR: TRANSACTION TABLE");
+			errorLogs.add(tpc.getErrorLogs());
+			System.out.println("size: " + errorLogs.getErrorMsgs().size());
+			return errorLogs;
+			}
+		
+		
+		
 		// }
 		int j = 0;
-		// iterate through ruleset to get individual rules
-		System.out.println("Starting Persist RuleSet");
-		rspc.persistRuleSet(ruleSet);
-		System.out.println("Finished Persist RuleSet");
-		for (Rule rule : ruleSet.getRuleSet()) {
-			System.out.println("Starting Persist Rule: #" + j);
-			rpc.persistRule(rule);
-			System.out.println("Finished Persist Rule: #" + j);
-		}
 		
-		tspc.getErrorLogs();
+			// iterate through ruleset to get individual rules
+			System.out.println("Starting Persist RuleSet");
+			rspc.persistRuleSet(ruleSet);
+			int rspc_errors = rspc.getErrorLogs().getErrorMsgs().size();
+			errorCount += rspc_errors;
+			System.out.println("errorCount: " + errorCount);
+		if(errorCount != 0){
+			errorLogs.add("DATABASE ERROR: RULESET TABLE");
+			errorLogs.add(rspc.getErrorLogs());
+			System.out.println("size: " + errorLogs.getErrorMsgs().size());
+			return errorLogs;
+			}
 		
-		errorLogs.add(tspc.getErrorLogs());
-		
+			System.out.println("Finished Persist RuleSet");
+			for (Rule rule : ruleSet.getRuleSet()) {
+				System.out.println("Starting Persist Rule: #" + j);
+				rpc.persistRule(rule);
+				System.out.println("Finished Persist Rule: #" + j);
+			}
+			int rpc_errors = rpc.getErrorLogs().getErrorMsgs().size();
+			errorCount += rpc_errors;
+			System.out.println("errorCount: " + errorCount);
+			if(errorCount != 0){
+			errorLogs.add("DATABASE ERROR: RULE TABLE");
+			errorLogs.add(rpc.getErrorLogs());
+			System.out.println("size: " + errorLogs.getErrorMsgs().size());
+			return errorLogs;
+			}
+	
+		System.out.println("Final errorCount: " + errorCount);
 		System.out.println("Finished DAO Controller");
+		System.out.println("size: " + errorLogs.getErrorMsgs().size());
 		return errorLogs;
 	}
 	

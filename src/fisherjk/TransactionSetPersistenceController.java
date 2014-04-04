@@ -19,8 +19,12 @@ public class TransactionSetPersistenceController {
 		
 		sqlStatement = generateInsertStmt(transactionSet);
 		dao.connect();
+		if(dao.getErrorLogs().getErrorMsgs().size() == 0){
 		dao.executeUpdate(sqlStatement);
+		}
+		if(dao.getErrorLogs().getErrorMsgs().size() == 0){
 		dao.disconnect();
+		}
 		
 	}
 

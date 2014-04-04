@@ -19,8 +19,12 @@ public class RulePersistenceController {
 			// could pass a student object in as parameter to this method
 		sqlStatement = generateInsertStmt(rule);
 		dao.connect();
+		if(dao.getErrorLogs().getErrorMsgs().size() == 0){
 		dao.executeUpdate(sqlStatement);
+		}
+		if(dao.getErrorLogs().getErrorMsgs().size() == 0){
 		dao.disconnect();
+		}
 	}
 
 	// setDAO - set the controller DAO to a given DAO
@@ -50,5 +54,8 @@ public class RulePersistenceController {
 		String insert = "INSERT INTO RULE (Rule_antecedent, Rule_consequent, Rule_actual_confidence, Rule_RuleSet_ID) VALUES (\""+ruleAntecedent+"\",\""+ruleConsequent +"\","+ruleActualConfidence+","+ruleRuleSet_ID+")";
 		result = insert;
 		return result;
+	}
+	public ErrorLogs getErrorLogs(){
+		return dao.getErrorLogs();
 	}
 }

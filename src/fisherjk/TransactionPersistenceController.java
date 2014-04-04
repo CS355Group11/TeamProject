@@ -19,9 +19,13 @@ public class TransactionPersistenceController {
 			// could pass a student object in as parameter to this method
 		sqlStatement = generateInsertStmt(transaction);
 		dao.connect();
+		if(dao.getErrorLogs().getErrorMsgs().size() == 0){
 		dao.executeUpdate(sqlStatement);
 		//dao.executeResultSet(sqlStatement);
+		}
+		if(dao.getErrorLogs().getErrorMsgs().size() == 0){
 		dao.disconnect();
+		}
 	}
 
 	// setDAO - set the controller DAO to a given DAO
@@ -59,5 +63,9 @@ public class TransactionPersistenceController {
 		result = insert;
 		System.out.println("Finished generateInsertStatement for transaction: " + transactionItemSet);
 		return result;
+	}
+	
+	public ErrorLogs getErrorLogs(){
+		return dao.getErrorLogs();
 	}
 }

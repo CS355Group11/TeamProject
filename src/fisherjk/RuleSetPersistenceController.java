@@ -19,8 +19,12 @@ public class RuleSetPersistenceController {
 			// could pass a student object in as parameter to this method
 		sqlStatement = generateInsertStmt(ruleSet);
 		dao.connect();
+		if(dao.getErrorLogs().getErrorMsgs().size() == 0){
 		dao.executeUpdate(sqlStatement);
+		}
+		if(dao.getErrorLogs().getErrorMsgs().size() == 0){
 		dao.disconnect();
+		}
 	}
 
 	// setDAO - set the controller DAO to a given DAO
@@ -48,5 +52,8 @@ public class RuleSetPersistenceController {
 		// TODO: code to convert rule object to SQL insert statement string for that rule
 		result = insert;
 		return result;
+	}
+	public ErrorLogs getErrorLogs(){
+		return dao.getErrorLogs();
 	}
 }
