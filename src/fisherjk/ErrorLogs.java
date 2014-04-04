@@ -23,6 +23,15 @@ public class ErrorLogs {
 		return this.errorMsgs.size();
 		
 	}
+	
+	public void add(ErrorLogs errorLogs){
+		for(int i = 0; i < errorLogs.getErrorCount(); i++){
+			String new_error = errorLogs.getErrorMsgs().get(i);
+			this.errorMsgs.add(new_error);
+		}
+		
+	}
+	
 
 	@Override
 	public String toString() {

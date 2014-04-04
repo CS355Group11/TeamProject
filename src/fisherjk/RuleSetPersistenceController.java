@@ -19,7 +19,7 @@ public class RuleSetPersistenceController {
 			// could pass a student object in as parameter to this method
 		sqlStatement = generateInsertStmt(ruleSet);
 		dao.connect();
-		dao.execute(sqlStatement);
+		dao.executeUpdate(sqlStatement);
 		dao.disconnect();
 	}
 
@@ -39,7 +39,7 @@ public class RuleSetPersistenceController {
 		//String ruleSetDateTime = ruleSet.getDatetime();
 		String queryID = "SELECT MAX(TransactionSet_ID) FROM TransactionSet;";
 		dao.connect();
-		int ruleSet_TransactionSet_ID =  dao.executeResultSet(queryID);
+		int ruleSet_TransactionSet_ID =  dao.executeQuery(queryID);
 		dao.disconnect();
 		String ruleSetDateTime = "2014-04-01 12:00:00";
 		String convert_date = "STR_TO_DATE(\""+ruleSetDateTime+"\", \"%Y-%m-%d %H:%i:%S\")";

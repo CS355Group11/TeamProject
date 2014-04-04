@@ -19,7 +19,7 @@ public class VendorPersistenceController {
 			// could pass a student object in as parameter to this method
 		sqlStatement = generateInsertStmt(vendor);
 		dao.connect();
-		dao.execute(sqlStatement);
+		dao.executeUpdate(sqlStatement);
 		//dao.executeResultSet(sqlStatement);
 		dao.disconnect();
 	}

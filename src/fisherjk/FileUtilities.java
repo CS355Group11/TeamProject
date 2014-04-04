@@ -205,8 +205,9 @@ public class FileUtilities {
 	 */
 
 	/* Method to write to a text file */
-	public static void writeFile(RuleSet ruleSets, String fileOutputName) {
+	public static void writeFile(RuleSet ruleSets, String fileOutputName, ErrorLogs errorLogs) {
 		// The name of the file to open.
+		String errorFileName = "src/errorLogs_"+fileOutputName;
 		fileOutputName = "src/" + fileOutputName;
 		
 		try {
@@ -217,8 +218,19 @@ public class FileUtilities {
 			writer.close();
 		} catch (IOException ex) {
 			System.out
-					.println("Error writing to file '" + fileOutputName + "'");
+					.println("Error writing to file: '" + fileOutputName + "'");
 		}
+		try {
+			PrintWriter error_writer = new PrintWriter(errorFileName);
+		for (int i = 0; i < errorLogs.getErrorMsgs().size(); i++) {
+			error_writer.println(errorLogs.getErrorMsgs().get(i));// get each rule set and print the result
+		}
+			error_writer.close();
+		} catch (IOException ex) {
+			System.out
+					.println("Error writing to file: '" + errorFileName + "'");
+		}
+		
 	}
 
 }

@@ -19,8 +19,9 @@ public class TransactionSetPersistenceController {
 		
 		sqlStatement = generateInsertStmt(transactionSet);
 		dao.connect();
-		dao.execute(sqlStatement);
+		dao.executeUpdate(sqlStatement);
 		dao.disconnect();
+		
 	}
 
 	// setDAO - set the controller DAO to a given DAO
@@ -55,4 +56,9 @@ public class TransactionSetPersistenceController {
 		System.out.println("Finished Insert Statement for transactionSet");
 		return result;
 	}
+	
+	public ErrorLogs getErrorLogs(){
+		return dao.getErrorLogs();
+	}
+	
 }

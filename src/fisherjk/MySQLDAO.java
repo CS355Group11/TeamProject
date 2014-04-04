@@ -22,6 +22,7 @@ public class MySQLDAO implements DAOInterface {
 	   Statement stmt = null;
 	   ResultSet rset = null;
 	   PreparedStatement pstmt = null;
+	   ErrorLogs errorLogs = new ErrorLogs();
 	
 	public void connect() {
 		System.out.println("Connecting to the database...");
@@ -45,18 +46,19 @@ public class MySQLDAO implements DAOInterface {
 		   try
 		   {
 			  System.out.println("Connected to DB");
-			  conn = DriverManager.getConnection("jdbc:mysql://dario.cs.uwec.edu/cs355group11",user,pass);
+			  conn = DriverManager.getConnection("jdbc:mysql://dario.cs.uwec.edu/cs355group111",user,pass);
 		   }
 		   catch (SQLException sqle)
 		   {
-			  System.out.println ("Could not make connection to database");
+			  errorLogs.getErrorMsgs().add("DATABASE ERROR: Could not make connection to database");
+			  System.out.println ("DATABASE ERROR: Could not make connection to database");
 			  System.out.println(sqle.getMessage());
-			  System.exit(1);
+			  
+			 // System.exit(1);
 		   }
 	}
 
-	public int execute(String query) {
-		int errorCode = 0;
+	public int executeUpdate(String query) {
 		int resultCode = 0;			// result code from SQL update
 		System.out.println("MySQL DAO execute");
 		 // --- 3) prepare and execute statement
@@ -68,15 +70,11 @@ public class MySQLDAO implements DAOInterface {
 		   {
 			  stmt = conn.createStatement();
 			  System.out.println("Statement : " + stmt);
-			  //pstmt = conn.prepareStatement(query);			// note call to prepareStatement()
-			 // pstmt.setInt(1, 400);	
-			  
-			  
-			  //rset = stmt.executeQuery(query);
 			  resultCode = stmt.executeUpdate(query);
 			  System.out.println("ResultSet : " + rset);
 			  
 			  if (resultCode == 0) {
+				   errorLogs.getErrorMsgs().add("DATABASE ERROR: Insert failed");
 				   System.out.println("Insert failed");
 			   }
 			   else {
@@ -87,33 +85,16 @@ public class MySQLDAO implements DAOInterface {
 		   }
 		   catch (Exception e)
 		   {
-			   System.out.println("Could not execute SQL statement");
+			   System.out.println("DATABASE ERROR: Could not execute SQL INSERT statement");
+			   errorLogs.getErrorMsgs().add("DATABASE ERROR: Could not execute SQL INSERT statement");
 			   System.out.println(e.getMessage());
-			   errorCode = 1;
-			   System.exit(1);
+			 //  System.exit(1);
 		   }
-		// use connection to execute query,
-		// --- 4) process result set
-		// process resultset
-		   if(rset!=null){
-		   try {
-			   while (rset.next()) {
-				   System.out.println(rset.getString(1) + "  " +	// TODO: change to use metadata
-								 	  rset.getString(2));
-			   }     // --- end - while
-		   }
-		   catch (SQLException sqle) {
-			   System.out.println("Could not process result set");
-			   System.out.println(sqle.getMessage());
-			   errorCode = 2;
-			   System.exit(1);
-		   }
-		   }
-		// set errorCode
-		return errorCode;
+
+		return resultCode;
 	}
 	
-	public int executeResultSet(String query) {
+	public int executeQuery(String query) {
 		System.out.println("Result SET QUERY");
 		int id = 0;
 		System.out.println("MySQL DAO executeResultSet");
@@ -133,9 +114,10 @@ public class MySQLDAO implements DAOInterface {
 		   catch (Exception e)
 		   {
 			   System.out.println("Could not execute SQL Result statement");
+			   errorLogs.getErrorMsgs().add("DATABASE ERROR: Could not execute SQL RESULT statement");
 			   System.out.println(e.getMessage());
 			   
-			   System.exit(1);
+			   //System.exit(1);
 		   }
 		// use connection to execute query,
 		// --- 4) process result set
@@ -148,8 +130,9 @@ public class MySQLDAO implements DAOInterface {
 		   }
 		   catch (SQLException sqle) {
 			   System.out.println("Could not process result set");
+			   errorLogs.getErrorMsgs().add("DATABASE ERROR: Could not process result set");
 			   System.out.println(sqle.getMessage());
-			   System.exit(1);
+			  // System.exit(1);
 		   }
 		   }
 		// set errorCode
@@ -161,23 +144,29 @@ public class MySQLDAO implements DAOInterface {
 		// disconnect MySQL connection, statement, resultset
 		 // --- 5) clean up statement and connection
 		   try {
-			   //stmt.close();
-			   //rset.close();
 			   if(rset != null){
 				   rset.close();
-			   }else if (stmt != null){
+			   }
+			   if (stmt != null){
 				   stmt.close();
 			   }
+			   if(conn != null){
 			   conn.close();
 			   System.out.println("Disconnected Successfully");
+			   }
 		   } 
 		   catch (SQLException sqle) {
-			   System.out.println("Could not close statement and connection");
+			   System.out.println("Could not close statement and/or connection");
+			   errorLogs.getErrorMsgs().add("DATABASE ERROR: Could not close statement and/or connection");
 			   System.out.println(sqle.getMessage());
-			   System.exit(1);
+			 //  System.exit(1);
 		   }
-		   
-		   //System.exit(0);wait until the very end
+	}
+
+	@Override
+	public ErrorLogs getErrorLogs() {
+		// TODO Auto-generated method stub
+		return errorLogs;
 	}
 
 	

@@ -14,13 +14,13 @@ public class MockDAO implements DAOInterface {
 		// do nothing
 	}
 
-	public int execute(String query) {
+	public int executeUpdate(String query) {
 		// return fake error code
 		System.out.println("mock DAO execute");
 		return 0;
 	}
 	
-	public int executeResultSet(String query) {
+	public int executeQuery(String query) {
 		// return fake error code
 		System.out.println("mock DAO execute");
 		return 0;
@@ -28,5 +28,10 @@ public class MockDAO implements DAOInterface {
 	
 	public void disconnect() {
 		// do nothing
+	}
+
+	public ErrorLogs getErrorLogs() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

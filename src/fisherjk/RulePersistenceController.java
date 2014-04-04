@@ -19,7 +19,7 @@ public class RulePersistenceController {
 			// could pass a student object in as parameter to this method
 		sqlStatement = generateInsertStmt(rule);
 		dao.connect();
-		dao.execute(sqlStatement);
+		dao.executeUpdate(sqlStatement);
 		dao.disconnect();
 	}
 
@@ -43,7 +43,7 @@ public class RulePersistenceController {
 		//String query = "SELECT RuleSet_ID FROM RuleSet WHERE RuleSet_ID =" +rule.getRuleSet_ID();
 		String queryID = "SELECT MAX(RuleSet_ID) FROM RuleSet;";
 		dao.connect();
-		int ruleRuleSet_ID =  dao.executeResultSet(queryID);
+		int ruleRuleSet_ID =  dao.executeQuery(queryID);
 		dao.disconnect();
 		//int ruleRuleSet_ID =  dao.executeResultSet(query);
 		// TODO: code to convert rule object to SQL insert statement string for that rule

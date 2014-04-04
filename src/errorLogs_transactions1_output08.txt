@@ -1,0 +1,3 @@
+Parameter Input Error:  Min Support Level is  below acceptable range. Must be between 0.0 and 1.0, inclusively
+Parameter Input Error:  Min Confidence Level is  below acceptable range. Must be between 0.0 and 1.0, inclusively
+2 error(s) found. No Rules are  Generated
