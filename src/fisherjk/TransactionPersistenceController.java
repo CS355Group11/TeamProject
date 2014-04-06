@@ -17,8 +17,8 @@ public class TransactionPersistenceController {
 		String sqlStatement;		// SQL statement to persist the student
 		
 			// could pass a student object in as parameter to this method
-		sqlStatement = generateInsertStmt(transaction);
 		dao.connect();
+		sqlStatement = generateInsertStmt(transaction);
 		if(dao.getErrorLogs().getErrorMsgs().size() == 0){
 		dao.executeUpdate(sqlStatement);
 		//dao.executeResultSet(sqlStatement);
@@ -50,11 +50,11 @@ public class TransactionPersistenceController {
 		//String query = "SELECT TransactionSet_ID FROM TransactionSet WHERE TranscationSet_ID =" + transaction.getTransactionSet_ID();
 		String queryID = "SELECT MAX(TransactionSet_ID) FROM TransactionSet;";
 		String queryVendor_ID = "SELECT MAX(Vendor_ID) FROM Vendor;";
-		dao.connect();
+		//dao.connect();
 		int transactionTransactionSet_ID =  dao.executeQuery(queryID);
 		int transactionVendor_ID =  dao.executeQuery(queryVendor_ID);
 		System.out.println("transactionVendor_ID: " + transactionVendor_ID);
-		dao.disconnect();
+		//dao.disconnect();
 		transaction.setTransactionSet_ID(transactionTransactionSet_ID);
 		int ID = transaction.getTransactionSet_ID();
 		//int vID = transaction.getTransactionSet_ID();

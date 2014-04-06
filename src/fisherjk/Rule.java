@@ -1,5 +1,8 @@
 package fisherjk;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /*Class to hold information about individual Rules for a transaction*/
 public class Rule {
 
@@ -8,6 +11,7 @@ public class Rule {
 	private double minSupportLevel;// must have 4 digits of precision
 	private double actualConfidenceLevel;// must have 4 digits of precision
 	private int ruleSet_ID = 0;
+
 
 	/*Constructors*/
 	public Rule(ItemSet antecedent, ItemSet consequent, double minSupportLevel,
@@ -86,5 +90,8 @@ public class Rule {
 				+ this.consequent.toStringWithoutSupport() + " ("
 				+ strConfidence + ")";
 	}
+
+	
+
 
 }

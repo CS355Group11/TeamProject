@@ -107,9 +107,7 @@ public class MySQLDAO implements DAOInterface {
 		   {
 			  System.out.println("Creating a statement");
 			  stmt = conn.createStatement();
-			  System.out.println("Statement : " + stmt);
 			  rset = stmt.executeQuery(query);
-			  System.out.println("ResultSet : " + rset);
 		   }
 		   catch (Exception e)
 		   {

@@ -126,21 +126,36 @@ public class FileUtilities {
 								Matcher itemMatcher = itemPattern.matcher(line);// find individual items on a new line basis
 								//int itemCount = 0;
 								ItemSet itemSet = new ItemSet();// create a new ItemSet
+								int uniqueItems = transactionSet.GetUniqueItems().getItemSet().size();
+								int totalItems = 0;
 								while (itemMatcher.find()) {// loop until we don't have any more matches in the groupings
+									
 									Item item = new Item(itemMatcher.group(0));
 									// System.out.println("Transaction # " +
 									// transactionCount + " Item # " + itemCount +
 									// ": " + item.getItem());
 									itemSet.getItemSet().add(item);// add item to
 																	// new itemset
-									//itemCount++;
+									totalItems++;//uniqueItems = transactionSet.GetUniqueItems().getItemSet().size();
 								}
 								System.out.println("Creating new Transaction Set");
 								Transaction transaction = new Transaction(itemSet);// create a new transaction
 								transactionSet.getTransactionSet().add(transaction);// append to overall transaction set
-
+								uniqueItems = transactionSet.GetUniqueItems().getItemSet().size();
+								//int totalItems = transactionSet.getTransactionSet().size();
+								System.out.println("Unique Items Count: " + uniqueItems);
+								System.out.println("Total Items Count: " + uniqueItems);
 							//transactionCount++;// increment the transcation
 												// count
+								if(uniqueItems > 25){
+									errorLogs.getErrorMsgs().add(formatError +"Too many unique items in transaction set");
+									
+								}
+								
+								if(totalItems > 1000){
+									errorLogs.getErrorMsgs().add(formatError +"Too many items in transaction set");//start here
+									
+								}
 								
 							}
 						}

@@ -8,11 +8,12 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		double minSupportLevel = 0.5;
-		double minConfidenceLevel = 0.5;
+		double minSupportLevel = 0.2;
+		double minConfidenceLevel = 0.2;
 
 		//runTest("test.txt", "output.txt", 0.22, minConfidenceLevel);// needs minSupportLevel to be 0.22 and minConfidenceLevel to be 0.5 to mimic PPT
 		runTest("wagner_input.txt", "wagner_output.txt", minSupportLevel,minConfidenceLevel);
+		//runTest("unique_items.txt", "unique_items_output.txt", 0.2,0.2);
 		// runTest("multiproduct.txt", "multiproduct_output.txt",minSupportLevel, minConfidenceLevel);
 		// runTest("error_test.txt", "error_output.txt", minSupportLevel,minConfidenceLevel);
 		// runTest("transactions1.txt", "transactions1_output01.txt", 0.25,0.5);
@@ -44,6 +45,8 @@ public class Main {
 		ErrorLogs errorLogs = new ErrorLogs();
 		ErrorLogs daoLogs = new ErrorLogs();
 		RuleSet ruleSet = new RuleSet();
+		Timer timer = new Timer();
+		Timer timerDB = new Timer();
 
 		
 		// System.out.println("supMsg: " + supMsg);
@@ -54,7 +57,7 @@ public class Main {
 			System.out.println("Min. support level is" + supMsg);
 			System.out.println("Min. confidence level is" + confMsg);
 
-			Timer timer = new Timer();
+			//Timer timer = new Timer();
 			timer.startTimer();
 			TransactionSet transactionSet = new TransactionSet();
 			System.out.println("Starting Reading File..." + fileInputName);
@@ -73,7 +76,10 @@ public class Main {
 				System.out
 						.println("elapsed time in msec.: " + timer.getTotal());
 				/* Inserting original transactionSet and generated rule set */
+				//Timer timerDB = new Timer();
 				errorLogs = DAOController(transactionSet, ruleSet);
+				timerDB.stopTimer();
+				System.out.println("DB elapsed time in msec.: " + timerDB.getTotal());
 				System.out.println("Errors from DAO: " + errorLogs.getErrorCount());
 			} else {
 				errorLogs.getErrorMsgs().add(
@@ -92,6 +98,7 @@ public class Main {
 				.println("No error(s) found. Rules are Successfully Generated");
 		errorLogs.getErrorMsgs().add("No error(s) found. Rules are Successfully Generated");
 		}
+		System.out.println("Total Time elapsed time in msec.: " + (timer.getTotal() + timerDB.getTotal()));
 		System.out.println("Starting Writing File: " + fileOutputName);
 		FileUtilities.writeFile(ruleSet, fileOutputName, errorLogs);
 		System.out.println("Finished Writing File:  " + fileOutputName);

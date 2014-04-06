@@ -1,12 +1,14 @@
 package fisherjk;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /*Class to store the complete set of rules after running the APrioriAlgorithm*/
 public class RuleSet {
 
 	private ArrayList<Rule> ruleSet;//instance variable to access the ruleSet
-	private String datetime;
+	private String timestamp;
 
 	
 	/*Constructors*/
@@ -16,6 +18,7 @@ public class RuleSet {
 	
 	public RuleSet(){
 		this.ruleSet = new ArrayList<Rule>();
+		this.timestamp = "";
 	}
 
 	/*Respective Getters and Setters*/
@@ -28,18 +31,22 @@ public class RuleSet {
 	}
 	
 
-	public String getDatetime() {
-		return datetime;
+	public String getTimestamp() {
+		return this.timestamp;
 	}
-
-	public void setDatetime(String datetime) {
-		this.datetime = datetime;
+	
+	public void setTimestamp() {
+		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//dd/MM/yyyy
+		Date now = new Date();
+		String strDate = sdfDate.format(now);
+		this.timestamp = strDate;
 	}
 
 	/*Override the toString to carefuly print each ruleSets content*/
 	@Override
 	public String toString() {
 		String strRuleSets = "";
+		strRuleSets = "Rule Set Generated on: " + this.timestamp + "\n"; 
 		for(int i = 0; i < this.ruleSet.size(); i++){
 			strRuleSets = strRuleSets + this.ruleSet.get(i).toString() + "\n"; 
 		}

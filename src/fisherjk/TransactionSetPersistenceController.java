@@ -17,8 +17,8 @@ public class TransactionSetPersistenceController {
 		String sqlStatement;		// SQL statement to persist the student
 		
 		
-		sqlStatement = generateInsertStmt(transactionSet);
 		dao.connect();
+		sqlStatement = generateInsertStmt(transactionSet);
 		if(dao.getErrorLogs().getErrorMsgs().size() == 0){
 		dao.executeUpdate(sqlStatement);
 		}

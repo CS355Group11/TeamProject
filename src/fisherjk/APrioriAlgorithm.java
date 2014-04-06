@@ -82,6 +82,7 @@ public class APrioriAlgorithm {
 					
 					rule.setX(subset);
 					
+					
 					ArrayList<Item> items = new ArrayList<Item>(itemset.getTransaction().getItemSet());
 					ItemSet consequent = new ItemSet(items);
 					
@@ -94,6 +95,7 @@ public class APrioriAlgorithm {
 					rule.setY(consequent);
 					rule.setMinSupportLevel(transSet.findSupport(itemset.getTransaction()));
 					rule.setActualConfidenceLevel(formatConfidence);
+					
 					if(rule.getX().getItemSet().size() > 0  && rule.getY().getItemSet().size() > 0){
 						allRuleSets.getRuleSet().add(rule);
 					}
@@ -105,7 +107,7 @@ public class APrioriAlgorithm {
 			
 		}		
 		
-		
+		allRuleSets.setTimestamp();
 		System.out.println("RuleSets:\n" + allRuleSets.toString());
 		
 		return allRuleSets;

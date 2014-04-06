@@ -17,8 +17,8 @@ public class RuleSetPersistenceController {
 		String sqlStatement;		// SQL statement to persist the student
 		
 			// could pass a student object in as parameter to this method
-		sqlStatement = generateInsertStmt(ruleSet);
 		dao.connect();
+		sqlStatement = generateInsertStmt(ruleSet);
 		if(dao.getErrorLogs().getErrorMsgs().size() == 0){
 		dao.executeUpdate(sqlStatement);
 		}
@@ -42,11 +42,12 @@ public class RuleSetPersistenceController {
 		String result = null;
 		//String ruleSetDateTime = ruleSet.getDatetime();
 		String queryID = "SELECT MAX(TransactionSet_ID) FROM TransactionSet;";
-		dao.connect();
+		//dao.connect();
 		int ruleSet_TransactionSet_ID =  dao.executeQuery(queryID);
-		dao.disconnect();
-		String ruleSetDateTime = "2014-04-01 12:00:00";
+		//dao.disconnect();
+		String ruleSetDateTime = ruleSet.getTimestamp();
 		String convert_date = "STR_TO_DATE(\""+ruleSetDateTime+"\", \"%Y-%m-%d %H:%i:%S\")";
+		System.out.println("Rule Set convert_date: " + convert_date);
 		String insert = "INSERT INTO RuleSet (RuleSet_datetime, RuleSet_TransactionSet_ID) VALUES ("+convert_date+", "+ruleSet_TransactionSet_ID+")";
 		result = insert;
 		// TODO: code to convert rule object to SQL insert statement string for that rule

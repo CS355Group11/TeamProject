@@ -17,8 +17,8 @@ public class VendorPersistenceController {
 		String sqlStatement;		// SQL statement to persist the student
 		
 			// could pass a student object in as parameter to this method
-		sqlStatement = generateInsertStmt(vendor);
 		dao.connect();
+		sqlStatement = generateInsertStmt(vendor);
 		if(dao.getErrorLogs().getErrorMsgs().size() == 0){
 		dao.executeUpdate(sqlStatement);
 		//dao.executeResultSet(sqlStatement);
