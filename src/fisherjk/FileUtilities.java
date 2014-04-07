@@ -30,6 +30,8 @@ public class FileUtilities {
 		TransactionSet transactionSet = new TransactionSet();
 		String formatError = "Format Error: ";
 		int errorCount = 0;
+		int largestTransactionSize = 0;
+		int transactionItemCount  = 0;
 		try {
 			// FileReader reads text files in the default encoding.
 			FileReader fileReader = new FileReader(fileInputName);
@@ -147,10 +149,22 @@ public class FileUtilities {
 								System.out.println("Total Items Count: " + uniqueItems);
 							//transactionCount++;// increment the transcation
 												// count
-								if(uniqueItems > 25){
-									errorLogs.getErrorMsgs().add(formatError +"Too many unique items in transaction set");
+								
+								transactionItemCount = transaction.getTransaction().getItemSet().size();
+								if(transactionItemCount > largestTransactionSize){
+									largestTransactionSize = transactionItemCount;
+								}
+								System.out.println();
+								
+								if(largestTransactionSize > 25){
+									errorLogs.getErrorMsgs().add(formatError +"Too many items in transaction set (Must be 25 or less items)");
 									
 								}
+								
+								//if(uniqueItems > 25){
+								//	errorLogs.getErrorMsgs().add(formatError +"Too many unique items in transaction set");
+									
+								//}
 								
 								if(totalItems > 1000){
 									errorLogs.getErrorMsgs().add(formatError +"Too many items in transaction set");//start here

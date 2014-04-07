@@ -1,6 +1,8 @@
 package fisherjk;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 //import java.util.Date;
 /* Class for holding information about a set of transactions in a TransactionSet*/
 public class TransactionSet {
@@ -12,6 +14,7 @@ public class TransactionSet {
 	//private Date transactionDate;
 	private String start_date;
 	private String end_date;
+	private String timestamp;
 	
 	/*TransactionSet constructors*/
 	public TransactionSet(ArrayList<Transaction> transactionSet) {
@@ -57,15 +60,17 @@ public class TransactionSet {
 		this.vendorSet = vendorSet;
 	}
 
-	/*
-	public Date getTransactionDate() {
-		return transactionDate;
+	public String getTimestamp() {
+		return this.timestamp;
 	}
-
-	public void setTransactionDate(Date transactionDate) {
-		this.transactionDate = transactionDate;
+	
+	public void setTimestamp() {
+		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy
+		Date now = new Date();
+		String strDate = sdfDate.format(now);
+		this.timestamp = strDate+"12:00:00";
 	}
-	 */
+	
 	/*Returns an itemSet containing a set of unique items found in a transactionSet which consists of Transactions*/
 	public ItemSet GetUniqueItems() {
 		ItemSet uniqueItems = new ItemSet();/*uniquely constructed itemSet*/

@@ -1,22 +1,13 @@
-/*
- * StudentPersistenceController - controller class to persist a student
- * 
- * Created by Paul J. Wagner, 2/28/2013
- */
 package fisherjk;
 
 
 public class RuleSetPersistenceController {
-	// data
-	//private Rule rule;		// student being worked with
+	
 	private DAOInterface dao;		// the Data Access Object (DAO) being used
 	
-	// methods
-	// persistStudent - overall method to persist a single student object
+	//Method to connect, update, and disconnect RuleSet
 	public void persistRuleSet(RuleSet ruleSet) {
-		String sqlStatement;		// SQL statement to persist the student
-		
-			// could pass a student object in as parameter to this method
+		String sqlStatement;		
 		dao.connect();
 		sqlStatement = generateInsertStmt(ruleSet);
 		if(dao.getErrorLogs().getErrorMsgs().size() == 0){
@@ -37,10 +28,9 @@ public class RuleSetPersistenceController {
 		}
 	}
 	
-	// generateInsertStmt - generate an SQL insert statement for a particular rule object
+	// generateInsertStmt - generate an SQL insert statement for a particular ruleSet object
 	public String generateInsertStmt(RuleSet ruleSet) {
 		String result = null;
-		//String ruleSetDateTime = ruleSet.getDatetime();
 		String queryID = "SELECT MAX(TransactionSet_ID) FROM TransactionSet;";
 		String queryGenID = "SELECT MAX(Generator_ID) FROM Generator;";
 		//dao.connect();
@@ -52,7 +42,6 @@ public class RuleSetPersistenceController {
 		System.out.println("Rule Set convert_date: " + convert_date);
 		String insert = "INSERT INTO RuleSet (RuleSet_datetime, RuleSet_TransactionSet_ID, RuleSet_Generator_ID) VALUES ("+convert_date+", "+ruleSet_TransactionSet_ID+", " + ruleSet_Generator_ID+")";
 		result = insert;
-		// TODO: code to convert rule object to SQL insert statement string for that rule
 		result = insert;
 		return result;
 	}

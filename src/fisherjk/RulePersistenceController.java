@@ -1,22 +1,13 @@
-/*
- * StudentPersistenceController - controller class to persist a student
- * 
- * Created by Paul J. Wagner, 2/28/2013
- */
 package fisherjk;
 
 
 public class RulePersistenceController {
-	// data
-	//private Rule rule;		// student being worked with
+	
 	private DAOInterface dao;		// the Data Access Object (DAO) being used
 	
-	// methods
-	// persistStudent - overall method to persist a single student object
+	//Method to connect, update, and disconnect Rule
 	public void persistRule(Rule rule) {
-		String sqlStatement;		// SQL statement to persist the student
-		
-			// could pass a student object in as parameter to this method
+		String sqlStatement;
 		dao.connect();
 		sqlStatement = generateInsertStmt(rule);
 		if(dao.getErrorLogs().getErrorMsgs().size() == 0){
@@ -43,8 +34,6 @@ public class RulePersistenceController {
 		double ruleActualConfidence = rule.getActualConfidenceLevel();
 		String ruleAntecedent = rule.getX().getItemSet().toString();
 		String ruleConsequent = rule.getY().getItemSet().toString();
-	    int ruleGenerator = 1;
-		//String query = "SELECT RuleSet_ID FROM RuleSet WHERE RuleSet_ID =" +rule.getRuleSet_ID();
 		String queryID = "SELECT MAX(RuleSet_ID) FROM RuleSet;";
 		//dao.connect();
 		int ruleRuleSet_ID =  dao.executeQuery(queryID);
