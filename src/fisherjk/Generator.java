@@ -7,17 +7,17 @@ import java.util.ArrayList;
 
 
 
-public class APrioriAlgorithm {
+public class Generator {
 	
 	private double generator_minSupportLevel;
 	private double generator_minConfidenceLevel;
 	
 	
-	public APrioriAlgorithm(){
+	public Generator(){
 		
 	}
 
-	public APrioriAlgorithm(double generator_minSupportLevel, double generator_minConfidenceLevel) {
+	public Generator(double generator_minSupportLevel, double generator_minConfidenceLevel) {
 		this.generator_minSupportLevel = generator_minSupportLevel;
 		this.generator_minConfidenceLevel = generator_minConfidenceLevel;
 	}

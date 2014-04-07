@@ -56,7 +56,7 @@ public class Main {
 		if (supMsg.equals("") && confMsg.equals("")) {// no errors
 			System.out.println("Min. support level is" + supMsg);
 			System.out.println("Min. confidence level is" + confMsg);
-			APrioriAlgorithm generator = new APrioriAlgorithm(minSupportLevel, minConfidenceLevel);
+			Generator generator = new Generator(minSupportLevel, minConfidenceLevel);
 			//Timer timer = new Timer();
 			timer.startTimer();
 			TransactionSet transactionSet = new TransactionSet();
@@ -65,11 +65,11 @@ public class Main {
 			if (transactionSet != null) {// while I have transactionSet
 
 				System.out.println("Starting APriori");
-				TransactionSet input = APrioriAlgorithm.DoApriori(
+				TransactionSet input = Generator.DoApriori(
 						transactionSet, minSupportLevel);
 				System.out.println("Finished APriori");
 				System.out.println("Starting Generating Rules");
-				ruleSet = APrioriAlgorithm.GenerateRuleSets(transactionSet,
+				ruleSet = Generator.GenerateRuleSets(transactionSet,
 						input, minConfidenceLevel);
 				System.out.println("Finished Generating Rules");
 				timer.stopTimer();
@@ -141,7 +141,7 @@ public class Main {
 	
 
 	/* DAO MAIN */
-	public static ErrorLogs DAOController(APrioriAlgorithm generator, TransactionSet transactionSet,RuleSet ruleSet) {
+	public static ErrorLogs DAOController(Generator generator, TransactionSet transactionSet,RuleSet ruleSet) {
 		System.out.println("Starting DAO Controller");
 		ErrorLogs errorLogs = new ErrorLogs();
 		GeneratorPersistenceController gpc = new GeneratorPersistenceController();
