@@ -199,6 +199,11 @@ public class FileUtilities {
 		} catch (IOException ex) {
 			System.out.println("Error reading file '" + fileInputName + "'");
 		}
+		
+		if(av.isEmpty()){
+			System.out.println("Format Error: No Vendor Provided");
+			errorLogs.add("Format Error: No Vendor Provided");
+		}
 		//System.out.println("Error Count: " + errorCount);
 		if(errorLogs.getErrorCount() >0){
 		transactionSet = null;

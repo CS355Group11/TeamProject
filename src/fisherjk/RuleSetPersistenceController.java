@@ -42,13 +42,15 @@ public class RuleSetPersistenceController {
 		String result = null;
 		//String ruleSetDateTime = ruleSet.getDatetime();
 		String queryID = "SELECT MAX(TransactionSet_ID) FROM TransactionSet;";
+		String queryGenID = "SELECT MAX(Generator_ID) FROM Generator;";
 		//dao.connect();
 		int ruleSet_TransactionSet_ID =  dao.executeQuery(queryID);
+		int ruleSet_Generator_ID =  dao.executeQuery(queryGenID);
 		//dao.disconnect();
 		String ruleSetDateTime = ruleSet.getTimestamp();
 		String convert_date = "STR_TO_DATE(\""+ruleSetDateTime+"\", \"%Y-%m-%d %H:%i:%S\")";
 		System.out.println("Rule Set convert_date: " + convert_date);
-		String insert = "INSERT INTO RuleSet (RuleSet_datetime, RuleSet_TransactionSet_ID) VALUES ("+convert_date+", "+ruleSet_TransactionSet_ID+")";
+		String insert = "INSERT INTO RuleSet (RuleSet_datetime, RuleSet_TransactionSet_ID, RuleSet_Generator_ID) VALUES ("+convert_date+", "+ruleSet_TransactionSet_ID+", " + ruleSet_Generator_ID+")";
 		result = insert;
 		// TODO: code to convert rule object to SQL insert statement string for that rule
 		result = insert;

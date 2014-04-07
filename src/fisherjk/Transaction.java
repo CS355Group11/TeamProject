@@ -1,6 +1,7 @@
 package fisherjk;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /*Class for holding singular ItemSet records*/
@@ -11,6 +12,7 @@ public class Transaction {
 	private double transactionTotalPrice;//A transaction total price
 	private int transactionSet_ID = 0;
 	private Vendor vendor;
+	private String timestamp;
 
 	/*Constructors for Transaction Class*/
 	public Transaction(ItemSet transaction) {
@@ -68,6 +70,18 @@ public class Transaction {
 	public void setVendor(Vendor vendor) {
 		this.vendor = vendor;
 	}
+	
+	public String getTimestamp() {
+		return this.timestamp;
+	}
+	
+	public void setTimestamp() {
+		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy
+		Date now = new Date();
+		String strDate = sdfDate.format(now);
+		this.timestamp = strDate+"12:00:00";
+	}
+	
 
 	/*Override the Transaction's toString to call the ItemSet's to String which calls an Item toString*/
 	@Override

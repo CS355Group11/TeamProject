@@ -43,7 +43,10 @@ public class TransactionPersistenceController {
 		System.out.println("Generating Insert Statement for transaction");
 		// TODO: code to convert transaction object to SQL insert statement string for that transaction
 		String result = null;
-		String transactionDateTime = "2014-04-01 12:00:00";
+		if(transaction.getTimestamp()==null){
+			transaction.setTimestamp();
+		}
+		String transactionDateTime = transaction.getTimestamp();
 		String transactionItemSet = transaction.getTransaction().getItemSet().toString();
 		System.out.println("Transaction Item Set: " + transactionItemSet);
 		
@@ -59,7 +62,7 @@ public class TransactionPersistenceController {
 		int ID = transaction.getTransactionSet_ID();
 		//int vID = transaction.getTransactionSet_ID();
 		String convert_date = "STR_TO_DATE(\""+transactionDateTime+"\", \"%Y-%m-%d %H:%i:%S\")";
-		String insert= "INSERT INTO Transaction (Transaction_start_datetime,Transaction_end_datetime, Transaction_items, Transaction_TransactionSet_ID, Transaction_Vendor_ID) VALUES("+convert_date+", "+convert_date+", \""+transactionItemSet+"\","+ID+", "+transactionVendor_ID+");";
+		String insert= "INSERT INTO Transaction (Transaction_datetime, Transaction_items, Transaction_TransactionSet_ID, Transaction_Vendor_ID) VALUES("+convert_date+", \""+transactionItemSet+"\","+ID+", "+transactionVendor_ID+");";
 		result = insert;
 		System.out.println("Finished generateInsertStatement for transaction: " + transactionItemSet);
 		return result;

@@ -6,19 +6,18 @@
 package fisherjk;
 
 
-public class VendorPersistenceController {
+public class GeneratorPersistenceController {
 	// data
-	//private Transaction transaction;		// student being worked with
 	private DAOInterface dao;		// the Data Access Object (DAO) being used
 	
 	// methods
 	// persistStudent - overall method to persist a single student object
-	public void persistVendor(Vendor vendor) {
+	public void persistGenerator(double minSupportLevel, double minConfidenceLevel) {
 		String sqlStatement;		// SQL statement to persist the student
 		
 			// could pass a student object in as parameter to this method
 		dao.connect();
-		sqlStatement = generateInsertStmt(vendor);
+		sqlStatement = generateInsertStmt(minSupportLevel, minConfidenceLevel);
 		if(dao.getErrorLogs().getErrorMsgs().size() == 0){
 		dao.executeUpdate(sqlStatement);
 		//dao.executeResultSet(sqlStatement);
@@ -40,18 +39,14 @@ public class VendorPersistenceController {
 	}
 	
 	// generateInsertStmt - generate an SQL insert statement for a particular transaction object
-	public String generateInsertStmt(Vendor vendor) {
+	public String generateInsertStmt(double minSupportLevel, double minConfidenceLevel) {
 		System.out.println("Generating Insert Statement for vendor");
 		// TODO: code to convert transaction object to SQL insert statement string for that transaction
 		String result = null;
-		String vendor_name = vendor.getVendor_name();
-		if(vendor_name == ""){
-			vendor_name = "Not Provided";
-		}
-		String insert= "INSERT INTO Vendor (Vendor_name) VALUES(\""+vendor_name+"\");";
+		String insert= "INSERT INTO Generator (Generator_min_support, Generator_min_confidence) VALUES("+minSupportLevel+", "+minConfidenceLevel+");";
 		System.out.println("insert statment " + insert);
 		result = insert;
-		System.out.println("Finished generateInsertStatement for vendor: " + vendor_name);
+		System.out.println("Finished generateInsertStatement for generator: ");
 		return result;
 	}
 	public ErrorLogs getErrorLogs(){

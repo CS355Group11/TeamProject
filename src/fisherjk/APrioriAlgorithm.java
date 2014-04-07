@@ -4,9 +4,42 @@ import java.util.ArrayList;
 
 
 /*Class to Run the Part I of the A Priori Algorithm */
+
+
+
 public class APrioriAlgorithm {
+	
+	private double generator_minSupportLevel;
+	private double generator_minConfidenceLevel;
+	
+	
+	public APrioriAlgorithm(){
+		
+	}
+
+	public APrioriAlgorithm(double generator_minSupportLevel, double generator_minConfidenceLevel) {
+		this.generator_minSupportLevel = generator_minSupportLevel;
+		this.generator_minConfidenceLevel = generator_minConfidenceLevel;
+	}
+
+	public double getGenerator_minSupportLevel() {
+		return generator_minSupportLevel;
+	}
+
+	public void setGenerator_minSupportLevel(double generator_minSupportLevel) {
+		this.generator_minSupportLevel = generator_minSupportLevel;
+	}
+
+	public double getGenerator_minConfidenceLevel() {
+		return generator_minConfidenceLevel;
+	}
+
+	public void setGenerator_minConfidenceLevel(double generator_minConfidenceLevel) {
+		this.generator_minConfidenceLevel = generator_minConfidenceLevel;
+	}
 
 	public static TransactionSet DoApriori(TransactionSet transSet,double minSupportLevel) {
+		
 		
 		ItemSet initialItemSet = transSet.GetUniqueItems();//get all singular unique items and put them into a ItemSet object
 		TransactionSet finalLargeItemSet = new TransactionSet(); // resultant large itemsets

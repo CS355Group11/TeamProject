@@ -11,8 +11,8 @@ public class Main {
 		double minSupportLevel = 0.2;
 		double minConfidenceLevel = 0.2;
 
-		//runTest("test.txt", "output.txt", 0.22, minConfidenceLevel);// needs minSupportLevel to be 0.22 and minConfidenceLevel to be 0.5 to mimic PPT
-		runTest("wagner_input.txt", "wagner_output.txt", minSupportLevel,minConfidenceLevel);
+		runTest("test.txt", "output.txt", 0.22, minConfidenceLevel);// needs minSupportLevel to be 0.22 and minConfidenceLevel to be 0.5 to mimic PPT
+		//runTest("wagner_input.txt", "wagner_output.txt", minSupportLevel,minConfidenceLevel);
 		//runTest("unique_items.txt", "unique_items_output.txt", 0.2,0.2);
 		// runTest("multiproduct.txt", "multiproduct_output.txt",minSupportLevel, minConfidenceLevel);
 		// runTest("error_test.txt", "error_output.txt", minSupportLevel,minConfidenceLevel);
@@ -47,7 +47,7 @@ public class Main {
 		RuleSet ruleSet = new RuleSet();
 		Timer timer = new Timer();
 		Timer timerDB = new Timer();
-
+		
 		
 		// System.out.println("supMsg: " + supMsg);
 		// System.out.println("confMsg: " + confMsg);
@@ -56,7 +56,7 @@ public class Main {
 		if (supMsg.equals("") && confMsg.equals("")) {// no errors
 			System.out.println("Min. support level is" + supMsg);
 			System.out.println("Min. confidence level is" + confMsg);
-
+			APrioriAlgorithm generator = new APrioriAlgorithm(minSupportLevel, minConfidenceLevel);
 			//Timer timer = new Timer();
 			timer.startTimer();
 			TransactionSet transactionSet = new TransactionSet();
@@ -77,7 +77,7 @@ public class Main {
 						.println("elapsed time in msec.: " + timer.getTotal());
 				/* Inserting original transactionSet and generated rule set */
 				//Timer timerDB = new Timer();
-				errorLogs = DAOController(transactionSet, ruleSet);
+				errorLogs = DAOController(generator, transactionSet, ruleSet);
 				timerDB.stopTimer();
 				System.out.println("DB elapsed time in msec.: " + timerDB.getTotal());
 				System.out.println("Errors from DAO: " + errorLogs.getErrorCount());
@@ -141,9 +141,10 @@ public class Main {
 	
 
 	/* DAO MAIN */
-	public static ErrorLogs DAOController(TransactionSet transactionSet,RuleSet ruleSet) {
+	public static ErrorLogs DAOController(APrioriAlgorithm generator, TransactionSet transactionSet,RuleSet ruleSet) {
 		System.out.println("Starting DAO Controller");
 		ErrorLogs errorLogs = new ErrorLogs();
+		GeneratorPersistenceController gpc = new GeneratorPersistenceController();
 		VendorPersistenceController vpc = new VendorPersistenceController();
 		TransactionPersistenceController tpc = new TransactionPersistenceController();
 		RulePersistenceController rpc = new RulePersistenceController();
@@ -159,14 +160,27 @@ public class Main {
 		} catch (IOException error) {
 			System.err.println("Error reading input");
 		}
-
+		gpc.setDAO(daoString);
 		vpc.setDAO(daoString);
 		tspc.setDAO(daoString);
 		tpc.setDAO(daoString);
 		rspc.setDAO(daoString);
 		rpc.setDAO(daoString);
 		
+		System.out.println("Starting Persist Generator");
+		gpc.persistGenerator(generator.getGenerator_minSupportLevel(), generator.getGenerator_minConfidenceLevel());
+		System.out.println("Finished Persist Generator");
+		int gpc_errors = gpc.getErrorLogs().getErrorMsgs().size();
+		errorCount += gpc_errors;
+		if(errorCount != 0){
+			errorLogs.add("DATABASE ERROR: GENERATOR TABLE");
+			errorLogs.add(gpc.getErrorLogs());
+			return errorLogs;
+		}
 		System.out.println("Starting Persist Vendor");
+		
+
+		
 		for (int i = 0; i < transactionSet.getVendorSet().size(); i++) {
 			Vendor vendor = transactionSet.getVendorSet().get(i);
 			vpc.persistVendor(vendor);
