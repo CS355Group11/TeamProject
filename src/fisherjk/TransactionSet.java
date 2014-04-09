@@ -9,7 +9,7 @@ public class TransactionSet {
 
 	
 	private ArrayList<Transaction> transactionSet;/*A transactionSet private instance variable is an ArrayList of individual Transactions*/
-	private String datetime;
+	//private String datetime;
 	private ArrayList<Vendor> vendorSet;
 	//private Date transactionDate;
 	private String start_date;

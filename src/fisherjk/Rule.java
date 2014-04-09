@@ -1,7 +1,6 @@
 package fisherjk;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 
 /*Class to hold information about individual Rules for a transaction*/
 public class Rule {

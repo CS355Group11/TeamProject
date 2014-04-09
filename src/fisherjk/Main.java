@@ -11,8 +11,8 @@ public class Main {
 		double minSupportLevel = 0.2;
 		double minConfidenceLevel = 0.2;
 
-		//runTest("test.txt", "output.txt", 0.22, minConfidenceLevel);// needs minSupportLevel to be 0.22 and minConfidenceLevel to be 0.5 to mimic PPT
-		//runTest("wagner_input.txt", "wagner_output.txt", minSupportLevel,minConfidenceLevel);
+		runTest("test.txt", "output.txt", 0.22, minConfidenceLevel);// needs minSupportLevel to be 0.22 and minConfidenceLevel to be 0.5 to mimic PPT
+		runTest("wagner_input.txt", "wagner_output.txt", minSupportLevel,minConfidenceLevel);
 		//runTest("unique_items.txt", "unique_items_output.txt", 0.2,0.2);
 		// runTest("multiproduct.txt", "multiproduct_output.txt",minSupportLevel, minConfidenceLevel);
 		// runTest("error_test.txt", "error_output.txt", minSupportLevel,minConfidenceLevel);
@@ -53,7 +53,7 @@ public class Main {
 		String supMsg = checkLevels(minSupportLevel);
 		String confMsg = checkLevels(minConfidenceLevel);
 		ErrorLogs errorLogs = new ErrorLogs();
-		ErrorLogs daoLogs = new ErrorLogs();
+		//ErrorLogs daoLogs = new ErrorLogs();
 		RuleSet ruleSet = new RuleSet();
 		Timer timer = new Timer();
 		Timer timerDB = new Timer();
