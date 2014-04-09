@@ -19,6 +19,8 @@ public class FileUtilities {
 	 * number, to be used in rule generation/filtering), 3. the name of a file
 	 * holding a transaction set in the specified format previously discussed
 	 */
+	
+	
 
 
 	/* READING FILE CONTENTS*/

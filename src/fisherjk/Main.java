@@ -18,13 +18,13 @@ public class Main {
 		// runTest("error_test.txt", "error_output.txt", minSupportLevel,minConfidenceLevel);
 		
 		/*ALL TESTS SUCCEED*/
-		 /*
+		 
 		 runTest("transactions1.txt", "transactions1_output01.txt", 0.25,0.5);
 		 runTest("transactions1.txt", "transactions1_output02.txt", 0.5, 0.66);
 		 runTest("transactions1.txt", "transactions1_output03.txt", 0.75,0.66);
 		 runTest("transactions1.txt", "transactions1_output04.txt", 0.5, 0.8);
 		 runTest("transactions1.txt", "transactions1_output05.txt", 0.0, 0.0);
-		 */
+		 
 		/*ERROR TESTS*/
 		/*ERRORS ARE SUCCESSFULLY CAUGHT*/
 		/*
@@ -41,7 +41,7 @@ public class Main {
 		
 		/*LOAD TEST*/
 		//Success:  runTest("transactions5.txt", "transactions5_output.txt", 0.25, 0.5);
-		runTest("transactions6.txt", "transactions6_output.txt", 0.2, 0.1);//1000 transactions with 100 items
+		//runTest("transactions6.txt", "transactions6_output.txt", 0.2, 0.1);//1000 transactions with 100 items
 		//?????? runTest("transactions7.txt", "transactions7_output.txt", 0.12, 0.6);//10000 transactions with 1000 items
 
 		/* END OF DAO MAIN */
@@ -154,12 +154,12 @@ public class Main {
 	public static ErrorLogs DAOController(Generator generator, TransactionSet transactionSet,RuleSet ruleSet) {
 		System.out.println("Starting DAO Controller");
 		ErrorLogs errorLogs = new ErrorLogs();
-		GeneratorPersistenceController gpc = new GeneratorPersistenceController();
 		VendorPersistenceController vpc = new VendorPersistenceController();
 		TransactionPersistenceController tpc = new TransactionPersistenceController();
 		RulePersistenceController rpc = new RulePersistenceController();
 		TransactionSetPersistenceController tspc = new TransactionSetPersistenceController();
 		RuleSetPersistenceController rspc = new RuleSetPersistenceController();
+		GeneratorPersistenceController gpc = new GeneratorPersistenceController();
 		int errorCount = 0;
 		String daoString = null;
 		InputStreamReader unbuffered = new InputStreamReader(System.in);
@@ -177,16 +177,6 @@ public class Main {
 		rspc.setDAO(daoString);
 		rpc.setDAO(daoString);
 		
-		System.out.println("Starting Persist Generator");
-		gpc.persistGenerator(generator.getGenerator_minSupportLevel(), generator.getGenerator_minConfidenceLevel());
-		System.out.println("Finished Persist Generator");
-		int gpc_errors = gpc.getErrorLogs().getErrorMsgs().size();
-		errorCount += gpc_errors;
-		if(errorCount != 0){
-			errorLogs.add("DATABASE ERROR: GENERATOR TABLE");
-			errorLogs.add(gpc.getErrorLogs());
-			return errorLogs;
-		}
 		System.out.println("Starting Persist Vendor");
 		
 
@@ -246,6 +236,16 @@ public class Main {
 			return errorLogs;
 			}
 		
+			System.out.println("Starting Persist Generator");
+			gpc.persistGenerator(generator.getGenerator_minSupportLevel(), generator.getGenerator_minConfidenceLevel());
+			System.out.println("Finished Persist Generator");
+			int gpc_errors = gpc.getErrorLogs().getErrorMsgs().size();
+			errorCount += gpc_errors;
+			if(errorCount != 0){
+				errorLogs.add("DATABASE ERROR: GENERATOR TABLE");
+				errorLogs.add(gpc.getErrorLogs());
+				return errorLogs;
+			}
 		
 		
 		// }

@@ -1,1 +1,3 @@
-No error(s) found. Rules are Successfully Generated
+DATABASE ERROR: GENERATOR TABLE
+DATABASE ERROR: Could not execute SQL INSERT statement
+2 error(s) found. No Rules are  Generated

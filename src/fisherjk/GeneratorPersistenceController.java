@@ -43,7 +43,9 @@ public class GeneratorPersistenceController {
 		System.out.println("Generating Insert Statement for vendor");
 		// TODO: code to convert transaction object to SQL insert statement string for that transaction
 		String result = null;
-		String insert= "INSERT INTO Generator (Generator_min_support, Generator_min_confidence) VALUES("+minSupportLevel+", "+minConfidenceLevel+");";
+		String queryID = "SELECT MAX(TransactionSet_ID) FROM TransactionSet;";
+		int generator_TransactionSet_ID =  dao.executeQuery(queryID);
+		String insert= "INSERT INTO Generator (Generator_min_support, Generator_min_confidence, Generator_TransactionSet_ID) VALUES("+minSupportLevel+", "+minConfidenceLevel+", " + generator_TransactionSet_ID+");";
 		System.out.println("insert statment " + insert);
 		result = insert;
 		System.out.println("Finished generateInsertStatement for generator: ");
