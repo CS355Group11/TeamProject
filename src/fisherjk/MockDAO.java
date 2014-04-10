@@ -10,8 +10,9 @@ package fisherjk;
 
 public class MockDAO implements DAOInterface {
 	// methods
-	public void connect() {
+	public int connect() {
 		// do nothing
+		return 0;
 	}
 
 	public int executeUpdate(String query) {
@@ -26,8 +27,9 @@ public class MockDAO implements DAOInterface {
 		return 0;
 	}
 	
-	public void disconnect() {
+	public int disconnect() {
 		// do nothing
+		return 0;
 	}
 
 	public ErrorLogs getErrorLogs() {
