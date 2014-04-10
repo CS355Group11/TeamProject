@@ -24,8 +24,9 @@ public class MySQLDAO implements DAOInterface {
 	   PreparedStatement pstmt = null;
 	   ErrorLogs errorLogs = new ErrorLogs();
 	
-	public void connect() {
+	public int connect() {
 		System.out.println("Connecting to the database...");
+		int errorCode = 0;
 		// load MySQL driver
 		 // --- 1) get the Class object for the driver 
 		   try
@@ -53,9 +54,10 @@ public class MySQLDAO implements DAOInterface {
 			  errorLogs.getErrorMsgs().add("DATABASE ERROR: Could not make connection to database");
 			  System.out.println ("DATABASE ERROR: Could not make connection to database");
 			  System.out.println(sqle.getMessage());
-			  
+			  errorCode = 1;
 			 // System.exit(1);
 		   }
+		   return errorCode;
 	}
 
 	public int executeUpdate(String query) {
@@ -137,10 +139,11 @@ public class MySQLDAO implements DAOInterface {
 		return id;
 	}
 	
-	public void disconnect() {
+	public int disconnect() {
 		System.out.println("Disconnecting...");
 		// disconnect MySQL connection, statement, resultset
 		 // --- 5) clean up statement and connection
+		int errorCode = 0;
 		   try {
 			   if(rset != null){
 				   rset.close();
@@ -157,8 +160,10 @@ public class MySQLDAO implements DAOInterface {
 			   System.out.println("Could not close statement and/or connection");
 			   errorLogs.getErrorMsgs().add("DATABASE ERROR: Could not close statement and/or connection");
 			   System.out.println(sqle.getMessage());
+			   errorCode =1;
 			 //  System.exit(1);
 		   }
+		   return errorCode;
 	}
 
 	@Override
