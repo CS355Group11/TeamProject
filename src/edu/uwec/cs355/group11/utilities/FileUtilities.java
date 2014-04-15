@@ -1,4 +1,4 @@
-package fisherjk;
+package edu.uwec.cs355.group11.utilities;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -8,6 +8,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import edu.uwec.cs355.group11.algorithm.Item;
+import edu.uwec.cs355.group11.algorithm.ItemSet;
+import edu.uwec.cs355.group11.algorithm.RuleSet;
+import edu.uwec.cs355.group11.algorithm.Transaction;
+import edu.uwec.cs355.group11.algorithm.TransactionSet;
+import edu.uwec.cs355.group11.algorithm.Vendor;
 
 /*IMPLEMENTED TO WITHSTANd TEST CASES AS BEST AS POSSIBLE*/
 public class FileUtilities {

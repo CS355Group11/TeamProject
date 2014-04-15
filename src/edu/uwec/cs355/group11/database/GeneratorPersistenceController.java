@@ -3,7 +3,9 @@
  * 
  * Created by Paul J. Wagner, 2/28/2013
  */
-package fisherjk;
+package edu.uwec.cs355.group11.database;
+
+import edu.uwec.cs355.group11.utilities.ErrorLogs;
 
 
 public class GeneratorPersistenceController {

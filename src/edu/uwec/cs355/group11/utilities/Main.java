@@ -1,8 +1,21 @@
-package fisherjk;
+package edu.uwec.cs355.group11.utilities;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+import edu.uwec.cs355.group11.algorithm.Generator;
+import edu.uwec.cs355.group11.algorithm.Rule;
+import edu.uwec.cs355.group11.algorithm.RuleSet;
+import edu.uwec.cs355.group11.algorithm.Transaction;
+import edu.uwec.cs355.group11.algorithm.TransactionSet;
+import edu.uwec.cs355.group11.algorithm.Vendor;
+import edu.uwec.cs355.group11.database.GeneratorPersistenceController;
+import edu.uwec.cs355.group11.database.RulePersistenceController;
+import edu.uwec.cs355.group11.database.RuleSetPersistenceController;
+import edu.uwec.cs355.group11.database.TransactionPersistenceController;
+import edu.uwec.cs355.group11.database.TransactionSetPersistenceController;
+import edu.uwec.cs355.group11.database.VendorPersistenceController;
 /*
  * import java.util.ArrayList;
 import java.util.HashSet;

@@ -1,8 +1,10 @@
-package fisherjk;
+package edu.uwec.cs355.group11.algorithm;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import edu.uwec.cs355.group11.utilities.Timer;
 //import java.util.Date;
 /* Class for holding information about a set of transactions in a TransactionSet*/
 public class TransactionSet implements Runnable {

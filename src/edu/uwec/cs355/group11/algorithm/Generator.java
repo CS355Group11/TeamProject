@@ -1,6 +1,8 @@
-package fisherjk;
+package edu.uwec.cs355.group11.algorithm;
 
 import java.util.ArrayList;
+
+import edu.uwec.cs355.group11.utilities.Timer;
 
 
 /*Class to Run the Part I of the A Priori Algorithm */
