@@ -267,7 +267,7 @@ public class WebClient extends JFrame {
 		}
 		System.out.println("Total Time elapsed time in msec.: " + (timer.getTotal() + timerDB.getTotal()));
 		System.out.println("Starting Writing File: " + fileOutputName);
-		FileUtilities.writeFile(ruleSet, fileOutputName, errorLogs);
+		//FileUtilities.writeFile(ruleSet, fileOutputName, errorLogs);
 		System.out.println("Finished Writing File:  " + fileOutputName);
 	}
 		
@@ -326,7 +326,7 @@ public class WebClient extends JFrame {
 			rpc.setDAO(daoString);
 			
 			System.out.println("Starting Persist Generator");
-//			gpc.persistGenerator(generator.getGenerator_minSupportLevel(), generator.getGenerator_minConfidenceLevel());
+			gpc.persistGenerator(generator.getGenerator_minSupportLevel(), generator.getGenerator_minConfidenceLevel());
 			System.out.println("Finished Persist Generator");
 			int gpc_errors = gpc.getErrorLogs().getErrorMsgs().size();
 			errorCount += gpc_errors;
@@ -341,7 +341,7 @@ public class WebClient extends JFrame {
 			
 			for (int i = 0; i < transactionSet.getVendorSet().size(); i++) {
 				Vendor vendor = transactionSet.getVendorSet().get(i);
-//				vpc.persistVendor(vendor);
+				vpc.persistVendor(vendor);
 				System.out
 						.println("vendor " + i + " is " + vendor.getVendor_name());
 			}
@@ -360,7 +360,7 @@ public class WebClient extends JFrame {
 			int i = 0;
 			
 				System.out.println("Starting Persist TransactionSet");
-//				tspc.persistTransactionSet(transactionSet);
+				tspc.persistTransactionSet(transactionSet);
 				int tspc_errors = tspc.getErrorLogs().getErrorMsgs().size();
 				errorCount += tspc_errors;
 				System.out.println("Finished Persist TransactionSet");
@@ -375,7 +375,7 @@ public class WebClient extends JFrame {
 				for (Transaction transaction : transactionSet.getTransactionSet()) {
 					System.out.println("Size: " + transactionSet.getTransactionSet().size());
 					System.out.println("Starting Persist Transaction: #" + i);
-					// tpc.persistTransaction(transactionSet.getTransactionSet().get(i));
+				    tpc.persistTransaction(transactionSet.getTransactionSet().get(i));
 //					tpc.persistTransaction(transaction);
 					i++;
 					System.out.println("Finished Persist Transaction: #" + i);
@@ -398,7 +398,7 @@ public class WebClient extends JFrame {
 			
 				// iterate through ruleset to get individual rules
 				System.out.println("Starting Persist RuleSet");
-//				rspc.persistRuleSet(ruleSet);
+				rspc.persistRuleSet(ruleSet);
 				int rspc_errors = rspc.getErrorLogs().getErrorMsgs().size();
 				errorCount += rspc_errors;
 				System.out.println("errorCount: " + errorCount);
@@ -412,7 +412,7 @@ public class WebClient extends JFrame {
 				System.out.println("Finished Persist RuleSet");
 				for (Rule rule : ruleSet.getRuleSet()) {
 					System.out.println("Starting Persist Rule: #" + j);
-//					rpc.persistRule(rule);
+					rpc.persistRule(rule);
 					System.out.println("Finished Persist Rule: #" + j);
 				}
 				int rpc_errors = rpc.getErrorLogs().getErrorMsgs().size();

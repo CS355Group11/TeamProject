@@ -87,6 +87,7 @@ public class Main {
 	/* Method to run various tests with different parameters quickly" */
 	public static void runTest(String fileInputName, String fileOutputName,
 			double minSupportLevel, double minConfidenceLevel) {
+		String errorFileOutputName = "ER_"+fileInputName;
 		String supMsg = checkLevels(minSupportLevel);
 		String confMsg = checkLevels(minConfidenceLevel);
 		ErrorLogs errorLogs = new ErrorLogs();
@@ -162,7 +163,7 @@ public class Main {
 		}
 		System.out.println("Total Time elapsed time in msec.: " + (timer.getTotal() + timerDB.getTotal()));
 		System.out.println("Starting Writing File: " + fileOutputName);
-		FileUtilities.writeFile(ruleSet, fileOutputName, errorLogs);
+		FileUtilities.writeFile(ruleSet, fileOutputName, errorLogs, errorFileOutputName);
 		System.out.println("Finished Writing File:  " + fileOutputName);
 		FileUtilities.writeTimes(tlogs);
 	}

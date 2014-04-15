@@ -1,3 +1,3 @@
-FileUtilties.readFile in msec. = 21
-Generator.DoApriori in msec. = 4
-Generator.GenerateRuleSets in msec. = 15
+FileUtilties.readFile in msec. = 1
+Generator.DoApriori in msec. = 0
+Generator.GenerateRuleSets in msec. = 0

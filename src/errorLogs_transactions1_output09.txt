@@ -1,2 +1,0 @@
-Parameter Input Error:  Min Support Level is  above acceptable range. Must be between 0.0 and 1.0, inclusively
-1 error(s) found. No Rules are  Generated

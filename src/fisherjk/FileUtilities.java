@@ -27,7 +27,9 @@ public class FileUtilities {
 	public static TransactionSet readFile(String fileInputName) {
 		ArrayList<Vendor> av = new ArrayList<Vendor>();
 		ErrorLogs errorLogs = new ErrorLogs();
+		if(!fileInputName.contains("src/")){
 		fileInputName = "src/" + fileInputName;
+		}
 		String line = "";
 		TransactionSet transactionSet = new TransactionSet();
 		String formatError = "Format Error: ";
@@ -254,11 +256,27 @@ public class FileUtilities {
 	 */
 
 	/* Method to write to a text file */
-	public static void writeFile(RuleSet ruleSets, String fileOutputName, ErrorLogs errorLogs) {
+	public static void writeFile(RuleSet ruleSets, String fileOutputName, ErrorLogs errorLogs, String errorFileOutputName) {
 		// The name of the file to open.
-		String errorFileName = "src/errorLogs_"+fileOutputName;
-		fileOutputName = "src/" + fileOutputName;
+		//String errorFileName = "src/errorLogs_"+fileOutputName;
+		System.out.println("BEFORE RuleFileOutputName: " + fileOutputName);
+		System.out.println("BEFORE ErrorFileOutputName: " + errorFileOutputName);
+		if(fileOutputName == "" || errorFileOutputName == ""){
+			errorLogs.getErrorMsgs().add("The specified output path(s) are empty");
+		}
+		
+		if(!fileOutputName.contains("src/")){
+			fileOutputName = "src/" + fileOutputName;
+		}
+		if(!errorFileOutputName.contains("src/")){
+			errorFileOutputName = "src/"+errorFileOutputName;
+		}
+		System.out.println("RuleFileOutputName: " + fileOutputName);
+		System.out.println("ErrorFileOutputName: " + errorFileOutputName);
+		
+		
 		int ruleSize = ruleSets.getRuleSet().size();
+		int errorSize = errorLogs.getErrorMsgs().size();
 		try {
 			PrintWriter writer = new PrintWriter(fileOutputName);
 			if(ruleSize >0){
@@ -266,7 +284,7 @@ public class FileUtilities {
 				writer.println(ruleSets.getRuleSet().get(i));// get each rule set and print the result
 			}
 			}else{
-				writer.println("No Rules could be generated under these parameter levels. Increase Transaction Set Size or MCL/MSL.");
+				errorLogs.getErrorMsgs().add("No Rules could be generated under these parameter levels. Increase Transaction Set Size or MCL/MSL.");
 			}
 			writer.close();
 		} catch (IOException ex) {
@@ -274,14 +292,18 @@ public class FileUtilities {
 					.println("Error writing to file: '" + fileOutputName + "'");
 		}
 		try {
-			PrintWriter error_writer = new PrintWriter(errorFileName);
+			PrintWriter error_writer = new PrintWriter(errorFileOutputName);
+		if(errorSize >0){	
 		for (int i = 0; i < errorLogs.getErrorMsgs().size(); i++) {
 			error_writer.println(errorLogs.getErrorMsgs().get(i));// get each rule set and print the result
+		}
+		}else{
+			error_writer.println("No Error's Occured in Rule Generation. Excellent Job!");
 		}
 			error_writer.close();
 		} catch (IOException ex) {
 			System.out
-					.println("Error writing to file: '" + errorFileName + "'");
+					.println("Error writing to file: '" + errorFileOutputName + "'");
 		}
 		
 	}

@@ -1,2 +1,0 @@
-Format Error: Transaction Set is not well-formed
-1 error(s) found. No Rules are  Generated
