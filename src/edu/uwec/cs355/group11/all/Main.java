@@ -1,21 +1,8 @@
-package edu.uwec.cs355.group11.utilities;
+package edu.uwec.cs355.group11.all;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
-import edu.uwec.cs355.group11.algorithm.Generator;
-import edu.uwec.cs355.group11.algorithm.Rule;
-import edu.uwec.cs355.group11.algorithm.RuleSet;
-import edu.uwec.cs355.group11.algorithm.Transaction;
-import edu.uwec.cs355.group11.algorithm.TransactionSet;
-import edu.uwec.cs355.group11.algorithm.Vendor;
-import edu.uwec.cs355.group11.database.GeneratorPersistenceController;
-import edu.uwec.cs355.group11.database.RulePersistenceController;
-import edu.uwec.cs355.group11.database.RuleSetPersistenceController;
-import edu.uwec.cs355.group11.database.TransactionPersistenceController;
-import edu.uwec.cs355.group11.database.TransactionSetPersistenceController;
-import edu.uwec.cs355.group11.database.VendorPersistenceController;
 /*
  * import java.util.ArrayList;
 import java.util.HashSet;
@@ -24,8 +11,8 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		double minSupportLevel = 0.2;
-		double minConfidenceLevel = 0.2;
+		//double minSupportLevel = 0.2;
+		//double minConfidenceLevel = 0.2;
 		/*
 		ArrayList<String> list = new ArrayList<String>();
 		list.add("A");
@@ -66,13 +53,13 @@ public class Main {
 		// runTest("error_test.txt", "error_output.txt", minSupportLevel,minConfidenceLevel);
 		
 		/*ALL TESTS SUCCEED*/
-		 /*
+		 
 		 runTest("transactions1.txt", "transactions1_output01.txt", 0.25,0.5);
 		 runTest("transactions1.txt", "transactions1_output02.txt", 0.5, 0.66);
 		 runTest("transactions1.txt", "transactions1_output03.txt", 0.75,0.66);
 		 runTest("transactions1.txt", "transactions1_output04.txt", 0.5, 0.8);
 		 runTest("transactions1.txt", "transactions1_output05.txt", 0.0, 0.0);
-		 */
+		 
 		/*ERROR TESTS*/
 		/*ERRORS ARE SUCCESSFULLY CAUGHT*/
 		/*
@@ -83,7 +70,7 @@ public class Main {
 		 runTest("transactions1.txt", "transactions1_output10.txt", 0.0, 1.1);//one error
 		 runTest("transactions1.txt", "transactions1_output11.txt", 1.1, 1.1);//two errors
 		*/
-		 runTest("transactions2.txt", "transactions2_output.txt", 0.0, 0.0);//bad format
+		// runTest("transactions2.txt", "transactions2_output.txt", 0.0, 0.0);//bad format
 		// runTest("transactions3.txt", "transactions3_output.txt", 0.0, 0.0);//bad format
 		// runTest("transactions4.txt", "transactions4_output.txt", 0.0, 0.0);//bad format
 		
@@ -100,6 +87,7 @@ public class Main {
 	/* Method to run various tests with different parameters quickly" */
 	public static void runTest(String fileInputName, String fileOutputName,
 			double minSupportLevel, double minConfidenceLevel) {
+		String errorFileOutputName = "ER_"+fileInputName;
 		String supMsg = checkLevels(minSupportLevel);
 		String confMsg = checkLevels(minConfidenceLevel);
 		ErrorLogs errorLogs = new ErrorLogs();
@@ -152,7 +140,7 @@ public class Main {
 						.println("elapsed time in msec.: " + timer.getTotal());
 				/* Inserting original transactionSet and generated rule set */
 				//Timer timerDB = new Timer();
-				//errorLogs = DAOController(generator, transactionSet, ruleSet);
+				errorLogs = DAOController(generator, transactionSet, ruleSet);
 				timerDB.stopTimer();
 				System.out.println("DB elapsed time in msec.: " + timerDB.getTotal());
 				System.out.println("Errors from DAO: " + errorLogs.getErrorCount());
@@ -175,7 +163,7 @@ public class Main {
 		}
 		System.out.println("Total Time elapsed time in msec.: " + (timer.getTotal() + timerDB.getTotal()));
 		System.out.println("Starting Writing File: " + fileOutputName);
-		FileUtilities.writeFile(ruleSet, fileOutputName, errorLogs);
+		FileUtilities.writeFile(ruleSet, fileOutputName, errorLogs, errorFileOutputName);
 		System.out.println("Finished Writing File:  " + fileOutputName);
 		FileUtilities.writeTimes(tlogs);
 	}

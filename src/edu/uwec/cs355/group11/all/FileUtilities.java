@@ -1,4 +1,4 @@
-package fisherjk;
+package edu.uwec.cs355.group11.all;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -49,7 +49,7 @@ public class FileUtilities {
 			String findBrackets = "\\{(\\s+)?|(\\s+)?\\}";// regex to find brackets for eventual removal
 			//String findBrackets = "\\{|\\}";
 			String findInBrackets = "\\{(.*)\\}";// regex to find content within  brackets
-			String findInBrackets2 = "\\{\\s+(.*)\\s+\\}";
+			//String findInBrackets2 = "\\{\\s+(.*)\\s+\\}";
 			String findCommas = "\\,\\s?";// regex to find commas and any white space immediately after it
 			//String findItem = "(\\w+)";
 			String findDescItem = "(.*)[^\\n]";// regex to find items
@@ -145,8 +145,8 @@ public class FileUtilities {
 								int totalItems = 0;
 								while (itemMatcher.find()) {// loop until we don't have any more matches in the groupings
 									
-									Pattern spacePattern = Pattern.compile(findSpaces);
-									Matcher spaceMatcher = spacePattern.matcher(itemMatcher.group(0));
+									//Pattern spacePattern = Pattern.compile(findSpaces);
+									//Matcher spaceMatcher = spacePattern.matcher(itemMatcher.group(0));
 									String itemNow = itemMatcher.group(0).replaceAll(findSpaces, "");//.replaceAll("space");
 									System.out.println("ItemNow: [" + itemNow.length() + "] vs. [" + itemMatcher.group(0).length()+"]");
 									
