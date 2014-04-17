@@ -1,0 +1,4 @@
+IF Ice Cold Beer THEN Tasty Red Apples (0.6667)
+IF Tasty Red Apples THEN Ice Cold Beer (0.6667)
+IF Stinky Diapers THEN Ice Cold Beer (1.000)
+IF Ice Cold Beer THEN Stinky Diapers (0.6667)

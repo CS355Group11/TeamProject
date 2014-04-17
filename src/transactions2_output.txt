@@ -1,0 +1,1 @@
+No Rules could be generated under these parameter levels. Increase Transaction Set Size or MCL/MSL.
