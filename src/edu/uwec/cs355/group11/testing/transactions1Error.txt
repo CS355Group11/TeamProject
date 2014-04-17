@@ -1,0 +1,2 @@
+No error(s) found in Input Format
+No Rules could be generated under these parameter levels. Increase Transaction Set Size or MCL/MSL.
