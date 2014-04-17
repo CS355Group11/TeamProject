@@ -1,18 +1,19 @@
 package fisherjk;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import edu.uwec.cs.wagnerpj.restlettwowayserial.Address;
+import edu.uwec.cs.wagnerpj.restlettwowayserial.Contact;
 //import java.util.Date;
 /* Class for holding information about a set of transactions in a TransactionSet*/
-public class TransactionSet implements Runnable {
+public class TransactionSet implements Serializable {
 
-	
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Transaction> transactionSet;/*A transactionSet private instance variable is an ArrayList of individual Transactions*/
-	//private String datetime;
 	private ArrayList<Vendor> vendorSet;
-	//private Date transactionDate;
-	private int index;
 	private String start_date;
 	private String end_date;
 	private String timestamp;
@@ -26,10 +27,15 @@ public class TransactionSet implements Runnable {
 		this.transactionSet = new ArrayList<Transaction>();
 	}
 	
-	public TransactionSet(int index) {
-		this.index = index;
+	public TransactionSet(TransactionSet aTransactionSet) {
+		//TransactionSet copy = new TransactionSet();
+		setVendorSet(aTransactionSet.getVendorSet());
+		setStart_date(aTransactionSet.getStart_date());
+		setEnd_date(aTransactionSet.getEnd_date());
+		//setTimestamp();
+		setTransactionSet(aTransactionSet.getTransactionSet());		
 	}
-
+	
 	/*Respective getters and setters*/
 	public ArrayList<Transaction> getTransactionSet() {
 		return transactionSet;
@@ -231,39 +237,9 @@ public class TransactionSet implements Runnable {
        return count;
     }
 
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		Timer timer = new Timer();
-		timer.startTimer();
-		ItemSet uniqueItems = new ItemSet();/*uniquely constructed itemSet*/
-		
-			for (int i = this.index; i < transactionSet.get(0).getTransaction().getItemSet().size(); i++) {/*doubly loop through each respective itemset in a transactionSet*/
-				Item item = transactionSet.get(0).getTransaction().getItemSet()
-						.get(i);
-				
-				if (!uniqueItems.getItemSet().contains(item)) {/*Only add items if not already within the unique list. Otherwise do nothing.*/
-					uniqueItems.getItemSet().add(item);
-				}
 
-			}
-			
-			
-			
-		
-		System.out.println("uniqueItemsSize: " + uniqueItems.getItemSet().size());
-		timer.stopTimer();
-		System.out.println("TransactionSet.GetUniqueItems: Time in Milliseconds: " + timer.getTotal());
-		
-
-		//return uniqueItems;
-	}
 	
-	public Thread start() {
-		Thread th = new Thread(this);
-		th.start();
-		return th;
-	}
+
 	
 	
 	

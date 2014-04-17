@@ -9,6 +9,7 @@ public class RuleSet {
 
 	private ArrayList<Rule> ruleSet;//instance variable to access the ruleSet
 	private String timestamp;
+	private String defTimeStamp;
 
 	
 	/*Constructors*/
@@ -19,6 +20,12 @@ public class RuleSet {
 	public RuleSet(){
 		this.ruleSet = new ArrayList<Rule>();
 		this.timestamp = "";
+	}
+
+	public RuleSet(RuleSet aRuleSet) {
+		// TODO Auto-generated constructor stub
+		setRuleSet(aRuleSet.getRuleSet());
+		setDefTimeStamp(aRuleSet.getDefTimeStamp());
 	}
 
 	/*Respective Getters and Setters*/
@@ -40,6 +47,15 @@ public class RuleSet {
 		Date now = new Date();
 		String strDate = sdfDate.format(now);
 		this.timestamp = strDate;
+	}
+	
+
+	public String getDefTimeStamp() {
+		return defTimeStamp;
+	}
+
+	public void setDefTimeStamp(String defTimeStamp) {
+		this.defTimeStamp = defTimeStamp;
 	}
 
 	/*Override the toString to carefuly print each ruleSets content*/
