@@ -46,7 +46,6 @@ public class WebClientUpdate extends JFrame {
 	private double msl;
 	private double mcl;
 	private Thread thread;
-	
 	private JPanel contentPane;
 	private JTextField mslTextField;
 	private JTextField mclTextField;
