@@ -36,6 +36,8 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JScrollPane;
 
+import org.restlet.resource.ClientResource;
+
 
 public class WebClient extends JFrame {
 
@@ -164,6 +166,13 @@ public class WebClient extends JFrame {
 				msl = Double.parseDouble(mslTextField.getText());
 				mcl = Double.parseDouble(mclTextField.getText());				
 						
+				//ClientResource clientResource = new ClientResource("http://localhost:8111/");
+		        
+				//TransactionSetResource proxy = clientResource.wrap(TransactionSetResource.class);
+
+				///proxy.store(transSet);
+				//newTransSet = proxy.retrieve();
+				
 				
 				if(isRunning == false){
 					isRunning = true;
@@ -173,11 +182,14 @@ public class WebClient extends JFrame {
 					    	//Function for what happens after mouse click
 					    	
 					    	if(formatFilePaths()){
+					    		ClientResource clientResource = new ClientResource("http://localhost:8111/");
+						        
+								GeneratorResource proxy = clientResource.wrap(GeneratorResource.class);
 					    		System.out.println("IN IF of format file paths");
 					    		System.out.println(inputFilePath);
 					    		System.out.println(outputErrorFilePath);
 					    		System.out.println(outputRuleFilePath);
-					    		runTest(inputFilePath, outputRuleFilePath, msl, mcl);
+					    		runTest(inputFilePath, outputRuleFilePath, msl, mcl, clientResource, proxy);
 						    	outputDialog(textPane);
 						    	outputErrorDialog(textErrorPane);
 								isRunning = false;
@@ -210,25 +222,26 @@ public class WebClient extends JFrame {
 	}	
 	
 	/* Method to run various tests with different parameters quickly" */
-	public void runTest(String fileInputName, String fileOutputName,
-			double minSupportLevel, double minConfidenceLevel) {
+	public void runTest(String fileInputName, String fileOutputName, double minSupportLevel, double minConfidenceLevel,
+			ClientResource clientResource, GeneratorResource proxy) {
 		String supMsg = checkLevels(minSupportLevel);
 		String confMsg = checkLevels(minConfidenceLevel);
 		ErrorLogs errorLogs = new ErrorLogs();
-		//ErrorLogs daoLogs = new ErrorLogs();
 		RuleSet ruleSet = new RuleSet();
 		Timer timer = new Timer();
 		Timer timerDB = new Timer();
 		TimerLogs tlogs = new TimerLogs();
 		
-		// System.out.println("supMsg: " + supMsg);
-		// System.out.println("confMsg: " + confMsg);
+		/*Client and Server Resource Variables*/
+		Generator newGen = new Generator();
+		
+		
 		errorLogs = parameterLogs(supMsg, confMsg);
 
 		if (supMsg.equals("") && confMsg.equals("")) {// no errors
 			System.out.println("Min. support level is" + supMsg);
 			System.out.println("Min. confidence level is" + confMsg);
-			Generator generator = new Generator(minSupportLevel, minConfidenceLevel);
+			Generator generator = new Generator(minSupportLevel, minConfidenceLevel, inputFilePath);
 			//Timer timer = new Timer();
 			timer.startTimer();
 			TransactionSet transactionSet = new TransactionSet();
@@ -241,14 +254,39 @@ public class WebClient extends JFrame {
 			tlogs.getTimerLogs().add(readTime);
 			if (transactionSet != null) {// while I have transactionSet
 
-				System.out.println("Starting APriori");
-				Timer tGen = new Timer();
-				tGen.startTimer();
-				TransactionSet input = Generator.DoApriori(
-						transactionSet, minSupportLevel);
-				tGen.stopTimer();
-				String genTime = ("Generator.DoApriori in msec. = " + tGen.getTotal());
-				tlogs.getTimerLogs().add(genTime);
+				//System.out.println("Starting APriori");
+				//Timer tGen = new Timer();
+				//tGen.startTimer();
+				//TransactionSet input = Generator.DoApriori(transactionSet, minSupportLevel);
+			
+					System.out.println("No error(s) found");
+					errorLogs.getErrorMsgs().add("No error(s) found in Input Format");
+				
+				proxy.store(generator);
+				ruleSet = proxy.retrieve();
+				
+				
+				//System.out.println("Starting Writing File(s): " + outputRuleFilePath + " and " + outputErrorFilePath);
+				//FileUtilities.writeFile(ruleSet, outputRuleFilePath, errorLogs, outputErrorFilePath);
+				//System.out.println("Finished Writing File(s):  " + outputRuleFilePath +" and " + outputErrorFilePath);
+				
+				
+			}
+			else {
+				errorLogs.getErrorMsgs().add(
+						"Format Error: Transaction Set is not well-formed");
+			}
+		}
+		System.out.println("RuleSet SIZE: " + ruleSet.getRuleSet().size());
+		System.out.println("ERROR SIZE: " + errorLogs.getErrorCount());
+		System.out.println("Starting Writing File(s): " + outputRuleFilePath + " and " + outputErrorFilePath);
+		FileUtilities.writeFile(ruleSet, outputRuleFilePath, errorLogs, outputErrorFilePath);
+		System.out.println("Finished Writing File(s):  " + outputRuleFilePath +" and " + outputErrorFilePath);
+				
+			/*	
+				//tGen.stopTimer();
+				//String genTime = ("Generator.DoApriori in msec. = " + tGen.getTotal());
+				//tlogs.getTimerLogs().add(genTime);
 				System.out.println("Finished APriori");
 				System.out.println("Starting Generating Rules");
 				Timer tRule = new Timer();
@@ -262,7 +300,7 @@ public class WebClient extends JFrame {
 				timer.stopTimer();
 				System.out
 						.println("elapsed time in msec.: " + timer.getTotal());
-				/* Inserting original transactionSet and generated rule set */
+				 Inserting original transactionSet and generated rule set 
 				timerDB.startTimer();
 				//errorLogs = DAOController(generator, transactionSet, ruleSet);
 				timerDB.stopTimer();
@@ -290,6 +328,7 @@ public class WebClient extends JFrame {
 		FileUtilities.writeFile(ruleSet, outputRuleFilePath, errorLogs, outputErrorFilePath);
 		System.out.println("Finished Writing File(s):  " + outputRuleFilePath +" and " + outputErrorFilePath);
 		FileUtilities.writeTimes(tlogs);
+		*/
 	}
 
 	/*
@@ -598,7 +637,7 @@ public class WebClient extends JFrame {
 				this.outputRuleFilePath =  outputRuleFileMatcher.group(0);
 			}else if(outputRuleFilePath.equals("")){
 				System.out.println("In this block");
-				this.outputRuleFilePath = "rule_output_" + this.inputFilePath;		
+				this.outputRuleFilePath = "rules_of_" + this.inputFilePath;		
 			}else{
 				System.out.println("No output rule extension is found");
 				this.outputRuleFilePath += ".txt";	
@@ -612,7 +651,7 @@ public class WebClient extends JFrame {
 			
 			}else if(outputErrorFilePath.equals("")){
 					System.out.println("In this block");
-					this.outputErrorFilePath = "errorLogs_" + this.inputFilePath;			
+					this.outputErrorFilePath = "errors_of_" + this.inputFilePath;			
 			}else{
 			System.out.println("No output error extension is found");
 				this.outputErrorFilePath += ".txt";

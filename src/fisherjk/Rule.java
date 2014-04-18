@@ -1,10 +1,13 @@
 package fisherjk;
 
+import java.io.Serializable;
+
 
 
 /*Class to hold information about individual Rules for a transaction*/
-public class Rule {
+public class Rule implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private ItemSet antecedent;//IF part of the rule
 	private ItemSet consequent;//THEN part of the rule
 	private double minSupportLevel;// must have 4 digits of precision

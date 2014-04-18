@@ -1,5 +1,6 @@
 package fisherjk;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -7,20 +8,32 @@ import java.util.ArrayList;
 
 
 
-public class Generator {
+public class Generator implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	private double generator_minSupportLevel;
 	private double generator_minConfidenceLevel;
-	
+	private String generator_filePath;
 	
 	public Generator(){
 		
 	}
 
-	public Generator(double generator_minSupportLevel, double generator_minConfidenceLevel) {
+
+	public Generator(double generator_minSupportLevel,double generator_minConfidenceLevel, String generator_filePath) {
 		this.generator_minSupportLevel = generator_minSupportLevel;
 		this.generator_minConfidenceLevel = generator_minConfidenceLevel;
+		this.generator_filePath = generator_filePath;
 	}
+
+
+
+	public Generator(Generator generator) {
+		setGenerator_minSupportLevel(generator.getGenerator_minSupportLevel());
+		setGenerator_minConfidenceLevel(generator.getGenerator_minConfidenceLevel());
+		setGenerator_filePath(generator.getGenerator_filePath());
+	}
+
 
 	public double getGenerator_minSupportLevel() {
 		return generator_minSupportLevel;
@@ -37,6 +50,17 @@ public class Generator {
 	public void setGenerator_minConfidenceLevel(double generator_minConfidenceLevel) {
 		this.generator_minConfidenceLevel = generator_minConfidenceLevel;
 	}
+	
+
+	public String getGenerator_filePath() {
+		return generator_filePath;
+	}
+
+
+	public void setGenerator_filePath(String generator_filePath) {
+		this.generator_filePath = generator_filePath;
+	}
+
 
 	public static TransactionSet DoApriori(TransactionSet transSet,double minSupportLevel) {
 		Timer timer = new Timer();

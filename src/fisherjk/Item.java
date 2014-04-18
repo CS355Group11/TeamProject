@@ -1,7 +1,11 @@
 package fisherjk;
 
+import java.io.Serializable;
+
 /* Class for holding singular Item information*/
-public class Item {
+public class Item implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private String itemName;//unique item name
 	private String itemDesc;//unique item description

@@ -18,8 +18,9 @@ public class RuleGeneratorTest {
 	
 	@Test
 	public void genTest() {
+		String filePath = "";
 		Generator gen = new Generator();
-		Generator gen1 = new Generator(2.0, 1.00);
+		Generator gen1 = new Generator(2.0, 1.00, filePath);
 		assertNotNull(gen);
 		assertNotNull(gen1);
 		

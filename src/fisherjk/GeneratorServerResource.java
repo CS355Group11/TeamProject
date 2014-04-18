@@ -1,127 +1,88 @@
 package fisherjk;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-/*
- * import java.util.ArrayList;
-import java.util.HashSet;
-*/
-public class Main {
+import org.restlet.resource.ClientResource;
+import org.restlet.resource.ServerResource;
 
-	public static void main(String[] args) {
-
-		double minSupportLevel = 0.2;
-		double minConfidenceLevel = 0.2;
-		/*
-		ArrayList<String> list = new ArrayList<String>();
-		list.add("A");
-		list.add("B");
-		list.add("E");
-		list.add("B");
-		list.add("D");
-		list.add("B");
-		list.add("C");
-		list.add("A");
-		list.add("C");
-		list.add("B");
-		list.add("C");
-		list.add("A");
-		list.add("C");
-		list.add("A");
-		list.add("B");
-		list.add("C");
-		list.add("E");
-		list.add("A");
-		list.add("B");
-		list.add("C");
-		HashSet<String> uniqueSet = new HashSet<String>(list);
-		ArrayList<String> uniqueList = new ArrayList<String>();
-		System.out.println("UniqueSet  count: " + uniqueSet.size());
-		for(String string : uniqueSet){
-			uniqueList.add(string);
-			System.out.println("Item: " + string.toString());
-		}
-		System.out.println("UniqueList  count: " + uniqueSet.size());
-		System.out.println();
-		*/
-		
-		//runTest("test.txt", "output.txt", 0.22, minConfidenceLevel);// needs minSupportLevel to be 0.22 and minConfidenceLevel to be 0.5 to mimic PPT
-		//runTest("wagner_input.txt", "wagner_output.txt", minSupportLevel,minConfidenceLevel);
-		//runTest("unique_items.txt", "unique_items_output.txt", 0.2,0.2);
-		// runTest("multiproduct.txt", "multiproduct_output.txt",minSupportLevel, minConfidenceLevel);
-		// runTest("error_test.txt", "error_output.txt", minSupportLevel,minConfidenceLevel);
-		
-		/*ALL TESTS SUCCEED*/
-		 
-		 runTest("transactions1.txt", "transactions1_output01.txt", 0.25,0.5);
-		 runTest("transactions1.txt", "transactions1_output02.txt", 0.5, 0.66);
-		 runTest("transactions1.txt", "transactions1_output03.txt", 0.75,0.66);
-		 runTest("transactions1.txt", "transactions1_output04.txt", 0.5, 0.8);
-		 runTest("transactions1.txt", "transactions1_output05.txt", 0.0, 0.0);
-		 
-		/*ERROR TESTS*/
-		/*ERRORS ARE SUCCESSFULLY CAUGHT*/
-		/*
-		 runTest("transactions1.txt", "transactions1_output06.txt", -1.0, 0.0);//one error
-		 runTest("transactions1.txt", "transactions1_output07.txt", 0.0, -1.0);//one error
-		 runTest("transactions1.txt", "transactions1_output08.txt", -1.0, -1.0);//two errors
-		 runTest("transactions1.txt", "transactions1_output09.txt", 1.1, 0.0);//one error
-		 runTest("transactions1.txt", "transactions1_output10.txt", 0.0, 1.1);//one error
-		 runTest("transactions1.txt", "transactions1_output11.txt", 1.1, 1.1);//two errors
-		*/
-		// runTest("transactions2.txt", "transactions2_output.txt", 0.0, 0.0);//bad format
-		// runTest("transactions3.txt", "transactions3_output.txt", 0.0, 0.0);//bad format
-		// runTest("transactions4.txt", "transactions4_output.txt", 0.0, 0.0);//bad format
-		
-		
-		/*LOAD TEST*/
-		//runTest("transactions5.txt", "transactions5_output.txt", 0.25, 0.5);
-		//runTest("smalltransactions6.txt", "transactions6_output.txt", 0.014, 0.2);//1000 transactions with 100 items (0.014)
-		//runTest("transactions6.txt", "transactions6_output.txt", 0.014, 0.2);//1000 transactions with 100 items (0.014)
-		//?????? runTest("transactions7.txt", "transactions7_output.txt", 0.12, 0.6);//10000 transactions with 1000 items (0.012)
-
-		/* END OF DAO MAIN */
+public class GeneratorServerResource extends ServerResource
+									implements GeneratorResource {
+	// data
+	private static Generator generator = new Generator();
+	private static RuleSet ruleSet = new RuleSet();
+	private ErrorLogs errorLogs = new ErrorLogs();
+	
+	// methods
+	public GeneratorServerResource () {
+		System.out.println("Generator constructor");
 	}
 
+	public RuleSet retrieve() {
+		/*GeneratorServerResource.generator.setGenerator_minSupportLevel(0.5);
+		GeneratorServerResource.generator.setGenerator_minConfidenceLevel(0.5);
+		GeneratorServerResource.generator.setGenerator_filePath("transactions1.txt");
+		System.out.println("Set Generator Min Support Level to   : " + GeneratorServerResource.generator.getGenerator_minSupportLevel());
+		System.out.println("Set Generator Min Confidence Level to: " + GeneratorServerResource.generator.getGenerator_minConfidenceLevel());
+		System.out.println("Set Generator File Path to           : " + GeneratorServerResource.generator.getGenerator_filePath());
+		
+		String outputRuleFilePath = "rules_of_"+GeneratorServerResource.generator.getGenerator_filePath();
+		String outputErrorFilePath = "rules_of_"+GeneratorServerResource.generator.getGenerator_filePath();
+		System.out.println("Starting Writing File(s): " + outputRuleFilePath + " and " + outputErrorFilePath);
+		FileUtilities.writeFile(ruleSet, outputRuleFilePath, errorLogs, outputErrorFilePath);
+		System.out.println("Finished Writing File(s):  " + outputRuleFilePath +" and " + outputErrorFilePath);
+		
+		*/
+		System.out.println("Server RuleSet SIZE: " + ruleSet.getRuleSet().size());
+		return ruleSet; 
+	}
+	
+	public void store (Generator generator) {
+		GeneratorServerResource.generator = new Generator(generator);
+		System.out.println("Min Support Level    : " + GeneratorServerResource.generator.getGenerator_minSupportLevel());
+		System.out.println("Min Confidence Level : " + GeneratorServerResource.generator.getGenerator_minConfidenceLevel());
+		System.out.println("File Path            : " + GeneratorServerResource.generator.getGenerator_filePath());
+		String fileOutputName = "rules_of_"+GeneratorServerResource.generator.getGenerator_filePath();
+		System.out.println("Starting to Run Test");
+		runTest(GeneratorServerResource.generator.getGenerator_filePath(), fileOutputName, GeneratorServerResource.generator.getGenerator_minSupportLevel(),GeneratorServerResource.generator.getGenerator_minConfidenceLevel());
+		System.out.println("Finished Run Test");
+	}
+	
+	
 	/* Method to run various tests with different parameters quickly" */
-	public static void runTest(String fileInputName, String fileOutputName,
-			double minSupportLevel, double minConfidenceLevel) {
-		String errorFileOutputName = "ER_"+fileInputName;
+	public void runTest(String inputFilePath, String outputRuleFilePath, double minSupportLevel, double minConfidenceLevel) {
 		String supMsg = checkLevels(minSupportLevel);
 		String confMsg = checkLevels(minConfidenceLevel);
 		ErrorLogs errorLogs = new ErrorLogs();
-		//ErrorLogs daoLogs = new ErrorLogs();
-		RuleSet ruleSet = new RuleSet();
+		//RuleSet ruleSet = new RuleSet();
 		Timer timer = new Timer();
 		Timer timerDB = new Timer();
 		TimerLogs tlogs = new TimerLogs();
+		//String outputErrorFilePath = "errors_of_"+inputFilePath;
 		
-		// System.out.println("supMsg: " + supMsg);
-		// System.out.println("confMsg: " + confMsg);
+		/*Client and Server Resource Variables*/
+		//Generator newGen = new Generator();
+		
+		
 		errorLogs = parameterLogs(supMsg, confMsg);
 
-		if (supMsg.equals("") && confMsg.equals("")) {// no errors
-			System.out.println("Min. support level is" + supMsg);
-			System.out.println("Min. confidence level is" + confMsg);
-			Generator generator = new Generator(minSupportLevel, minConfidenceLevel, fileInputName);
 			//Timer timer = new Timer();
 			timer.startTimer();
 			TransactionSet transactionSet = new TransactionSet();
-			System.out.println("Starting Reading File..." + fileInputName);
+			System.out.println("Starting Reading File..." + inputFilePath);
 			Timer tRead = new Timer();
 			tRead.startTimer();
-			transactionSet = FileUtilities.readFile(fileInputName);
+			transactionSet = FileUtilities.readFile(inputFilePath);
 			tRead.stopTimer();
 			String readTime = ("FileUtilties.readFile in msec. = " + tRead.getTotal());
 			tlogs.getTimerLogs().add(readTime);
-			if (transactionSet != null) {// while I have transactionSet
+			
 
 				System.out.println("Starting APriori");
 				Timer tGen = new Timer();
 				tGen.startTimer();
-				TransactionSet input = Generator.DoApriori(
-						transactionSet, minSupportLevel);
+				TransactionSet input = Generator.DoApriori(transactionSet, minSupportLevel);
+				
+				
+				
+				
 				tGen.stopTimer();
 				String genTime = ("Generator.DoApriori in msec. = " + tGen.getTotal());
 				tlogs.getTimerLogs().add(genTime);
@@ -129,8 +90,8 @@ public class Main {
 				System.out.println("Starting Generating Rules");
 				Timer tRule = new Timer();
 				tRule.startTimer();
-				ruleSet = Generator.GenerateRuleSets(transactionSet,
-						input, minConfidenceLevel);
+				ruleSet = Generator.GenerateRuleSets(transactionSet,input, minConfidenceLevel);
+				//this.ruleSet = ruleSet;
 				tRule.stopTimer();
 				String ruleTime = ("Generator.GenerateRuleSets in msec. = " + tRule.getTotal());
 				tlogs.getTimerLogs().add(ruleTime);
@@ -139,16 +100,12 @@ public class Main {
 				System.out
 						.println("elapsed time in msec.: " + timer.getTotal());
 				/* Inserting original transactionSet and generated rule set */
-				//Timer timerDB = new Timer();
-				//errorLogs = DAOController(generator, transactionSet, ruleSet);
+				timerDB.startTimer();
+				errorLogs = DAOController(generator, transactionSet, ruleSet);
 				timerDB.stopTimer();
 				System.out.println("DB elapsed time in msec.: " + timerDB.getTotal());
 				System.out.println("Errors from DAO: " + errorLogs.getErrorCount());
-			} else {
-				errorLogs.getErrorMsgs().add(
-						"Format Error: Transaction Set is not well-formed");
-			}
-		}
+			
 
 		int errorCount = errorLogs.getErrorCount();
 		System.out.println(errorLogs.toString());
@@ -158,14 +115,15 @@ public class Main {
 			errorLogs.getErrorMsgs().add(errorCount+ " error(s) found. No Rules are  Generated");
 		}else{
 		System.out
-				.println("No error(s) found. Rules are Successfully Generated");
-		errorLogs.getErrorMsgs().add("No error(s) found. Rules are Successfully Generated");
+				.println("No error(s) found");
+		errorLogs.getErrorMsgs().add("No error(s) found in Input Format");
 		}
 		System.out.println("Total Time elapsed time in msec.: " + (timer.getTotal() + timerDB.getTotal()));
-		System.out.println("Starting Writing File: " + fileOutputName);
-		FileUtilities.writeFile(ruleSet, fileOutputName, errorLogs, errorFileOutputName);
-		System.out.println("Finished Writing File:  " + fileOutputName);
-		FileUtilities.writeTimes(tlogs);
+		//System.out.println("Starting Writing File(s): " + outputRuleFilePath + " and " + outputErrorFilePath);
+		//FileUtilities.writeFile(ruleSet, outputRuleFilePath, errorLogs, outputErrorFilePath);
+		//System.out.println("Finished Writing File(s):  " + outputRuleFilePath +" and " + outputErrorFilePath);
+		//FileUtilities.writeTimes(tlogs);
+		this.errorLogs = errorLogs;
 	}
 
 	/*
@@ -215,7 +173,8 @@ public class Main {
 		RuleSetPersistenceController rspc = new RuleSetPersistenceController();
 		GeneratorPersistenceController gpc = new GeneratorPersistenceController();
 		int errorCount = 0;
-		String daoString = null;
+		String daoString = "MySQL";
+		/*
 		InputStreamReader unbuffered = new InputStreamReader(System.in);
 		BufferedReader keyboard = new BufferedReader(unbuffered);
 		try {
@@ -224,6 +183,7 @@ public class Main {
 		} catch (IOException error) {
 			System.err.println("Error reading input");
 		}
+		*/
 		gpc.setDAO(daoString);
 		vpc.setDAO(daoString);
 		tspc.setDAO(daoString);
@@ -339,8 +299,7 @@ public class Main {
 		System.out.println("size: " + errorLogs.getErrorMsgs().size());
 		return errorLogs;
 	}
+
 	
-	
-	
-	
+
 }

@@ -1,9 +1,12 @@
 package fisherjk;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /* Class for holding information about a set of items known as an ItemSet*/
-public class ItemSet {
+public class ItemSet implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private ArrayList<Item> itemSet;// unique ItemSet private variable
 									// placeholder

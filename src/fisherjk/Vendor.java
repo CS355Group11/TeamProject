@@ -1,6 +1,10 @@
 package fisherjk;
 
-public class Vendor {
+import java.io.Serializable;
+
+public class Vendor implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 private String vendor_name;
 

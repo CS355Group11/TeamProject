@@ -1,11 +1,14 @@
 package fisherjk;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 /*Class to store the complete set of rules after running the APrioriAlgorithm*/
-public class RuleSet {
+public class RuleSet implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private ArrayList<Rule> ruleSet;//instance variable to access the ruleSet
 	private String timestamp;

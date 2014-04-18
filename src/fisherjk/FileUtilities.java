@@ -279,6 +279,8 @@ public class FileUtilities {
 		
 		int ruleSize = ruleSets.getRuleSet().size();
 		int errorSize = errorLogs.getErrorMsgs().size();
+		System.out.println("rule size : " + ruleSize);
+		System.out.println("error size: " + errorSize);
 		try {
 			PrintWriter writer = new PrintWriter(fileOutputName);
 			if(ruleSize >0){

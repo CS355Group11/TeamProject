@@ -3,10 +3,10 @@ package fisherjk;
 import org.restlet.resource.Get;
 import org.restlet.resource.Put;
 
-public interface RuleSetResource {
+public interface GeneratorResource {
 	@Get
 	public RuleSet retrieve();
 
 	@Put
-	public void store(RuleSet ruleSet);
+	public void store(Generator generator);
 }

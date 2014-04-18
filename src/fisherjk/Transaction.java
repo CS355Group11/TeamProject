@@ -1,12 +1,14 @@
 package fisherjk;
 
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /*Class for holding singular ItemSet records*/
-public class Transaction {
+public class Transaction  implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private ItemSet transaction;//A transaction is essentially an itemSet
 	private String transactionDate;//A transaction's timestamp variable 
 	private double transactionTotalPrice;//A transaction total price
