@@ -1,4 +1,4 @@
-package fisherjk;
+package edu.uwec.cs355.group11.client;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -37,6 +37,13 @@ import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 
 import org.restlet.resource.ClientResource;
+
+import edu.uwec.cs355.group11.common.ErrorLogs;
+import edu.uwec.cs355.group11.common.FileUtilities;
+import edu.uwec.cs355.group11.common.Generator;
+import edu.uwec.cs355.group11.common.RuleSet;
+import edu.uwec.cs355.group11.common.TransactionSet;
+import edu.uwec.cs355.group11.service.GeneratorResource;
 
 
 public class WebClient extends JFrame {

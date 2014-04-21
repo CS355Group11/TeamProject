@@ -1,10 +1,15 @@
-package fisherjk;
+package edu.uwec.cs355.group11.common;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import edu.uwec.cs355.group11.client.Timer;
+import edu.uwec.cs355.group11.service.Item;
+import edu.uwec.cs355.group11.service.ItemSet;
+import edu.uwec.cs355.group11.service.Transaction;
+import edu.uwec.cs355.group11.service.Vendor;
 //import java.util.Date;
 /* Class for holding information about a set of transactions in a TransactionSet*/
 public class TransactionSet implements Serializable {
