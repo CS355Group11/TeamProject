@@ -1,3 +1,3 @@
-Format Error: Found Extra Right Brace on line # 4
+Format Error: Found an empty transaction
 Format Error: Transaction Set is not well-formed
 No Rules could be generated under these parameter levels. Increase Transaction Set Size or MCL/MSL.

@@ -1,9 +1,11 @@
 package fisherjk;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ErrorLogs {
-	
+public class ErrorLogs implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	
 	private ArrayList<String> errorMsgs;
 

@@ -17,6 +17,7 @@ public class TransactionSet implements Serializable {
 	private String start_date;
 	private String end_date;
 	private String timestamp;
+	private ErrorLogs errorLogs;
 	
 	/*TransactionSet constructors*/
 	public TransactionSet(ArrayList<Transaction> transactionSet) {
@@ -82,6 +83,18 @@ public class TransactionSet implements Serializable {
 		this.timestamp = strDate+"12:00:00";
 	}
 	
+	
+	
+	
+	
+	public ErrorLogs getErrorLogs() {
+		return errorLogs;
+	}
+
+	public void setErrorLogs(ErrorLogs errorLogs) {
+		this.errorLogs = errorLogs;
+	}
+
 	/*Returns an itemSet containing a set of unique items found in a transactionSet which consists of Transactions*/
 	public ItemSet GetUniqueItems() {
 		Timer timer = new Timer();

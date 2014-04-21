@@ -238,10 +238,10 @@ public class FileUtilities {
 		}
 		//System.out.println("Error Count: " + errorCount);
 		if(errorLogs.getErrorCount() >0){
-		transactionSet = null;
+		//transactionSet = null;
 		//FileUtilities.writeCurrentErrors(errorLogs, "well.txt");
 		}
-		
+		transactionSet.setErrorLogs(errorLogs);
 		return transactionSet;
 		
 
