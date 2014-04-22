@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,6 +27,7 @@ public class FileUtilities {
 	/* READING FILE CONTENTS*/
 	public static TransactionSet readFile(String fileInputName) {
 		ArrayList<Vendor> av = new ArrayList<Vendor>();
+		ArrayList<Transaction> optional = new ArrayList<Transaction>();
 		ErrorLogs errorLogs = new ErrorLogs();
 		if(!fileInputName.contains("src/")){
 		fileInputName = "src/" + fileInputName;
@@ -46,20 +48,35 @@ public class FileUtilities {
 			//String patternInBrackets = "(?<=\\{)(.*)(?=\\})";// unused at the moment
 			String findVendor = "(?<=\\})?(.*)";// regex to find vendor name
 			String findDate = "[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}";// regex to find the date
+			String findDateTime = "[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}.*";
+			String findDateTime2 = "(?<=\\}\\s)[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}\\s[0-9]{2}:[0-9]{2}:[0-9]{2}";
+			String findDateTime3 = "([0-9]{4}-[0-9]{1,2}-[0-9]{1,2}\\s[0-9]{2}:[0-9]{2}:[0-9]{2})";
 			String findBrackets = "\\{(\\s+)?|(\\s+)?\\}";// regex to find brackets for eventual removal
 			//String findBrackets = "\\{|\\}";
 			String findInBrackets = "\\{(.*)\\}";// regex to find content within  brackets
 			String findInBrackets2 = "\\{\\s+(.*)\\s+\\}";
+			String findInBracketsDate = "(\\{(.*)\\})(\\s[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}\\s[0-9]{2}:[0-9]{2}:[0-9]{2})?";
 			String findCommas = "\\,\\s?";// regex to find commas and any white space immediately after it
 			//String findItem = "(\\w+)";
 			String findDescItem = "(.*)[^\\n]";// regex to find items
 			String findLeftBrace = "\\{";
 			String findRightBrace = "\\}";
+			String findRightBraceDate = "(?<=\\}\\s)[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}\\s[0-9]{2}:[0-9]{2}:[0-9]{2}";
 			String findSpaces = "\\s";
 			//"\\{\\s+"
 			int lineNum = 0;
+			int transNum = 0;
+			String temp ="";
+			int opDates = 0;
+			HashMap<Integer, String> hashDate = new HashMap<Integer, String>();
 			
 			while (scanner.hasNextLine() &&  errorLogs.getErrorCount()==0) {
+				/*Transaction def = new Transaction();
+				def.setTimestamp();
+				String def_timeStamp = def.getTimestamp() +"";
+				temp = def_timeStamp;
+				System.out.println("BEFORE temp is: " + temp);
+				*/
 				System.out.println("Current ErrorCount = " + errorCount);
 				line = scanner.nextLine();
 				lineNum++;
@@ -74,7 +91,11 @@ public class FileUtilities {
 				Pattern datePattern = Pattern.compile(findDate);
 				Matcher dateMatcher = datePattern.matcher(line);
 				
-				if (dateMatcher.find()) {/*determine if we found a date string*/
+				
+				Pattern dateTimePattern = Pattern.compile(findDateTime3);
+				Matcher dateTimeMatcher = dateTimePattern.matcher(line);
+				
+				if (lineNum <= 3 && dateMatcher.find()) {/*determine if we found a date string*/
 					System.out.println("date is: " + line);
 					System.out.println("GETTER: " + transactionSet.getStart_date());
 					if(transactionSet.getStart_date() == null){
@@ -84,19 +105,61 @@ public class FileUtilities {
 						transactionSet.setEnd_date(line);
 						System.out.println("end_date is: " + line);
 					}
+					
+				/*if (dateTimeMatcher.find()) {
+					opDates++;
+					temp = line;
+					temp = dateTimeMatcher.group(0);
+					System.out.println("# " + transNum + " temp datetime is: " + temp);
+					Transaction transDate = new Transaction();
+					transDate.setTransactionDate(temp);
+					optional.add(transDate);
+					System.out.println("FOUND A DATE TIME FOR CURRENT TRANSACTION LINE");
+					hashDate.put(lineNum, temp);
+					line = line.replaceFirst(findDateTime3, "");
+					System.out.println("REMOVED OPTIONAL DATETIME: Line is now: " + line);
+					
+				}
+				
+				*/
 
 				} else {
+					
+					
+					if (dateTimeMatcher.find()) {
+						opDates++;
+						temp = line;
+						temp = dateTimeMatcher.group(0);
+						System.out.println("# " + transNum + " temp datetime is: " + temp);
+						Transaction transDate = new Transaction();
+						transDate.setTransactionDate(temp);
+						optional.add(transDate);
+						System.out.println("FOUND A DATE TIME FOR CURRENT TRANSACTION LINE");
+						hashDate.put(lineNum, temp);
+						line = line.replaceFirst(findDateTime3, "");
+						System.out.println("REMOVED OPTIONAL DATETIME: Line is now: " + line);
+						
+					}
+					
+					
 
 					// Find for missing closing and leading brackets
 					Pattern leftBracePattern = Pattern.compile(findLeftBrace);
 					Pattern rightBracePattern = Pattern.compile(findRightBrace);
+					Pattern rightBraceDatePattern = Pattern.compile(findRightBraceDate);
 
 					Matcher leftBraceMatcher = leftBracePattern.matcher(line);
 					Matcher rightBraceMatcher = rightBracePattern.matcher(line);
+					Matcher rightBraceDateMatcher = rightBraceDatePattern.matcher(line);
 
+					
 					if (leftBraceMatcher.find() && rightBraceMatcher.find()) {/*Determine if a left or right brace is missing*/
+						System.out.println("OptionalDateTime: " + rightBraceDateMatcher.find());
+						
+						
 						System.out.println("Found Left and Right Brace");
 						Pattern contentPattern = Pattern.compile(findInBrackets);
+						System.out.println("line: " + line);
 						Matcher contentMatcher = contentPattern.matcher(line);
 						
 						if(rightBraceMatcher.find()){
@@ -114,8 +177,14 @@ public class FileUtilities {
 						}
 						
 						
+						
+						
+						
 						if (contentMatcher.find()) {
 							//May need to fix spacing check
+							//if(contentMatcher.group(2)!=null){
+							//System.out.println("SETTING DATE TO GROUP 3: " + contentMatcher.group(3));
+							//}
 							if(contentMatcher.group(1).contentEquals(" ") || contentMatcher.group(1).contentEquals("")){//check to see if empty transaction {} or { }
 								System.out.println(contentMatcher.group(1).contentEquals(" "));//space
 								System.out.println(contentMatcher.group(1).contentEquals(""));//empty
@@ -125,6 +194,7 @@ public class FileUtilities {
 								//errorCount++;
 							}else if(errorCount == 0){//while no errors found
 							// System.out.println("line contents"+ line);
+								transNum++;
 								Pattern bracketPattern = Pattern.compile(findBrackets);
 								Matcher bracketMatcher = bracketPattern.matcher(line);
 								line = bracketMatcher.replaceAll("");// strip brackets
@@ -160,6 +230,19 @@ public class FileUtilities {
 								}
 								System.out.println("Creating new Transaction Set");
 								Transaction transaction = new Transaction(itemSet);// create a new transaction
+								
+								
+								transaction.setTimestamp();
+								String date = transaction.getTimestamp();
+								if(temp != ""){
+								 date = temp;
+								}
+								
+								//System.out.println("LINENUM " + lineNum +  "  OPDATES: " + opDates );
+								System.out.println("SETTING DATE TO TEMP: " + date);
+								transaction.setTransactionDate(date);
+								System.out.println("Created This Transactions TimeStamp: " + transaction.getTransactionDate());
+								
 								transactionSet.getTransactionSet().add(transaction);// append to overall transaction set
 								uniqueItems = transactionSet.GetUniqueItems().getItemSet().size();
 								//int totalItems = transactionSet.getTransactionSet().size();
@@ -167,7 +250,7 @@ public class FileUtilities {
 								System.out.println("Total Items Count: " + uniqueItems);
 							//transactionCount++;// increment the transcation
 												// count
-								
+								temp ="";
 								transactionItemCount = transaction.getTransaction().getItemSet().size();
 								if(transactionItemCount > largestTransactionSize){
 									largestTransactionSize = transactionItemCount;
@@ -242,6 +325,11 @@ public class FileUtilities {
 		//FileUtilities.writeCurrentErrors(errorLogs, "well.txt");
 		}
 		transactionSet.setErrorLogs(errorLogs);
+		for(int i = 0; i < optional.size(); i++){
+			System.out.println("Optional Datetime: " + optional.get(i).getTransactionDate());
+			
+		}
+		
 		return transactionSet;
 		
 

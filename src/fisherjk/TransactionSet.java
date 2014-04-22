@@ -78,7 +78,7 @@ public class TransactionSet implements Serializable {
 		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy
 		Date now = new Date();
 		String strDate = sdfDate.format(now);
-		this.timestamp = strDate+"12:00:00";
+		this.timestamp = strDate+" 12:00:00";
 	}
 	
 	

@@ -1,0 +1,8 @@
+PaulMart
+2014-03-15
+2014-03-16 09:30:22
+{ProductX, ProductY} 2014-01-25 12:30:20
+{ProductX, ProductS, ProductT} 2014-01-25 12:30:21
+{ProductX, ProductY, ProductZ}
+{ProductX, ProductY, ProductZ}
+{ProductR} 2014-01-26 08:30:07

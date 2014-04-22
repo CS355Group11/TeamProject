@@ -130,36 +130,6 @@ public class GeneratorServerResource extends ServerResource implements
 	 * method to determine acceptable levels minSupportLevel and
 	 * minConfidenceLevel
 	 */
-	public static String checkLevels(double level) {
-		String message = "";
-		if (level < 0.0) {
-			message = " below acceptable range.";
-		}
-		if (level > 1.0) {
-
-			message = " above acceptable range.";
-		}
-
-		return message;
-	}
-
-	public static ErrorLogs parameterLogs(String supMsg, String confMsg) {
-		ErrorLogs logs = new ErrorLogs();
-		String parameterError = "Parameter Input Error: ";
-		String parameterRange = " Must be between 0.0 and 1.0, inclusively";
-		if (!supMsg.equals("")) {
-			logs.getErrorMsgs().add(
-					parameterError + " Min Support Level is " + supMsg
-							+ parameterRange);
-		}
-		if (!confMsg.equals("")) {
-			logs.getErrorMsgs().add(
-					parameterError + " Min Confidence Level is " + confMsg
-							+ parameterRange);
-		}
-		return logs;
-
-	}
 
 	/* DAO MAIN */
 	public static ErrorLogs DAOController(Generator generator,
