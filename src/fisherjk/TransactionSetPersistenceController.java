@@ -44,14 +44,14 @@ public class TransactionSetPersistenceController {
 			transactionSet.setTimestamp();
 		}
 		
-		if(start == null || end == null){
+		if(start == null && end == null){
 			transactionSet.setTimestamp();
 			String defaultTimeStamp = transactionSet.getTimestamp();
 			startDateTime = defaultTimeStamp;
 			endDateTime = defaultTimeStamp;
 		}else{
-			startDateTime = start +" 12:00:00";//think about how to get default time here and fileUtitities
-			endDateTime = end +" 12:00:00";
+			startDateTime = start;//think about how to get default time here and fileUtitities
+			endDateTime = end;
 		}
 		String convert_start_date = "STR_TO_DATE(\""+startDateTime+"\", \"%Y-%m-%d %H:%i:%S\")";
 		String convert_end_date = "STR_TO_DATE(\""+endDateTime+"\", \"%Y-%m-%d %H:%i:%S\")";

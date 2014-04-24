@@ -33,10 +33,13 @@ public class TransactionPersistenceController {
 	public String generateInsertStmt(Transaction transaction) {
 		System.out.println("Generating Insert Statement for transaction");
 		String result = null;
-		if(transaction.getTimestamp()==null){
+		//transaction.getTransactionDate();
+		if(transaction.getTransactionDate()==null){
 			transaction.setTimestamp();
+			String timestamp = transaction.getTimestamp();
+			transaction.setTransactionDate(timestamp);
 		}
-		String transactionDateTime = transaction.getTimestamp();
+		String transactionDateTime = transaction.getTransactionDate();
 		String transactionItemSet = transaction.getTransaction().getItemSet().toString();
 		System.out.println("Transaction Item Set: " + transactionItemSet);
 		

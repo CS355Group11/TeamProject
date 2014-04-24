@@ -109,7 +109,7 @@ public class GeneratorServerResource extends ServerResource implements
 
 		/* Inserting original transactionSet and generated rule set */
 		timerDB.startTimer();
-		//errorLogs = DAOController(generator, transactionSet, ruleSet);
+		errorLogs = DAOController(generator, transactionSet, ruleSet);
 		timerDB.stopTimer();
 		System.out.println("DB elapsed time in msec.: " + timerDB.getTotal());
 		System.out.println("Errors from DAO: " + errorLogs.getErrorCount());
