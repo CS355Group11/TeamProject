@@ -1,7 +1,15 @@
-package fisherjk;
+package testing;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import common.Timer;
+import common.RuleSet;
+import common.TransactionSet;
+import service.Item;
+import service.ItemSet;
+import service.Rule;
+import service.Transaction;
 
 
 /*Class to Run the Part I of the A Priori Algorithm */
@@ -63,7 +71,6 @@ public class Generator implements Serializable{
 
 
 	public static TransactionSet DoApriori(TransactionSet transSet,double minSupportLevel) {
-		System.out.println("Starting A Priori");
 		Timer timer = new Timer();
 		timer.startTimer();
 		//for (int i = 0; i < transSet.getTransactionSet().size(); i++) {
@@ -78,43 +85,20 @@ public class Generator implements Serializable{
 		TransactionSet LargeItemSet = new TransactionSet(); // large itemset in each iteration
 		TransactionSet CandidateItemSet = new TransactionSet(); // candidate itemset in each iteration
 
+
 		// first iteration (1-item itemsets)
-		//System.out.println("SIZE OF INITIAL ITEM SET: " + initialItemSet.getItemSet().size());
 		for (int i = 0; i < initialItemSet.getItemSet().size(); i++) {
-			System.out.println("i: "  +i);
-			//System.out.println("ENTER FIRST FOR LOOP");
 			Item candidateItem = initialItemSet.getItemSet().get(i);
 			ItemSet candidateItemSet = new ItemSet();
-			double findSupport = transSet.findSupport(candidateItemSet);//calculate and find each successive support level for an transaction (remember it is an itemSet)
-			candidateItemSet.setItemSetSupport(findSupport/(transSet.getTransactionSet().size()));//Set each successive support level for its respective transaction (remember it is an itemSet)
-		 
-			//CandidateItemSet.getTransactionSet().add(candidateTrans);
-			
-			if (candidateItemSet.getItemSetSupport() >= minSupportLevel) {
-				candidateItemSet.getItemSet().add(candidateItem);
-				Transaction candidateTrans = new Transaction(candidateItemSet);
-				CandidateItemSet.getTransactionSet().add(candidateTrans);
-			}
-		}
-			//System.out.println("Starting K-Item Subsets for 2 ");
-			CandidateItemSet = (CandidateItemSet.twoItemSubsets(CandidateItemSet.GetUniqueItems(), minSupportLevel, transSet));
-			//CandidateItemSet = (CandidateItemSet.findKItemSubsets(CandidateItemSet.GetUniqueItems(), 2));
-			System.out.println("SUBSETS OF 2 candidateItemSet size: " + CandidateItemSet.getTransactionSet().size());
-			/*Filter out the 2 items */
-
-			
-			System.out.println("RESULT CANDIDATE OF 2: " + CandidateItemSet.toString());
-			
-			
-			
-			//candidateItemSet.getItemSet().add(candidateItem);
+			candidateItemSet.getItemSet().add(candidateItem);
+			Transaction candidateTrans = new Transaction(candidateItemSet);
 			//candidateTrans.toString();
 
-			//CandidateItemSet.getTransactionSet().add(candidateTrans);
-		
+			CandidateItemSet.getTransactionSet().add(candidateTrans);
+		}
 
 		// next iterations
-		int k = 3;
+		int k = 2;
 		while (CandidateItemSet.getTransactionSet().size() != 0) {
 			//set LargeItemSetIteration from CandidateItemSet (pruning)
 			LargeItemSet.getTransactionSet().clear();
@@ -145,9 +129,8 @@ public class Generator implements Serializable{
 			System.out.println("END");
 		}//end of while loop brace
 		System.out.println("Final Set: \n" + finalLargeItemSet.toString());
-		System.out.println(timer.getTotal());
 		timer.stopTimer();
-		System.out.println("Generator.DoAPriori: Time in Milliseconds" + timer.getTotal());
+		//System.out.println("Generator.DoAPriori: Time in Milliseconds" + timer.getTotal());
 		return finalLargeItemSet;//final returned value
 
 

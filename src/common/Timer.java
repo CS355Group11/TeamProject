@@ -1,4 +1,4 @@
-package fisherjk;
+package common;
 
 import java.util.Date;
 
@@ -15,17 +15,17 @@ public class Timer {
 	}
 	
 	// --- startTimer - get a starting time
-	void startTimer() {
+	public void startTimer() {
 		startTime = System.currentTimeMillis();
 	}
 
 	// --- stopTimer - get an ending time
-	void stopTimer() {
+	public void stopTimer() {
 		stopTime = System.currentTimeMillis();
 	}
 
 	// --- getTotal - return the elapsed time
-	long getTotal() {
+	public long getTotal() {
 		long result = 0;
 		if (stopTime > startTime) {
 			result = stopTime - startTime;

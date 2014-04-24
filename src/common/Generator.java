@@ -1,7 +1,12 @@
-package fisherjk;
+package common;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import service.Item;
+import service.ItemSet;
+import service.Rule;
+import service.Transaction;
 
 
 /*Class to Run the Part I of the A Priori Algorithm */

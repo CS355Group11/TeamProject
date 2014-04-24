@@ -1,9 +1,14 @@
-package fisherjk;
+package common;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import service.Item;
+import service.ItemSet;
+import service.Transaction;
+import service.Vendor;
 
 //import java.util.Date;
 /* Class for holding information about a set of transactions in a TransactionSet*/

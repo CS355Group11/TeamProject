@@ -1,10 +1,15 @@
-package fisherjk;
+package testing;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import common.Timer;
+import service.Item;
+import service.ItemSet;
+import service.Transaction;
+import service.Vendor;
 //import java.util.Date;
 /* Class for holding information about a set of transactions in a TransactionSet*/
 public class TransactionSet implements Serializable {
@@ -78,7 +83,7 @@ public class TransactionSet implements Serializable {
 		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy
 		Date now = new Date();
 		String strDate = sdfDate.format(now);
-		this.timestamp = strDate+" 12:00:00";
+		this.timestamp = strDate+"12:00:00";
 	}
 	
 	
@@ -95,9 +100,6 @@ public class TransactionSet implements Serializable {
 
 	/*Returns an itemSet containing a set of unique items found in a transactionSet which consists of Transactions*/
 	public ItemSet GetUniqueItems() {
-		
-		
-		
 		Timer timer = new Timer();
 		timer.startTimer();
 		ItemSet uniqueItems = new ItemSet();/*uniquely constructed itemSet*/
@@ -116,8 +118,7 @@ public class TransactionSet implements Serializable {
 			
 		}
 		timer.stopTimer();
-		String time = (""+timer.getTotal());
-		System.out.println("TransactionSet.GetUniqueItems: Time in Milliseconds: " + time);
+		//System.out.println("TransactionSet.GetUniqueItems: Time in Milliseconds: " + timer.getTotal());
 		
 
 		return uniqueItems;
@@ -218,60 +219,8 @@ public class TransactionSet implements Serializable {
 		timer.stopTimer();
 		String time = ("TransactionSet.findKItemSubsets: Time in Milliseconds: " + timer.getTotal());
 		System.out.println(time);
-		System.out.println("K = : " + k);
-		System.out.println(allSubsets.toString());
 		return (allSubsets);/*final combination of all possible subsets based on the size of k*/
 	}
-	
-	
-	/*Determines and returns all possible combinations of  k-item subsets based on a given itemSet. This allows filtering to take place as the next loop iteration starts up */
-	public TransactionSet twoItemSubsets(ItemSet itemSet, double minSupportLevel, TransactionSet transSet) {
-		System.out.println("2 ItemSubsets starting");
-		System.out.println("Starting ItemSet to make 2 item subsets");
-		TransactionSet allSubsets = new TransactionSet();/*New subset of transactions to return in a TransactionSet*/
-		int size = itemSet.getItemSet().size();
-		System.out.println("Passed in ItemSet:");
-		System.out.println(itemSet.toString());
-		System.out.println("size: " + size);
-		for(int i = 0; i < size; i++){
-			Item currItem = new Item(itemSet.getItemSet().get(i).getItem());
-			System.out.println("CURRENT ITEM: " + currItem.toString());
-			for(int j =i; j < size-1; j++){
-				ItemSet iSet = new ItemSet();
-				Item newItem = new Item(itemSet.getItemSet().get(j+1).getItem());
-				System.out.println("NEW ITEM?: " + newItem.toString());
-				if(!currItem.equals(newItem)){
-					iSet.getItemSet().add(currItem);
-					iSet.getItemSet().add(newItem);
-				}
-				
-				System.out.println("ItemSet to check:\n:" + iSet.toString());
-				double findSupport = transSet.findSupport(iSet);
-				
-				
-				
-				iSet.setItemSetSupport(findSupport);
-				//System.out.println("findSupport: " + (findSupport/transSet.getTransactionSet().size()) + "vs.  minSupport: " + minSupportLevel);
-				if(iSet.getItemSet().size() >1){
-				if (iSet.getItemSetSupport()/transSet.getTransactionSet().size() >= minSupportLevel) {
-					
-					Transaction ts = new Transaction(iSet);
-					allSubsets.getTransactionSet().add(ts);
-				}
-				}
-			}
-		}
-		
-		
-		 
-		 
-		 
-		
-		System.out.println("ALLSUBSETS FROM 2 ITEM SUBSETS:\n");
-		System.out.println(allSubsets.toString());
-		return (allSubsets);/*final combination of all possible subsets based on the size of k*/
-	}
-	
 	
 
 	/*Necessary for functions to determine subsets based on the bits of an index*/
