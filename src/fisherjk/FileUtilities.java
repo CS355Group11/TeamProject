@@ -77,11 +77,12 @@ public class FileUtilities {
 				temp = def_timeStamp;
 				System.out.println("BEFORE temp is: " + temp);
 				*/
-				System.out.println("Current ErrorCount = " + errorCount);
+				//System.out.println("Current ErrorCount = " + errorCount);
 				line = scanner.nextLine();
 				lineNum++;
-				String lineError = " on line # " + lineNum;
-				System.out.println("line->" + line);
+				//String lineError = " on line # " + lineNum;
+				//System.out.println("LineNum: " + lineNum);
+				//System.out.println("line->" + line);
 				// check to find start of a new transaction set
 				// determine if found a new vendor and start/end date
 				Pattern vendorPattern = Pattern.compile(findVendor);
@@ -96,32 +97,15 @@ public class FileUtilities {
 				Matcher dateTimeMatcher = dateTimePattern.matcher(line);
 				
 				if (lineNum <= 3 && dateMatcher.find()) {/*determine if we found a date string*/
-					System.out.println("date is: " + line);
-					System.out.println("GETTER: " + transactionSet.getStart_date());
+					//System.out.println("date is: " + line);
+					///System.out.println("GETTER: " + transactionSet.getStart_date());
 					if(transactionSet.getStart_date() == null){
 						transactionSet.setStart_date(line);
-						System.out.println("start_date is: " + line);
+						//System.out.println("start_date is: " + line);
 					}else{
 						transactionSet.setEnd_date(line);
-						System.out.println("end_date is: " + line);
+						//System.out.println("end_date is: " + line);
 					}
-					
-				/*if (dateTimeMatcher.find()) {
-					opDates++;
-					temp = line;
-					temp = dateTimeMatcher.group(0);
-					System.out.println("# " + transNum + " temp datetime is: " + temp);
-					Transaction transDate = new Transaction();
-					transDate.setTransactionDate(temp);
-					optional.add(transDate);
-					System.out.println("FOUND A DATE TIME FOR CURRENT TRANSACTION LINE");
-					hashDate.put(lineNum, temp);
-					line = line.replaceFirst(findDateTime3, "");
-					System.out.println("REMOVED OPTIONAL DATETIME: Line is now: " + line);
-					
-				}
-				
-				*/
 
 				} else {
 					
@@ -130,14 +114,14 @@ public class FileUtilities {
 						opDates++;
 						temp = line;
 						temp = dateTimeMatcher.group(0);
-						System.out.println("# " + transNum + " temp datetime is: " + temp);
+						//System.out.println("# " + transNum + " temp datetime is: " + temp);
 						Transaction transDate = new Transaction();
 						transDate.setTransactionDate(temp);
 						optional.add(transDate);
-						System.out.println("FOUND A DATE TIME FOR CURRENT TRANSACTION LINE");
+						//System.out.println("FOUND A DATE TIME FOR CURRENT TRANSACTION LINE");
 						hashDate.put(lineNum, temp);
 						line = line.replaceFirst(findDateTime3, "");
-						System.out.println("REMOVED OPTIONAL DATETIME: Line is now: " + line);
+						//System.out.println("REMOVED OPTIONAL DATETIME: Line is now: " + line);
 						
 					}
 					
@@ -154,25 +138,25 @@ public class FileUtilities {
 
 					
 					if (leftBraceMatcher.find() && rightBraceMatcher.find()) {/*Determine if a left or right brace is missing*/
-						System.out.println("OptionalDateTime: " + rightBraceDateMatcher.find());
+						//System.out.println("OptionalDateTime: " + rightBraceDateMatcher.find());
 						
 						
-						System.out.println("Found Left and Right Brace");
+						//System.out.println("Found Left and Right Brace");
 						Pattern contentPattern = Pattern.compile(findInBrackets);
-						System.out.println("line: " + line);
+						//System.out.println("line: " + line);
 						Matcher contentMatcher = contentPattern.matcher(line);
 						
 						if(rightBraceMatcher.find()){
-							System.out.println("Found Extra Right Brace");
-							errorLogs.getErrorMsgs().add(formatError +"Found Extra Right Brace" + lineError);
+							//System.out.println("Found Extra Right Brace");
+							errorLogs.getErrorMsgs().add(formatError +"Found Extra Right Brace on Line #" + lineNum);
 							//errorCount++;
 							
 						}
 						
 						
 						if(leftBraceMatcher.find()){
-							System.out.println("Found Extra Left Brace");
-							errorLogs.getErrorMsgs().add(formatError +"Found Extra Left Brace"+ lineError);
+							//System.out.println("Found Extra Left Brace");
+							errorLogs.getErrorMsgs().add(formatError +"Found Extra Left Brace on Line #"+ lineNum);
 							//errorCount++;
 						}
 						
@@ -186,10 +170,10 @@ public class FileUtilities {
 							//System.out.println("SETTING DATE TO GROUP 3: " + contentMatcher.group(3));
 							//}
 							if(contentMatcher.group(1).contentEquals(" ") || contentMatcher.group(1).contentEquals("")){//check to see if empty transaction {} or { }
-								System.out.println(contentMatcher.group(1).contentEquals(" "));//space
-								System.out.println(contentMatcher.group(1).contentEquals(""));//empty
-								System.out.println("Content: " + contentMatcher.group(1));
-								System.out.println("Found an empty transaction");
+								//System.out.println(contentMatcher.group(1).contentEquals(" "));//space
+								//System.out.println(contentMatcher.group(1).contentEquals(""));//empty
+								//System.out.println("Content: " + contentMatcher.group(1));
+								//System.out.println("Found an empty transaction");
 								errorLogs.getErrorMsgs().add(formatError + "Found an empty transaction");
 								//errorCount++;
 							}else if(errorCount == 0){//while no errors found
@@ -206,19 +190,19 @@ public class FileUtilities {
 								// System.out.println("line is now: " + line);
 								
 								
-								System.out.println("Line is Currently " + line.length() +" characters long");
+								//System.out.println("Line is Currently " + line.length() +" characters long");
 								Pattern itemPattern = Pattern.compile(findDescItem);
 								Matcher itemMatcher = itemPattern.matcher(line);// find individual items on a new line basis
 								//int itemCount = 0;
 								ItemSet itemSet = new ItemSet();// create a new ItemSet
-								int uniqueItems = transactionSet.GetUniqueItems().getItemSet().size();
+								//int uniqueItems = transactionSet.GetUniqueItems().getItemSet().size();
 								int totalItems = 0;
 								while (itemMatcher.find()) {// loop until we don't have any more matches in the groupings
 									
 									Pattern spacePattern = Pattern.compile(findSpaces);
 									Matcher spaceMatcher = spacePattern.matcher(itemMatcher.group(0));
 									String itemNow = itemMatcher.group(0).replaceAll(findSpaces, "");//.replaceAll("space");
-									System.out.println("ItemNow: [" + itemNow.length() + "] vs. [" + itemMatcher.group(0).length()+"]");
+									//System.out.println("ItemNow: [" + itemNow.length() + "] vs. [" + itemMatcher.group(0).length()+"]");
 									
 									Item item = new Item(itemMatcher.group(0));
 									// System.out.println("Transaction # " +
@@ -228,7 +212,7 @@ public class FileUtilities {
 																	// new itemset
 									totalItems++;//uniqueItems = transactionSet.GetUniqueItems().getItemSet().size();
 								}
-								System.out.println("Creating new Transaction Set");
+								//System.out.println("Creating new Transaction Set");
 								Transaction transaction = new Transaction(itemSet);// create a new transaction
 								
 								
@@ -239,15 +223,15 @@ public class FileUtilities {
 								}
 								
 								//System.out.println("LINENUM " + lineNum +  "  OPDATES: " + opDates );
-								System.out.println("SETTING DATE TO TEMP: " + date);
+								//System.out.println("SETTING DATE TO TEMP: " + date);
 								transaction.setTransactionDate(date);
-								System.out.println("Created This Transactions TimeStamp: " + transaction.getTransactionDate());
+								//System.out.println("Created This Transactions TimeStamp: " + transaction.getTransactionDate());
 								
 								transactionSet.getTransactionSet().add(transaction);// append to overall transaction set
-								uniqueItems = transactionSet.GetUniqueItems().getItemSet().size();
+								//uniqueItems = transactionSet.GetUniqueItems().getItemSet().size();
 								//int totalItems = transactionSet.getTransactionSet().size();
-								System.out.println("Unique Items Count: " + uniqueItems);
-								System.out.println("Total Items Count: " + uniqueItems);
+								//System.out.println("Unique Items Count: " + uniqueItems);
+								//System.out.println("Total Items Count: " + uniqueItems);
 							//transactionCount++;// increment the transcation
 												// count
 								temp ="";
@@ -255,7 +239,7 @@ public class FileUtilities {
 								if(transactionItemCount > largestTransactionSize){
 									largestTransactionSize = transactionItemCount;
 								}
-								System.out.println();
+								//System.out.println();
 								
 								if(largestTransactionSize > 25){
 									errorLogs.getErrorMsgs().add(formatError +"Too many items in transaction set (Must be 25 or less items)");
@@ -278,23 +262,23 @@ public class FileUtilities {
 					} else {
 						
 						if(vendorMatcher.find()) {//figure out how to set vendors to transactions
-							System.out.println("Vendor is: " + line);
+							//System.out.println("Vendor is: " + line);
 							Vendor vendor = new Vendor(line);
 							av.add(vendor);
 							transactionSet.setVendorSet(av);
 							//transaction.setVendor(vendor);
-							System.out.println("MATCHER Vendor in vendor set: " + vendor.getVendor_name());
+							//System.out.println("MATCHER Vendor in vendor set: " + vendor.getVendor_name());
 						} else {
 						
 							if (!leftBraceMatcher.find()) {
-								System.out.println("Missing Left brace");
-								errorLogs.getErrorMsgs().add(formatError +"Missing Left brace"+ lineError);
+								//System.out.println("Missing Left brace");
+								errorLogs.getErrorMsgs().add(formatError +"Missing Left brace on Line # "+ lineNum);
 								//errorCount++;
 							}
 							
 							if (!rightBraceMatcher.find()) {
-								System.out.println("Missing right brace");
-								errorLogs.getErrorMsgs().add(formatError +"Missing Right brace"+ lineError);
+								//System.out.println("Missing right brace");
+								errorLogs.getErrorMsgs().add(formatError +"Missing Right brace on Line #"+ lineNum);
 								//errorCount++;
 							}
 						}
@@ -302,9 +286,9 @@ public class FileUtilities {
 				
 				}
 			}
-			System.out.println("Error Count: " + errorLogs.getErrorCount());
-			System.out.println("Transaction Set: " + transactionSet.getTransactionSet().toString());
-			System.out.println("Error Logs: " + errorLogs.toString());
+			//System.out.println("Error Count: " + errorLogs.getErrorCount());
+			//System.out.println("Transaction Set: " + transactionSet.getTransactionSet().toString());
+			//System.out.println("Error Logs: " + errorLogs.toString());
 			// Always close files.
 			/*USE A FINALLY?*/
 			fileReader.close();
@@ -316,8 +300,8 @@ public class FileUtilities {
 		}
 		
 		if(av.isEmpty()){
-			System.out.println("Format Error: No Vendor Provided");
-			errorLogs.add("Format Error: No Vendor Provided");
+			//System.out.println("Format Error: No Vendor Provided");
+			//errorLogs.add("Format Error: No Vendor Provided");
 		}
 		//System.out.println("Error Count: " + errorCount);
 		if(errorLogs.getErrorCount() >0){
@@ -326,7 +310,7 @@ public class FileUtilities {
 		}
 		transactionSet.setErrorLogs(errorLogs);
 		for(int i = 0; i < optional.size(); i++){
-			System.out.println("Optional Datetime: " + optional.get(i).getTransactionDate());
+			//System.out.println("Optional Datetime: " + optional.get(i).getTransactionDate());
 			
 		}
 		

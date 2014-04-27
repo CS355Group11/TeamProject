@@ -213,6 +213,7 @@ public class GeneratorWebClient extends JFrame {
 					    		System.out.println(outputRuleFilePath);
 					    		runTest(inputFilePath, outputRuleFilePath, msl, mcl, clientResource, proxy);
 						    	outputDialog(textPane);
+						    	//outputRuleDialog(textPane);
 						    	outputErrorDialog(textErrorPane);
 								isRunning = false;
 					    	}
@@ -367,6 +368,7 @@ public class GeneratorWebClient extends JFrame {
 		}	
 		
 		try {
+			//System.out.println("Printing rules");
 			if(!outputRuleFilePath.contains("src/")){
 				outputRuleFilePath = "src/" + outputRuleFilePath;
 			}
@@ -375,12 +377,13 @@ public class GeneratorWebClient extends JFrame {
 			writeOutput(pane, "\nOutput Rule File : " + outputRuleFilePath);
 			writeOutput(pane, "_______________");
 			
-			while(fileScanner.hasNext()){					
+			while(fileScanner.hasNext()){
+				//System.out.println("Printing rules");
 				writeOutput(pane, fileScanner.nextLine());
 			}
 		
 			fileScanner.close();				
-			
+			System.out.println("finished Printing rules");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -389,7 +392,28 @@ public class GeneratorWebClient extends JFrame {
 	}
 	
 	
-	
+	private void outputRuleDialog(JTextPane pane){
+		Scanner fileScanner;
+		//System.out.println("Default Output Error File Path: " + outputErrorFilePath);
+		try {
+			if(!outputRuleFilePath.contains("src/")){
+				outputRuleFilePath = "src/" + outputRuleFilePath;
+			}
+			fileScanner = new Scanner(new FileInputStream(outputRuleFilePath));
+
+			writeOutput(pane, "\nOutput Error File : " + outputRuleFilePath);
+			writeOutput(pane, "_______________");
+			
+			while(fileScanner.hasNextLine()){					
+				writeOutput(pane, fileScanner.nextLine());
+			}
+		
+			fileScanner.close();				
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	
@@ -449,14 +473,14 @@ public class GeneratorWebClient extends JFrame {
 			
 			
 			
-			System.out.println("New GUI: " + inputFilePath);
-			System.out.println("New GUI: " + outputRuleFilePath);
-			System.out.println("New GUI: " + outputErrorFilePath);
+			//System.out.println("New GUI: " + inputFilePath);
+			//System.out.println("New GUI: " + outputRuleFilePath);
+			//System.out.println("New GUI: " + outputErrorFilePath);
 			
 			
 			
 			if(inputFileMatcher.find()){
-				System.out.println("GROUPED INPUT FILE NAME: " + inputFileMatcher.group(0));
+				//System.out.println("GROUPED INPUT FILE NAME: " + inputFileMatcher.group(0));
 				inputFilePath = inputFileMatcher.group(0);
 			}else{
 				System.out.println("No input extension is found");
@@ -467,10 +491,10 @@ public class GeneratorWebClient extends JFrame {
 			
 			
 			if(outputRuleFileMatcher.find()){
-				System.out.println("GROUPED OUTPUT RULE FILE NAME: " + outputRuleFileMatcher.group(0));
+				//System.out.println("GROUPED OUTPUT RULE FILE NAME: " + outputRuleFileMatcher.group(0));
 				this.outputRuleFilePath =  outputRuleFileMatcher.group(0);
 			}else if(outputRuleFilePath.equals("")){
-				System.out.println("In this block");
+				//System.out.println("In this block");
 				this.outputRuleFilePath = "rules_of_" + this.inputFilePath;		
 			}else{
 				System.out.println("No output rule extension is found");
@@ -480,14 +504,14 @@ public class GeneratorWebClient extends JFrame {
 			
 			
 			if(outputErrorFileMatcher.find()){
-				System.out.println("GROUPED OUTPUT ERROR FILE NAME: " + outputErrorFileMatcher.group(0));
+				//System.out.println("GROUPED OUTPUT ERROR FILE NAME: " + outputErrorFileMatcher.group(0));
 				this.outputErrorFilePath =  outputErrorFileMatcher.group(0);
 			
 			}else if(outputErrorFilePath.equals("")){
 					System.out.println("In this block");
 					this.outputErrorFilePath = "errors_of_" + this.inputFilePath;			
 			}else{
-			System.out.println("No output error extension is found");
+				System.out.println("No output error extension is found");
 				this.outputErrorFilePath += ".txt";
 			}
 			
@@ -495,9 +519,9 @@ public class GeneratorWebClient extends JFrame {
 		
 			
 			
-			System.out.println("Final GUI: " + inputFilePath);
-			System.out.println("Final GUI: " + outputRuleFilePath);
-			System.out.println("Final GUI: " + outputErrorFilePath);
+			//System.out.println("Final GUI: " + inputFilePath);
+			//System.out.println("Final GUI: " + outputRuleFilePath);
+			//System.out.println("Final GUI: " + outputErrorFilePath);
 			
 		
 		
