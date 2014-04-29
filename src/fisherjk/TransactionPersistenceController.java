@@ -6,16 +6,21 @@ public class TransactionPersistenceController {
 	private DAOInterface dao;		// the Data Access Object (DAO) being used
 	
 	//Method to connect, update, and disconnect Transaction
+
+	
 	public void persistTransaction(Transaction transaction) {
 		String sqlStatement;
+		
+		
 		dao.connect();
+		
 		sqlStatement = generateInsertStmt(transaction);
 		if(dao.getErrorLogs().getErrorMsgs().size() == 0){
 		dao.executeUpdate(sqlStatement);
 		//dao.executeResultSet(sqlStatement);
 		}
 		if(dao.getErrorLogs().getErrorMsgs().size() == 0){
-		dao.disconnect();
+			dao.disconnect();
 		}
 	}
 

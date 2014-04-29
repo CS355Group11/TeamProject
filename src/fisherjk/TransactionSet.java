@@ -194,7 +194,7 @@ public class TransactionSet implements Serializable {
 	
 	/*Determines and returns all possible combinations of  k-item subsets based on a given itemSet. This allows filtering to take place as the next loop iteration starts up */
 	public TransactionSet findKItemSubsets(ItemSet itemSet, int k) {
-		System.out.println("findKItemSubsets starting");
+		//System.out.println("findKItemSubsets starting");
 		Timer timer = new Timer();
 		timer.startTimer();
 		TransactionSet allSubsets = new TransactionSet();/*New subset of transactions to return in a TransactionSet*/
@@ -216,10 +216,10 @@ public class TransactionSet implements Serializable {
 			}
 		}
 		timer.stopTimer();
-		String time = ("TransactionSet.findKItemSubsets: Time in Milliseconds: " + timer.getTotal());
-		System.out.println(time);
-		System.out.println("K = : " + k);
-		System.out.println(allSubsets.toString());
+		//String time = ("TransactionSet.findKItemSubsets: Time in Milliseconds: " + timer.getTotal());
+		//System.out.println(time);
+		//System.out.println("K = : " + k);
+		//System.out.println(allSubsets.toString());
 		return (allSubsets);/*final combination of all possible subsets based on the size of k*/
 	}
 	
@@ -265,7 +265,7 @@ public class TransactionSet implements Serializable {
 		
 		*/
 		public TransactionSet twoItemSubsets(TransactionSet candidSet, double minSupportLevel, TransactionSet transSet) {
-			System.out.println("2 ItemSubsets starting");
+			//System.out.println("2 ItemSubsets starting");
 			//System.out.println("Starting ItemSet to make 2 item subsets");
 			TransactionSet allSubsets = new TransactionSet();/*New subset of transactions to return in a TransactionSet*/
 			
@@ -287,20 +287,13 @@ public class TransactionSet implements Serializable {
 					//System.out.println("findSupport: " + (findSupport/transSet.getTransactionSet().size()) + "vs.  minSupport: " + minSupportLevel);
 					//if(iSet.getItemSet().size() >1){
 						if (iSet.getItemSetSupport() >= minSupportLevel) {
-							System.out.println("Passed: ");
+							//System.out.println("Passed: ");
 							Transaction ts = new Transaction(iSet);
 							allSubsets.getTransactionSet().add(ts);
 						}
 					//}
 				}
 			}
-		
-		 
-		 
-		 
-		
-		//System.out.println("ALLSUBSETS FROM 2 ITEM SUBSETS:\n");
-		//System.out.println(allSubsets.toString());
 		return (allSubsets);/*final combination of all possible subsets based on the size of k*/
 	}
 	

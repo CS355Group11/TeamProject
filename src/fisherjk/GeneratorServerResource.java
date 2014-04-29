@@ -192,7 +192,7 @@ public class GeneratorServerResource extends ServerResource implements
 			return errorLogs;
 		}
 		System.out.println("errorCount: " + errorCount);
-
+		//tpc.connect();
 		for (Transaction transaction : transactionSet.getTransactionSet()) {
 			System.out.println("Size: "
 					+ transactionSet.getTransactionSet().size());
@@ -207,7 +207,7 @@ public class GeneratorServerResource extends ServerResource implements
 		int tpc_errors = tpc.getErrorLogs().getErrorMsgs().size();
 		errorCount += tpc_errors;
 		System.out.println("errorCount: " + errorCount);
-
+		
 		if (errorCount != 0) {
 			errorLogs.add("DATABASE ERROR: TRANSACTION TABLE");
 			errorLogs.add(tpc.getErrorLogs());
@@ -215,6 +215,7 @@ public class GeneratorServerResource extends ServerResource implements
 			return errorLogs;
 		}
 
+		//tpc.disconnect();
 		System.out.println("Starting Persist Generator");
 		gpc.persistGenerator(generator.getGenerator_minSupportLevel(),
 				generator.getGenerator_minConfidenceLevel());

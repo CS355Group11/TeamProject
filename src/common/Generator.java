@@ -152,7 +152,7 @@ public class Generator implements Serializable{
 		System.out.println("Final Set: \n" + finalLargeItemSet.toString());
 		System.out.println(timer.getTotal());
 		timer.stopTimer();
-		System.out.println("Generator.DoAPriori: Time in Milliseconds" + timer.getTotal());
+		System.out.println("Generator.DoAPriori: Time in Milliseconds: " + timer.getTotal());
 		return finalLargeItemSet;//final returned value
 
 

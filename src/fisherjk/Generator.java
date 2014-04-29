@@ -66,23 +66,15 @@ public class Generator implements Serializable{
 		System.out.println("Starting A Priori");
 		Timer timer = new Timer();
 		timer.startTimer();
-		//for (int i = 0; i < transSet.getTransactionSet().size(); i++) {
-		//	for (int j = 0; j < transSet.getTransactionSet().size(); j++) {
-		//	(new TransactionSet(j)).start();
-		//	}
-		//}
-		//timer.stopTimer();
-		//System.out.println("Threaded Generator.GetUniqueItems: Time in Milliseconds" + timer.getTotal());
+		
 		ItemSet initialItemSet = transSet.GetUniqueItems();//get all singular unique items and put them into a ItemSet object
 		TransactionSet finalLargeItemSet = new TransactionSet(); // resultant large itemsets
 		TransactionSet LargeItemSet = new TransactionSet(); // large itemset in each iteration
 		TransactionSet CandidateItemSet = new TransactionSet(); // candidate itemset in each iteration
 
 		// first iteration (1-item itemsets)
-		//System.out.println("SIZE OF INITIAL ITEM SET: " + initialItemSet.getItemSet().size());
+		
 		for (int i = 0; i < initialItemSet.getItemSet().size(); i++) {
-			//System.out.println("i: "  +i);
-			//System.out.println("ENTER FIRST FOR LOOP");
 			Item candidateItem = initialItemSet.getItemSet().get(i);
 			ItemSet candidateItemSet = new ItemSet();
 			candidateItemSet.getItemSet().add(candidateItem);
@@ -97,26 +89,70 @@ public class Generator implements Serializable{
 				CandidateItemSet.getTransactionSet().add(new Transaction(candidateItemSet));
 			}
 		}
-			//System.out.println("Starting K-Item Subsets for 2 ");
-		//CandidateItemSet.GetUniqueItems()
-			//System.out.println("CandidateItemSet Size: " + CandidateItemSet.getTransactionSet().size());
-			CandidateItemSet = (CandidateItemSet.twoItemSubsets(CandidateItemSet, minSupportLevel, transSet));
-			//CandidateItemSet = (CandidateItemSet.findKItemSubsets(CandidateItemSet.GetUniqueItems(), 2));
-			//System.out.println("SUBSETS OF 2 candidateItemSet size: " + CandidateItemSet.getTransactionSet().size());
-			/*Filter out the 2 items */
-
-			
-			//System.out.println("RESULT CANDIDATE OF 2: " + CandidateItemSet.toString());
-			
-			
-			
-			//candidateItemSet.getItemSet().add(candidateItem);
-			//candidateTrans.toString();
-
-			//CandidateItemSet.getTransactionSet().add(candidateTrans);
 		
+		System.out.println("B4 CandidateItemSet: " + CandidateItemSet.toString());
+			CandidateItemSet = (CandidateItemSet.twoItemSubsets(CandidateItemSet, minSupportLevel, transSet));
+			System.out.println("After CandidateItemSet: " + CandidateItemSet.toString());
+			/*
+			ItemSet filter = (CandidateItemSet.twoItemSubsets(CandidateItemSet, minSupportLevel, transSet)).GetUniqueItems();
 
+			
+		/*NEW STUFF
+		int k = 3;
+		TransactionSet kItemSubsets = new TransactionSet();
+		TransactionSet check = new TransactionSet();
+		kItemSubsets = kItemSubsets.findKItemSubsets(filter, k);
+		boolean frequent = true;
+		while (kItemSubsets.getTransactionSet().size() != 0){
+			for(int i = 0; i < kItemSubsets.getTransactionSet().size(); i++){
+				ItemSet currItem = kItemSubsets.getTransactionSet().get(i).getTransaction();
+				 check = kItemSubsets.findKItemSubsets(currItem, k-1);
+				 for(int j = 0; j < check.getTransactionSet().size(); j++){
+					 System.out.println("IN inner for loop");
+					 if(!kItemSubsets.getTransactionSet().get(k-2).getTransaction().getItemSet().contains(check.getTransactionSet().get(j).getTransaction().getItemSet())){
+						 System.out.println("HIT conditional");
+						 frequent = false;
+					 }
+				 }
+				 
+				 
+				 if(frequent){
+					 System.out.println("FREQUENT HAPPENS");
+					 double findSupport = transSet.findSupport(currItem);//calculate and find each successive support level for an transaction (remember it is an itemSet)
+					currItem.setItemSetSupport(findSupport/(transSet.getTransactionSet().size()));//Set each successive support level for its respective transaction (remember it is an itemSet)
+					
+					if (currItem.getItemSetSupport() >= minSupportLevel) {//Determine if the itemSet's support level meets or exceeds the supportThreshold to filter out
+						
+						//System.out.println(transaction.toString() + "-" + findSupport);//debugging info
+					
+						LargeItemSet.getTransactionSet().add(new Transaction(currItem));
+						//if (currItem.getItemSet().size() > 1) {// this might not work in the long run
+							System.out.println("Adding: " + currItem.toString());
+							LargeItemSet.getTransactionSet().add(new Transaction(currItem));
+							finalLargeItemSet.getTransactionSet().add(new Transaction(currItem));//add the resultingLargeItemSet of final 
+						//}
+					
+						
+				 }
+				 
+			}	
+			
+			
+		}
+			k++;
+			frequent = true;
+			kItemSubsets.getTransactionSet().clear();
+			kItemSubsets = transSet.findKItemSubsets(LargeItemSet.GetUniqueItems(), k);
+			LargeItemSet.getTransactionSet().clear();
+			
+		}
+		
+		
+		
+		System.out.println("finalLargeItemSet:" + finalLargeItemSet.toString());
+		return finalLargeItemSet;
 		// next iterations
+		*/
 		int k = 3;
 		while (CandidateItemSet.getTransactionSet().size() != 0) {
 			//set LargeItemSetIteration from CandidateItemSet (pruning)
@@ -146,9 +182,7 @@ public class Generator implements Serializable{
 			//System.out.println("done making candidates");
 			k += 1;
 			//System.out.println("END");
-		}//end of while loop brace
-		//System.out.println("Final Set: \n" + finalLargeItemSet.toString());
-		//System.out.println(timer.getTotal());
+		}
 		timer.stopTimer();
 		System.out.println("Generator.DoAPriori: Time in Milliseconds" + timer.getTotal());
 		return finalLargeItemSet;//final returned value
