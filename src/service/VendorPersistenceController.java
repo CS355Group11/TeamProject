@@ -10,11 +10,7 @@ import common.ErrorLogs;
 
 public class VendorPersistenceController {
 	// data
-	//private Transaction transaction;		// student being worked with
-	private DAOInterface dao;		// the Data Access Object (DAO) being used
-	
-	// methods
-	// persistStudent - overall method to persist a single student object
+	private DAOInterface dao;	
 	public void persistVendor(Vendor vendor) {
 		String sqlStatement;		// SQL statement to persist the student
 		
@@ -41,10 +37,9 @@ public class VendorPersistenceController {
 		}
 	}
 	
-	// generateInsertStmt - generate an SQL insert statement for a particular transaction object
+	// generateInsertStmt - generate an SQL insert statement for a particular vendor object
 	public String generateInsertStmt(Vendor vendor) {
 		System.out.println("Generating Insert Statement for vendor");
-		// TODO: code to convert transaction object to SQL insert statement string for that transaction
 		String result = null;
 		String vendor_name = vendor.getVendor_name();
 		if(vendor_name == ""){

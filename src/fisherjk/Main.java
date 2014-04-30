@@ -11,8 +11,8 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		double minSupportLevel = 0.2;
-		double minConfidenceLevel = 0.2;
+		//double minSupportLevel = 0.2;
+		//double minConfidenceLevel = 0.2;
 		/*
 		ArrayList<String> list = new ArrayList<String>();
 		list.add("A");
@@ -104,7 +104,7 @@ public class Main {
 		if (supMsg.equals("") && confMsg.equals("")) {// no errors
 			System.out.println("Min. support level is" + supMsg);
 			System.out.println("Min. confidence level is" + confMsg);
-			Generator generator = new Generator(minSupportLevel, minConfidenceLevel, fileInputName);
+			//Generator generator = new Generator(minSupportLevel, minConfidenceLevel, fileInputName);
 			//Timer timer = new Timer();
 			timer.startTimer();
 			TransactionSet transactionSet = new TransactionSet();

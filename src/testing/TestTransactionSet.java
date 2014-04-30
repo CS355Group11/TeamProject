@@ -9,8 +9,8 @@ import org.junit.Test;
 import common.TransactionSet;
 import service.Item;
 import service.ItemSet;
+import service.Transaction;
 import service.Vendor;
-
 
 public class TestTransactionSet extends TestCase{
 

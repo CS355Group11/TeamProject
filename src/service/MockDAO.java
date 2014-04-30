@@ -35,7 +35,7 @@ public class MockDAO implements DAOInterface {
 	}
 
 	public ErrorLogs getErrorLogs() {
-		// TODO Auto-generated method stub
+		//do nothing
 		return null;
 	}
 }

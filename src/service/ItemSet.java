@@ -31,7 +31,6 @@ public class ItemSet implements Serializable {
 	}
 
 	public void setItemSet(ArrayList<Item> itemSet) {
-
 		this.itemSet = itemSet;
 	}
 
@@ -72,7 +71,6 @@ public class ItemSet implements Serializable {
 				itemSetContents = itemSetContents + " AND ";
 			}
 		}
-
 		return itemSetContents;
 	}
 

@@ -16,13 +16,7 @@ public class GeneratorServerResource extends ServerResource implements
 	}
 
 	public RuleSet retrieve() {
-		/*
-		 * GeneratorServerResource.generator.setGenerator_minSupportLevel(0.5);
-		 * GeneratorServerResource
-		 * .generator.setGenerator_minConfidenceLevel(0.5);
-		 * GeneratorServerResource
-		 * .generator.setGenerator_filePath("transactions1.txt");
-		 */
+		
 		System.out.println("Set Generator Min Support Level to   : "
 				+ GeneratorServerResource.generator
 						.getGenerator_minSupportLevel());
@@ -31,18 +25,6 @@ public class GeneratorServerResource extends ServerResource implements
 						.getGenerator_minConfidenceLevel());
 		System.out.println("Set Generator File Path to           : "
 				+ GeneratorServerResource.generator.getGenerator_filePath());
-		/*
-		 * String outputRuleFilePath =
-		 * "rules_of_"+GeneratorServerResource.generator
-		 * .getGenerator_filePath(); String outputErrorFilePath =
-		 * "rules_of_"+GeneratorServerResource
-		 * .generator.getGenerator_filePath();
-		 * System.out.println("Starting Writing File(s): " + outputRuleFilePath
-		 * + " and " + outputErrorFilePath); FileUtilities.writeFile(ruleSet,
-		 * outputRuleFilePath, errorLogs, outputErrorFilePath);
-		 * System.out.println("Finished Writing File(s):  " + outputRuleFilePath
-		 * +" and " + outputErrorFilePath);
-		 */
 
 		System.out.println("Server RuleSet SIZE: "
 				+ ruleSet.getRuleSet().size());
@@ -111,7 +93,7 @@ public class GeneratorServerResource extends ServerResource implements
 		timerDB.startTimer();
 		
 		/*Trigger Database Calls*/
-		//errorLogs = DAOController(generator, transactionSet, ruleSet);
+		errorLogs = DAOController(generator, transactionSet, ruleSet);
 		
 		timerDB.stopTimer();
 		System.out.println("DB elapsed time in msec.: " + timerDB.getTotal());

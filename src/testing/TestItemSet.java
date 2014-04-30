@@ -7,8 +7,8 @@ import junit.framework.TestCase;
 import org.junit.Test;
 
 import service.Item;
-
-
+import service.ItemSet;
+import service.Transaction;
 
 public class TestItemSet extends TestCase{
 

@@ -1,6 +1,6 @@
 package service;
 
-import org.restlet.resource.ClientResource;
+//import org.restlet.resource.ClientResource;
 import org.restlet.resource.ServerResource;
 
 import common.ErrorLogs;
@@ -16,7 +16,7 @@ public class GeneratorServerResource extends ServerResource implements
 	// data
 	private static Generator generator = new Generator();
 	private static RuleSet ruleSet = new RuleSet();
-	private static ErrorLogs errorLogs = new ErrorLogs();
+	//private static ErrorLogs errorLogs = new ErrorLogs();
 
 	// methods
 	public GeneratorServerResource() {
@@ -24,13 +24,7 @@ public class GeneratorServerResource extends ServerResource implements
 	}
 
 	public RuleSet retrieve() {
-		/*
-		 * GeneratorServerResource.generator.setGenerator_minSupportLevel(0.5);
-		 * GeneratorServerResource
-		 * .generator.setGenerator_minConfidenceLevel(0.5);
-		 * GeneratorServerResource
-		 * .generator.setGenerator_filePath("transactions1.txt");
-		 */
+		
 		System.out.println("Set Generator Min Support Level to   : "
 				+ GeneratorServerResource.generator
 						.getGenerator_minSupportLevel());
@@ -39,18 +33,6 @@ public class GeneratorServerResource extends ServerResource implements
 						.getGenerator_minConfidenceLevel());
 		System.out.println("Set Generator File Path to           : "
 				+ GeneratorServerResource.generator.getGenerator_filePath());
-		/*
-		 * String outputRuleFilePath =
-		 * "rules_of_"+GeneratorServerResource.generator
-		 * .getGenerator_filePath(); String outputErrorFilePath =
-		 * "rules_of_"+GeneratorServerResource
-		 * .generator.getGenerator_filePath();
-		 * System.out.println("Starting Writing File(s): " + outputRuleFilePath
-		 * + " and " + outputErrorFilePath); FileUtilities.writeFile(ruleSet,
-		 * outputRuleFilePath, errorLogs, outputErrorFilePath);
-		 * System.out.println("Finished Writing File(s):  " + outputRuleFilePath
-		 * +" and " + outputErrorFilePath);
-		 */
 
 		System.out.println("Server RuleSet SIZE: "
 				+ ruleSet.getRuleSet().size());
@@ -93,7 +75,7 @@ public class GeneratorServerResource extends ServerResource implements
 		
 		/*Re-read Transaction Set to create the TransactionSet needed for A Priori*/
 		TransactionSet transactionSet = new TransactionSet();
-		System.out.println("Starting Reading File..." + inputFilePath);
+		//System.out.println("Starting Reading File..." + inputFilePath);
 		transactionSet = FileUtilities.readFile(inputFilePath);
 		
 		/*Start Running the A Priori Algorithm*/
@@ -117,7 +99,10 @@ public class GeneratorServerResource extends ServerResource implements
 
 		/* Inserting original transactionSet and generated rule set */
 		timerDB.startTimer();
+		
+		/*Trigger Database Calls*/
 		errorLogs = DAOController(generator, transactionSet, ruleSet);
+		
 		timerDB.stopTimer();
 		System.out.println("DB elapsed time in msec.: " + timerDB.getTotal());
 		System.out.println("Errors from DAO: " + errorLogs.getErrorCount());
@@ -129,15 +114,11 @@ public class GeneratorServerResource extends ServerResource implements
 			errorLogs.getErrorMsgs().add(errorCount + " error(s) found. No Rules are  Generated");
 		}
 		timer.stopTimer();
-		System.out.println("Total Time elapsed time in msec.: "+ (timer.getTotal()));
-		
-		this.errorLogs = errorLogs;
+		System.out.println("TGEN Total Time elapsed time in msec.: "+ (tGen.getTotal()));
+		System.out.println("TDB Total Time elapsed time in msec.: "+ (timerDB.getTotal()));
+		//this.errorLogs = errorLogs;
 	}
 
-	/*
-	 * method to determine acceptable levels minSupportLevel and
-	 * minConfidenceLevel
-	 */
 
 	/* DAO MAIN */
 	public static ErrorLogs DAOController(Generator generator,
@@ -152,13 +133,6 @@ public class GeneratorServerResource extends ServerResource implements
 		GeneratorPersistenceController gpc = new GeneratorPersistenceController();
 		int errorCount = 0;
 		String daoString = "MySQL";
-		/*
-		 * InputStreamReader unbuffered = new InputStreamReader(System.in);
-		 * BufferedReader keyboard = new BufferedReader(unbuffered); try {
-		 * System.out.println("Use (Mock) DAO or (MySQL) DAO? Mock"); daoString
-		 * = keyboard.readLine(); } catch (IOException error) {
-		 * System.err.println("Error reading input"); }
-		 */
 		gpc.setDAO(daoString);
 		vpc.setDAO(daoString);
 		tspc.setDAO(daoString);
@@ -184,7 +158,7 @@ public class GeneratorServerResource extends ServerResource implements
 			return errorLogs;
 		}
 
-		// daoString = "MySQL";
+		
 		// iterate through tranactionset to get individual transactions
 		int i = 0;
 
@@ -200,7 +174,7 @@ public class GeneratorServerResource extends ServerResource implements
 			return errorLogs;
 		}
 		System.out.println("errorCount: " + errorCount);
-
+		//tpc.connect();
 		for (Transaction transaction : transactionSet.getTransactionSet()) {
 			System.out.println("Size: "
 					+ transactionSet.getTransactionSet().size());
@@ -215,7 +189,7 @@ public class GeneratorServerResource extends ServerResource implements
 		int tpc_errors = tpc.getErrorLogs().getErrorMsgs().size();
 		errorCount += tpc_errors;
 		System.out.println("errorCount: " + errorCount);
-
+		
 		if (errorCount != 0) {
 			errorLogs.add("DATABASE ERROR: TRANSACTION TABLE");
 			errorLogs.add(tpc.getErrorLogs());
@@ -223,6 +197,7 @@ public class GeneratorServerResource extends ServerResource implements
 			return errorLogs;
 		}
 
+		//tpc.disconnect();
 		System.out.println("Starting Persist Generator");
 		gpc.persistGenerator(generator.getGenerator_minSupportLevel(),
 				generator.getGenerator_minConfidenceLevel());

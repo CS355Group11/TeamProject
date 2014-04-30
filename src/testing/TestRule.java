@@ -9,6 +9,9 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
+import service.ItemSet;
+import service.Rule;
+
 
 
 public class TestRule extends TestCase{

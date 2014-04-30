@@ -8,16 +8,19 @@ public class TransactionPersistenceController {
 	private DAOInterface dao;		// the Data Access Object (DAO) being used
 	
 	//Method to connect, update, and disconnect Transaction
+
+	
 	public void persistTransaction(Transaction transaction) {
 		String sqlStatement;
 		dao.connect();
+		
 		sqlStatement = generateInsertStmt(transaction);
 		if(dao.getErrorLogs().getErrorMsgs().size() == 0){
 		dao.executeUpdate(sqlStatement);
 		//dao.executeResultSet(sqlStatement);
 		}
 		if(dao.getErrorLogs().getErrorMsgs().size() == 0){
-		dao.disconnect();
+			dao.disconnect();
 		}
 	}
 
@@ -35,21 +38,22 @@ public class TransactionPersistenceController {
 	public String generateInsertStmt(Transaction transaction) {
 		System.out.println("Generating Insert Statement for transaction");
 		String result = null;
-		if(transaction.getTimestamp()==null){
+		//transaction.getTransactionDate();
+		if(transaction.getTransactionDate()==null){
 			transaction.setTimestamp();
+			String timestamp = transaction.getTimestamp();
+			transaction.setTransactionDate(timestamp);
 		}
-		String transactionDateTime = transaction.getTimestamp();
+		String transactionDateTime = transaction.getTransactionDate();
 		String transactionItemSet = transaction.getTransaction().getItemSet().toString();
 		System.out.println("Transaction Item Set: " + transactionItemSet);
 		
 		
 		String queryID = "SELECT MAX(TransactionSet_ID) FROM TransactionSet;";
 		String queryVendor_ID = "SELECT MAX(Vendor_ID) FROM Vendor;";
-		//dao.connect();
 		int transactionTransactionSet_ID =  dao.executeQuery(queryID);
 		int transactionVendor_ID =  dao.executeQuery(queryVendor_ID);
 		System.out.println("transactionVendor_ID: " + transactionVendor_ID);
-		//dao.disconnect();
 		transaction.setTransactionSet_ID(transactionTransactionSet_ID);
 		int ID = transaction.getTransactionSet_ID();
 		String convert_date = "STR_TO_DATE(\""+transactionDateTime+"\", \"%Y-%m-%d %H:%i:%S\")";

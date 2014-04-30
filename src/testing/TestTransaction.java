@@ -6,10 +6,10 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
-import fisherjk.Item;
-import fisherjk.ItemSet;
-import fisherjk.Transaction;
-import fisherjk.Vendor;
+import service.Item;
+import service.ItemSet;
+import service.Transaction;
+import service.Vendor;
 
 
 public class TestTransaction extends TestCase{

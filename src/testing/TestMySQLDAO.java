@@ -2,9 +2,14 @@ package testing;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+
 import java.lang.annotation.Annotation;
+
 import junit.framework.TestCase;
+
 import org.junit.Test;
+
+import service.MySQLDAO;
 
 
 public class TestMySQLDAO extends TestCase{

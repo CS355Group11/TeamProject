@@ -1,6 +1,6 @@
 package fisherjk;
 
-import java.util.Date;
+//import java.util.Date;
 
 public class Timer {
 	private long startTime;			// start time in absolute milliseconds

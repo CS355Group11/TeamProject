@@ -85,7 +85,6 @@ public class MySQLDAO implements DAOInterface {
 				   System.out.println("Insert successful");
 			   }
 			  
-			  
 		   }
 		   catch (Exception e)
 		   {
