@@ -6,6 +6,7 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
+import common.ErrorLogs;
 import common.TransactionSet;
 import service.Item;
 import service.ItemSet;
@@ -18,7 +19,7 @@ public class TestTransactionSet extends TestCase{
 	public void testTransactionSet() {
 		TransactionSet transSet = new TransactionSet();
 		assertNotNull(transSet);
-		ArrayList<Transaction> transSetSet = new ArrayList<Transaction>();
+		//ArrayList<Transaction> transSetSet = new ArrayList<Transaction>();
 		TransactionSet transSet1 = new TransactionSet(transSet);
 		assertNotNull(transSet1);
 
@@ -110,11 +111,17 @@ public class TestTransactionSet extends TestCase{
 	@Test
 	public void testGetErrorLogs(){
 		TransactionSet transSet = new TransactionSet();
+		ErrorLogs errorLogs = new ErrorLogs();
+		transSet.setErrorLogs(errorLogs);
+		assertNotNull(transSet.getErrorLogs());
 	}
 
 	@Test
 	public void testSetErrorLogs(){
-
+		TransactionSet transSet = new TransactionSet();
+		ErrorLogs errorLogs = new ErrorLogs();
+		transSet.setErrorLogs(errorLogs);
+		assertNotNull(transSet.getErrorLogs());
 	}
 
 	@Test
@@ -155,7 +162,7 @@ public class TestTransactionSet extends TestCase{
 		ItemSet one = new ItemSet();
 		one = transSet.GetUniqueItems();
 		
-		double findSupport = transSet.findSupport(one);
+		//double findSupport = transSet.findSupport(one);
 		double test = transSet.findSupport(one);
 		boolean test_bool = (test == 0);
 		assertTrue(test_bool);
@@ -177,7 +184,7 @@ public class TestTransactionSet extends TestCase{
 
 	@Test
 	public void testGetBit() {
-		TransactionSet transSet = new TransactionSet();
+		//TransactionSet transSet = new TransactionSet();
 		int test = TransactionSet.GetBit(8, 2);
 		boolean test_bool = (test == 0);
 		assertTrue(test_bool);
@@ -185,7 +192,7 @@ public class TestTransactionSet extends TestCase{
 
 	@Test
 	public void testDecimalToBinary() {
-		TransactionSet transSet = new TransactionSet();
+		//TransactionSet transSet = new TransactionSet();
 		String test = TransactionSet.DecimalToBinary(64, 4);
 		boolean test_bool = (test == "0101");
 		assertFalse(test_bool);
@@ -193,7 +200,7 @@ public class TestTransactionSet extends TestCase{
 
 	@Test
 	public void testGetOnCount() {
-		TransactionSet transSet = new TransactionSet();
+		//TransactionSet transSet = new TransactionSet();
 		int n = TransactionSet.GetOnCount(4, 10);
 		boolean test = (n == 101);
 		assertFalse(test);

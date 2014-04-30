@@ -1,7 +1,0 @@
-PaulMart
-2014-03-05
-2014-03-06
-{Tasty Red Apples, Ice Cold Beer, Gouda Cheese}
-{Ice Cold Beer, Stinky Diapers}
-{Tasty Red Apples, Ice Cold Beer, Stinky Diapers}
-{Tasty Red Apples}

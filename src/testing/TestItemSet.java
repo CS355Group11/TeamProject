@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import service.Item;
 import service.ItemSet;
-import service.Transaction;
+//import service.Transaction;
 
 public class TestItemSet extends TestCase{
 
@@ -83,7 +83,7 @@ public class TestItemSet extends TestCase{
 
 	@Test
 	public void testContainsItemSet(){
-		Transaction t1 = new Transaction();
+		//Transaction t1 = new Transaction();
 		ArrayList<Item> sub = new ArrayList<>();
 		sub.add(new Item("Item"));
 		ItemSet i = new ItemSet(sub);
