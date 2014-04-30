@@ -63,8 +63,6 @@ public class Rule implements Serializable {
 	public void setActualConfidenceLevel(double actualConfidenceLevel) {
 		this.actualConfidenceLevel = actualConfidenceLevel;
 	}
-	
-	
 
 	public int getRuleSet_ID() {
 		return ruleSet_ID;

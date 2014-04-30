@@ -11,7 +11,6 @@ public class Transaction  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private ItemSet transaction;//A transaction is essentially an itemSet
 	private String transactionDate;//A transaction's timestamp variable 
-	private double transactionTotalPrice;//A transaction total price
 	private int transactionSet_ID = 0;
 	private Vendor vendor;
 	private String timestamp;
@@ -43,17 +42,6 @@ public class Transaction  implements Serializable {
 	public void setTransactionDate(String transactionDate) {
 		this.transactionDate = transactionDate;
 	}
-
-	public double getTransactionTotalPrice(Transaction transaction) {
-		return transactionTotalPrice;
-
-	}
-	
-	public void setTransactionTotalPrice(double transactionTotalPrice) {
-		this.transactionTotalPrice = transactionTotalPrice;
-
-	}
-	
 
 	public int getTransactionSet_ID() {
 		return transactionSet_ID;

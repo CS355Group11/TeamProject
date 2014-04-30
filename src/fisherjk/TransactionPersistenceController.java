@@ -10,8 +10,6 @@ public class TransactionPersistenceController {
 	
 	public void persistTransaction(Transaction transaction) {
 		String sqlStatement;
-		
-		
 		dao.connect();
 		
 		sqlStatement = generateInsertStmt(transaction);
@@ -51,11 +49,9 @@ public class TransactionPersistenceController {
 		
 		String queryID = "SELECT MAX(TransactionSet_ID) FROM TransactionSet;";
 		String queryVendor_ID = "SELECT MAX(Vendor_ID) FROM Vendor;";
-		//dao.connect();
 		int transactionTransactionSet_ID =  dao.executeQuery(queryID);
 		int transactionVendor_ID =  dao.executeQuery(queryVendor_ID);
 		System.out.println("transactionVendor_ID: " + transactionVendor_ID);
-		//dao.disconnect();
 		transaction.setTransactionSet_ID(transactionTransactionSet_ID);
 		int ID = transaction.getTransactionSet_ID();
 		String convert_date = "STR_TO_DATE(\""+transactionDateTime+"\", \"%Y-%m-%d %H:%i:%S\")";

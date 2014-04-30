@@ -35,9 +35,7 @@ public class RulePersistenceController {
 		String ruleAntecedent = rule.getX().getItemSet().toString();
 		String ruleConsequent = rule.getY().getItemSet().toString();
 		String queryID = "SELECT MAX(RuleSet_ID) FROM RuleSet;";
-		//dao.connect();
 		int ruleRuleSet_ID =  dao.executeQuery(queryID);
-		//dao.disconnect();
 		String insert = "INSERT INTO RULE (Rule_antecedent, Rule_consequent, Rule_actual_confidence, Rule_RuleSet_ID) VALUES (\""+ruleAntecedent+"\",\""+ruleConsequent +"\","+ruleActualConfidence+","+ruleRuleSet_ID+")";
 		result = insert;
 		return result;

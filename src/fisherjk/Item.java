@@ -8,13 +8,9 @@ public class Item implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String itemName;//unique item name
-	private String itemDesc;//unique item description
-	private double itemPrice;//unique item price
 
 	public Item(String itemName) {
 		this.itemName = itemName;
-		//this.itemDesc = itemDesc;	//unused at the moment
-		//this.itemPrice = itemPrice; //unused at the moment
 
 	}
 	
@@ -25,22 +21,6 @@ public class Item implements Serializable {
 
 	public void setItem(String itemName) {
 		this.itemName = itemName;
-	}
-
-	public String getItemDesc() {
-		return itemDesc;
-	}
-
-	public void setItemDesc(String itemDesc) {
-		this.itemDesc = itemDesc;
-	}
-
-	public double getItemPrice() {
-		return itemPrice;
-	}
-
-	public void setItemPrice(double itemPrice) {
-		this.itemPrice = itemPrice;
 	}
 
 	/*Override the Item's class toString since it will be called by later classes*/

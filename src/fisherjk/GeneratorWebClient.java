@@ -10,29 +10,29 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+//import javax.swing.SwingConstants;
 
 import java.awt.Font;
 
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JButton;
-import javax.swing.SwingUtilities;
+//import javax.swing.SwingUtilities;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.BufferedReader;
-import java.io.File;
+//import java.io.BufferedReader;
+//import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+//import java.io.IOException;
+//import java.io.InputStreamReader;
+//import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+//import java.awt.event.ActionListener;
+//import java.awt.event.ActionEvent;
 
 import javax.swing.JScrollPane;
 
@@ -42,6 +42,7 @@ import org.restlet.resource.ClientResource;
 public class GeneratorWebClient extends JFrame {
 
 	//Variables for web client
+	private static final long serialVersionUID = 1L;
 	private String inputFilePath;
 	private String outputErrorFilePath;
 	private String outputRuleFilePath;
@@ -257,11 +258,9 @@ public class GeneratorWebClient extends JFrame {
 		ErrorLogs errorLogs = new ErrorLogs();
 		RuleSet ruleSet = new RuleSet();
 		Timer timer = new Timer();
-		Timer timerDB = new Timer();
 		TimerLogs tlogs = new TimerLogs();
 		
 		/*Client and Server Resource Variables*/
-		Generator newGen = new Generator();
 		
 		
 		errorLogs = parameterLogs(supMsg, confMsg);
@@ -355,10 +354,10 @@ public class GeneratorWebClient extends JFrame {
 			
 			writeOutput(pane, "Input File : " + inputFilePath);
 			writeOutput(pane, "_______________");
-			int i = 0;
+			//int i = 0;
 			while(fileScanner.hasNextLine()){		
 				writeOutput(pane, fileScanner.nextLine());
-				i++;
+				//i++;
 			}
 		
 			fileScanner.close();				
@@ -392,31 +391,6 @@ public class GeneratorWebClient extends JFrame {
 	}
 	
 	
-	private void outputRuleDialog(JTextPane pane){
-		Scanner fileScanner;
-		//System.out.println("Default Output Error File Path: " + outputErrorFilePath);
-		try {
-			if(!outputRuleFilePath.contains("src/")){
-				outputRuleFilePath = "src/" + outputRuleFilePath;
-			}
-			fileScanner = new Scanner(new FileInputStream(outputRuleFilePath));
-
-			writeOutput(pane, "\nOutput Error File : " + outputRuleFilePath);
-			writeOutput(pane, "_______________");
-			
-			while(fileScanner.hasNextLine()){					
-				writeOutput(pane, fileScanner.nextLine());
-			}
-		
-			fileScanner.close();				
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	
-	
 	private void outputErrorDialog(JTextPane pane){
 		Scanner fileScanner;
 		System.out.println("Default Output Error File Path: " + outputErrorFilePath);
@@ -448,37 +422,17 @@ public class GeneratorWebClient extends JFrame {
 		if(inputFilePath.equals("")){
 			result = false;
 		} else {
-			/*
-			if(outputErrorFilePath.equals("")){
-				System.out.println("In this block");
-				outputErrorFilePath = "errorLogs_" + inputFilePath + "_output";			
-			}
-			
-			if(outputRuleFilePath.equals("")){
-				outputRuleFilePath = inputFilePath + "_output";	
-			}
-			
-			*/
-			
-			
-			
+
+
 			String findExtension = "(.*)\\.txt$";
-			String findSRC  ="src\\/";
-			String findFile = "(src\\/)?(.*)\\.txt$";
+			//String findSRC  ="src\\/";
+			//String findFile = "(src\\/)?(.*)\\.txt$";
 			
 			Pattern inputFilePattern = Pattern.compile(findExtension);
 			Matcher inputFileMatcher = inputFilePattern.matcher(inputFilePath);
 			Matcher outputRuleFileMatcher = inputFilePattern.matcher(outputRuleFilePath);
 			Matcher outputErrorFileMatcher = inputFilePattern.matcher(outputErrorFilePath);
-			
-			
-			
-			//System.out.println("New GUI: " + inputFilePath);
-			//System.out.println("New GUI: " + outputRuleFilePath);
-			//System.out.println("New GUI: " + outputErrorFilePath);
-			
-			
-			
+
 			if(inputFileMatcher.find()){
 				//System.out.println("GROUPED INPUT FILE NAME: " + inputFileMatcher.group(0));
 				inputFilePath = inputFileMatcher.group(0);
@@ -516,15 +470,6 @@ public class GeneratorWebClient extends JFrame {
 			}
 			
 			}
-		
-			
-			
-			//System.out.println("Final GUI: " + inputFilePath);
-			//System.out.println("Final GUI: " + outputRuleFilePath);
-			//System.out.println("Final GUI: " + outputErrorFilePath);
-			
-		
-		
 		return result;
 	}
 	

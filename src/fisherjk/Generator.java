@@ -63,10 +63,6 @@ public class Generator implements Serializable{
 
 
 	public static TransactionSet DoApriori(TransactionSet transSet,double minSupportLevel) {
-		System.out.println("Starting A Priori");
-		Timer timer = new Timer();
-		timer.startTimer();
-		
 		ItemSet initialItemSet = transSet.GetUniqueItems();//get all singular unique items and put them into a ItemSet object
 		TransactionSet finalLargeItemSet = new TransactionSet(); // resultant large itemsets
 		TransactionSet LargeItemSet = new TransactionSet(); // large itemset in each iteration
@@ -89,75 +85,15 @@ public class Generator implements Serializable{
 				CandidateItemSet.getTransactionSet().add(new Transaction(candidateItemSet));
 			}
 		}
-		
-		System.out.println("B4 CandidateItemSet: " + CandidateItemSet.toString());
-			CandidateItemSet = (CandidateItemSet.twoItemSubsets(CandidateItemSet, minSupportLevel, transSet));
-			System.out.println("After CandidateItemSet: " + CandidateItemSet.toString());
-			/*
-			ItemSet filter = (CandidateItemSet.twoItemSubsets(CandidateItemSet, minSupportLevel, transSet)).GetUniqueItems();
 
+			CandidateItemSet = (CandidateItemSet.twoItemSubsets(CandidateItemSet, minSupportLevel, transSet));
 			
-		/*NEW STUFF
-		int k = 3;
-		TransactionSet kItemSubsets = new TransactionSet();
-		TransactionSet check = new TransactionSet();
-		kItemSubsets = kItemSubsets.findKItemSubsets(filter, k);
-		boolean frequent = true;
-		while (kItemSubsets.getTransactionSet().size() != 0){
-			for(int i = 0; i < kItemSubsets.getTransactionSet().size(); i++){
-				ItemSet currItem = kItemSubsets.getTransactionSet().get(i).getTransaction();
-				 check = kItemSubsets.findKItemSubsets(currItem, k-1);
-				 for(int j = 0; j < check.getTransactionSet().size(); j++){
-					 System.out.println("IN inner for loop");
-					 if(!kItemSubsets.getTransactionSet().get(k-2).getTransaction().getItemSet().contains(check.getTransactionSet().get(j).getTransaction().getItemSet())){
-						 System.out.println("HIT conditional");
-						 frequent = false;
-					 }
-				 }
-				 
-				 
-				 if(frequent){
-					 System.out.println("FREQUENT HAPPENS");
-					 double findSupport = transSet.findSupport(currItem);//calculate and find each successive support level for an transaction (remember it is an itemSet)
-					currItem.setItemSetSupport(findSupport/(transSet.getTransactionSet().size()));//Set each successive support level for its respective transaction (remember it is an itemSet)
-					
-					if (currItem.getItemSetSupport() >= minSupportLevel) {//Determine if the itemSet's support level meets or exceeds the supportThreshold to filter out
-						
-						//System.out.println(transaction.toString() + "-" + findSupport);//debugging info
-					
-						LargeItemSet.getTransactionSet().add(new Transaction(currItem));
-						//if (currItem.getItemSet().size() > 1) {// this might not work in the long run
-							System.out.println("Adding: " + currItem.toString());
-							LargeItemSet.getTransactionSet().add(new Transaction(currItem));
-							finalLargeItemSet.getTransactionSet().add(new Transaction(currItem));//add the resultingLargeItemSet of final 
-						//}
-					
-						
-				 }
-				 
-			}	
-			
-			
-		}
-			k++;
-			frequent = true;
-			kItemSubsets.getTransactionSet().clear();
-			kItemSubsets = transSet.findKItemSubsets(LargeItemSet.GetUniqueItems(), k);
-			LargeItemSet.getTransactionSet().clear();
-			
-		}
-		
-		
-		
-		System.out.println("finalLargeItemSet:" + finalLargeItemSet.toString());
-		return finalLargeItemSet;
 		// next iterations
-		*/
 		int k = 3;
 		while (CandidateItemSet.getTransactionSet().size() != 0) {
 			//set LargeItemSetIteration from CandidateItemSet (pruning)
 			LargeItemSet.getTransactionSet().clear();
-			System.out.println("START");
+			//System.out.println("START");
 			for (Transaction transaction : CandidateItemSet.getTransactionSet()) {//loop through each transaction in each TransactionSet
 				double findSupport = transSet.findSupport(transaction.getTransaction());//calculate and find each successive support level for an transaction (remember it is an itemSet)
 				transaction.getTransaction().setItemSetSupport(findSupport/(transSet.getTransactionSet().size()));//Set each successive support level for its respective transaction (remember it is an itemSet)
@@ -168,11 +104,11 @@ public class Generator implements Serializable{
 					//System.out.println(transaction.toString() + "-" + findSupport);//debugging info
 					
 					LargeItemSet.getTransactionSet().add(transaction);
-					if (transaction.getTransaction().getItemSet().size() > 1) {// this might not work in the long run
+					//if (transaction.getTransaction().getItemSet().size() > 1) {// this might not work in the long run
 						
 					
 					finalLargeItemSet.getTransactionSet().add(transaction);//add the resultingLargeItemSet of final 
-					}
+					//}
 				}
 
 			}
@@ -181,10 +117,7 @@ public class Generator implements Serializable{
 			CandidateItemSet = (CandidateItemSet.findKItemSubsets(LargeItemSet.GetUniqueItems(), k));//Add all the combinations of subsets for a given set of unique items/ItemSets
 			//System.out.println("done making candidates");
 			k += 1;
-			//System.out.println("END");
 		}
-		timer.stopTimer();
-		System.out.println("Generator.DoAPriori: Time in Milliseconds" + timer.getTotal());
 		return finalLargeItemSet;//final returned value
 
 
@@ -212,7 +145,6 @@ public class Generator implements Serializable{
 					Rule rule = new Rule();
 					
 					rule.setX(subset);
-					
 					
 					ArrayList<Item> items = new ArrayList<Item>(itemset.getTransaction().getItemSet());
 					ItemSet consequent = new ItemSet(items);
@@ -249,8 +181,6 @@ public class Generator implements Serializable{
 	
 	/*method to find all combinations of rule subsets to help trim the final rule set generation*/
 	public static ArrayList<ItemSet> findRuleSubsets(ItemSet candidates, ArrayList<ItemSet> sets){
-		Timer timer = new Timer();
-		timer.startTimer();
 		ArrayList<ItemSet> allRuleSets = sets;
 		
 		if(!allRuleSets.contains(candidates)){
@@ -265,8 +195,6 @@ public class Generator implements Serializable{
 			findRuleSubsets(newSet, allRuleSets);
 			
 		}
-		timer.stopTimer();
-		//System.out.println("Generator.findRuleSubsets: Time in Milliseconds" + timer.getTotal());
 		return allRuleSets;
 	}
 	

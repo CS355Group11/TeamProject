@@ -38,13 +38,7 @@ public class TransactionTest {
 		assertEquals("4/14/2014", trans.getTransactionDate());
 	}
 	
-	@Test
-	public void transactionTotalPriceGetSet() {
-		Transaction trans = new Transaction();
-		trans.setTransactionTotalPrice(1323.232);
-		boolean test = (trans.getTransactionTotalPrice(trans) == 1323.232);
-		assertTrue(test);
-	}
+
 	
 	@Test
 	public void transactionSet_IDGetSetTest() {

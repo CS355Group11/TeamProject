@@ -165,7 +165,7 @@ public class Main {
 		System.out.println("Starting Writing File: " + fileOutputName);
 		FileUtilities.writeFile(ruleSet, fileOutputName, errorLogs, errorFileOutputName);
 		System.out.println("Finished Writing File:  " + fileOutputName);
-		FileUtilities.writeTimes(tlogs);
+		//FileUtilities.writeTimes(tlogs);
 	}
 
 	/*

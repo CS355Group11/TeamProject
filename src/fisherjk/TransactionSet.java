@@ -95,11 +95,6 @@ public class TransactionSet implements Serializable {
 
 	/*Returns an itemSet containing a set of unique items found in a transactionSet which consists of Transactions*/
 	public ItemSet GetUniqueItems() {
-		
-		
-		
-		//Timer timer = new Timer();
-		//timer.startTimer();
 		ItemSet uniqueItems = new ItemSet();/*uniquely constructed itemSet*/
 		for (int j = 0; j < transactionSet.size(); j++) {/*loop through the first transactionSet object*/
 			for (int i = 0; i < transactionSet.get(j).getTransaction().getItemSet().size(); i++) {/*doubly loop through each respective itemset in a transactionSet*/
@@ -111,46 +106,10 @@ public class TransactionSet implements Serializable {
 				}
 
 			}
-			
-			
-			
 		}
-		//timer.stopTimer();
-		//String time = (""+timer.getTotal());
-		//System.out.println("TransactionSet.GetUniqueItems: Time in Milliseconds: " + time);
-		
-
 		return uniqueItems;
 	}
 	
-	
-	/*Returns an itemSet containing a set of unique items found in a transactionSet which consists of Transactions*/
-	public ItemSet GetUniqueItems2() {
-		Timer timer = new Timer();
-		timer.startTimer();
-		
-		
-		ItemSet uniqueItems = new ItemSet();/*uniquely constructed itemSet*/
-		for (int j = 0; j < transactionSet.size(); j++) {/*loop through the first transactionSet object*/
-			for (int i = 0; i < transactionSet.get(j).getTransaction().getItemSet().size(); i++) {/*doubly loop through each respective itemset in a transactionSet*/
-				Item item = transactionSet.get(j).getTransaction().getItemSet()
-						.get(i);
-				
-				if (!uniqueItems.getItemSet().contains(item)) {/*Only add items if not already within the unique list. Otherwise do nothing.*/
-					uniqueItems.getItemSet().add(item);
-				}
-
-			}
-			
-			
-			
-		}
-		timer.stopTimer();
-		//System.out.println("TransactionSet.GetUniqueItems: Time in Milliseconds: " + timer.getTotal());
-		
-
-		return uniqueItems;
-	}
 	
 	
 
@@ -194,9 +153,6 @@ public class TransactionSet implements Serializable {
 	
 	/*Determines and returns all possible combinations of  k-item subsets based on a given itemSet. This allows filtering to take place as the next loop iteration starts up */
 	public TransactionSet findKItemSubsets(ItemSet itemSet, int k) {
-		//System.out.println("findKItemSubsets starting");
-		Timer timer = new Timer();
-		timer.startTimer();
 		TransactionSet allSubsets = new TransactionSet();/*New subset of transactions to return in a TransactionSet*/
 		int subsetCount = (int) Math.pow(2, itemSet.getItemSet().size());/*index control for loop*/
 		int itemSetSize = itemSet.getItemSet().size();/*size control for inner loop*/
@@ -215,11 +171,6 @@ public class TransactionSet implements Serializable {
 				allSubsets.getTransactionSet().add(new Transaction(subset));//add the new transaction subset
 			}
 		}
-		timer.stopTimer();
-		//String time = ("TransactionSet.findKItemSubsets: Time in Milliseconds: " + timer.getTotal());
-		//System.out.println(time);
-		//System.out.println("K = : " + k);
-		//System.out.println(allSubsets.toString());
 		return (allSubsets);/*final combination of all possible subsets based on the size of k*/
 	}
 	
@@ -270,7 +221,7 @@ public class TransactionSet implements Serializable {
 			TransactionSet allSubsets = new TransactionSet();/*New subset of transactions to return in a TransactionSet*/
 			
 			int size = candidSet.getTransactionSet().size();
-			System.out.println("SIZE: " + size);
+			//System.out.println("SIZE: " + size);
 			for(int i = 0; i < size; i++){
 				//System.out.println("i: " + i);
 				Item currItem = new Item(candidSet.getTransactionSet().get(i).getTransaction().getItemSet().get(0).toString());

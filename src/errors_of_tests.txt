@@ -1,3 +1,0 @@
-Format Error: No Vendor Provided
-Format Error: Transaction Set is not well-formed
-No Rules could be generated under these parameter levels. Increase Transaction Set Size or MCL/MSL.

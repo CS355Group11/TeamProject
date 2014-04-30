@@ -34,7 +34,6 @@ public class TransactionSetPersistenceController {
 		//code to convert transactionSet object to SQL insert statement string for that transactionSet
 		System.out.println("Generating Insert Statement for transactionSet");
 		String result = null;
-		//String transactionSetDateTime = transactionSet.getDatetime();
 		String start = transactionSet.getStart_date();
 		String end = transactionSet.getEnd_date();
 		String startDateTime ="";
