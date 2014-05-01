@@ -350,6 +350,7 @@ public class GeneratorWebClient extends JFrame {
 		
 		
 		//Input File
+		/*
 		try {
 			if(!inputFilePath.contains("src/")){
 				inputFilePath = "src/" + inputFilePath;
@@ -369,7 +370,7 @@ public class GeneratorWebClient extends JFrame {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}	
-		
+		*/
 		try {
 			//System.out.println("Printing rules");
 			if(!outputRuleFilePath.contains("src/")){
@@ -379,11 +380,13 @@ public class GeneratorWebClient extends JFrame {
 
 			writeOutput(pane, "\nOutput Rule File : " + outputRuleFilePath);
 			writeOutput(pane, "_______________");
-			
+			int rules = 0;
 			while(fileScanner.hasNext()){
 				//System.out.println("Printing rules");
 				writeOutput(pane, fileScanner.nextLine());
+				rules++;
 			}
+			writeOutput(pane, ("\n"+rules+" Rules Generated"));
 		
 			fileScanner.close();				
 			System.out.println("finished Printing rules");
