@@ -275,7 +275,7 @@ public class Main {
 				// i++){
 				System.out.println("Starting Persist Transaction: #" + i);
 				// tpc.persistTransaction(transactionSet.getTransactionSet().get(i));
-				tpc.persistTransaction(transaction);
+				tpc.persistTransaction(transaction, i, transactionSet.getTransactionSet().size());
 				i++;
 				System.out.println("Finished Persist Transaction: #" + i);
 			}

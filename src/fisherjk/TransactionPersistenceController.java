@@ -8,18 +8,32 @@ public class TransactionPersistenceController {
 	//Method to connect, update, and disconnect Transaction
 
 	
-	public void persistTransaction(Transaction transaction) {
+	public void persistTransaction(Transaction transaction, int index, int size) {
 		String sqlStatement;
-		dao.connect();
+		
+		if(index == 0){
+			System.out.println("Connecting for the first transaction");
+			dao.connect();
+		}
+		/*else if(index == (size-1)){
+			System.out.println("index: " + index + "vs. size-1: " + (size-1));
+			System.out.println("Last Transaction Inserted");
+			dao.disconnect();
+		}else{
+		*/
 		
 		sqlStatement = generateInsertStmt(transaction);
 		if(dao.getErrorLogs().getErrorMsgs().size() == 0){
 		dao.executeUpdate(sqlStatement);
 		//dao.executeResultSet(sqlStatement);
 		}
-		if(dao.getErrorLogs().getErrorMsgs().size() == 0){
+		if(index == (size-1)){
+			//if(dao.getErrorLogs().getErrorMsgs().size() == 0){
 			dao.disconnect();
+		//}
 		}
+		
+		
 	}
 
 	// setDAO - set the controller DAO to a given DAO
@@ -49,8 +63,11 @@ public class TransactionPersistenceController {
 		
 		String queryID = "SELECT MAX(TransactionSet_ID) FROM TransactionSet;";
 		String queryVendor_ID = "SELECT MAX(Vendor_ID) FROM Vendor;";
+		System.out.println("Trying to get TranactionSet ID");
+		//dao.connect();
 		int transactionTransactionSet_ID =  dao.executeQuery(queryID);
 		int transactionVendor_ID =  dao.executeQuery(queryVendor_ID);
+		//dao.disconnect();
 		System.out.println("transactionVendor_ID: " + transactionVendor_ID);
 		transaction.setTransactionSet_ID(transactionTransactionSet_ID);
 		int ID = transaction.getTransactionSet_ID();

@@ -107,7 +107,9 @@ public class GeneratorServerResource extends ServerResource implements
 		}
 		timer.stopTimer();
 		System.out.println("TGEN Total Time elapsed time in msec.: "+ (tGen.getTotal()));
+		System.out.println("TRULE Total Time elapsed time in msec.: "+ (tRule.getTotal()));
 		System.out.println("TDB Total Time elapsed time in msec.: "+ (timerDB.getTotal()));
+		System.out.println("Timer Total Time elapsed time in msec.: "+ (timer.getTotal()));
 		//this.errorLogs = errorLogs;
 	}
 
@@ -132,7 +134,7 @@ public class GeneratorServerResource extends ServerResource implements
 		rspc.setDAO(daoString);
 		rpc.setDAO(daoString);
 
-		System.out.println("Starting Persist Vendor");
+		//System.out.println("Starting Persist Vendor");
 
 		for (int i = 0; i < transactionSet.getVendorSet().size(); i++) {
 			Vendor vendor = transactionSet.getVendorSet().get(i);
@@ -141,7 +143,7 @@ public class GeneratorServerResource extends ServerResource implements
 					.println("vendor " + i + " is " + vendor.getVendor_name());
 		}
 		int vpc_errors = vpc.getErrorLogs().getErrorMsgs().size();
-		System.out.println("Finished Persist Vendor");
+		//System.out.println("Finished Persist Vendor");
 		errorCount += vpc_errors;
 		if (errorCount != 0) {
 			errorLogs.add("DATABASE ERROR: VENDOR TABLE");
@@ -152,40 +154,43 @@ public class GeneratorServerResource extends ServerResource implements
 
 		
 		// iterate through tranactionset to get individual transactions
-		int i = 0;
+		//int i = 0;
 
-		System.out.println("Starting Persist TransactionSet");
+		//System.out.println("Starting Persist TransactionSet");
 		tspc.persistTransactionSet(transactionSet);
 		int tspc_errors = tspc.getErrorLogs().getErrorMsgs().size();
 		errorCount += tspc_errors;
-		System.out.println("Finished Persist TransactionSet");
+		//System.out.println("Finished Persist TransactionSet");
 		if (errorCount != 0) {
 			errorLogs.add("DATABASE ERROR: TRANSACTIONSET TABLE");
 			errorLogs.add(tspc.getErrorLogs());
-			System.out.println("size: " + errorLogs.getErrorMsgs().size());
+			//System.out.println("size: " + errorLogs.getErrorMsgs().size());
 			return errorLogs;
 		}
-		System.out.println("errorCount: " + errorCount);
+		//System.out.println("errorCount: " + errorCount);
 		//tpc.connect();
+		int i =0;
+		int size = transactionSet.getTransactionSet().size();
 		for (Transaction transaction : transactionSet.getTransactionSet()) {
 			System.out.println("Size: "
 					+ transactionSet.getTransactionSet().size());
 			// for(int i = 0; i < transactionSet.getTransactionSet().size();
 			// i++){
-			System.out.println("Starting Persist Transaction: #" + i);
+			//System.out.println("Starting Persist Transaction: #" + i);
 			// tpc.persistTransaction(transactionSet.getTransactionSet().get(i));
-			tpc.persistTransaction(transaction);
+			tpc.persistTransaction(transaction, i, size);
 			i++;
-			System.out.println("Finished Persist Transaction: #" + i);
+			//System.out.println("Finished Persist Transaction: #" + i);
 		}
+		System.out.println("Finished Persisting Transactions");
 		int tpc_errors = tpc.getErrorLogs().getErrorMsgs().size();
 		errorCount += tpc_errors;
-		System.out.println("errorCount: " + errorCount);
+		//System.out.println("errorCount: " + errorCount);
 		
 		if (errorCount != 0) {
-			errorLogs.add("DATABASE ERROR: TRANSACTION TABLE");
+			//errorLogs.add("DATABASE ERROR: TRANSACTION TABLE");
 			errorLogs.add(tpc.getErrorLogs());
-			System.out.println("size: " + errorLogs.getErrorMsgs().size());
+			//System.out.println("size: " + errorLogs.getErrorMsgs().size());
 			return errorLogs;
 		}
 
@@ -193,7 +198,7 @@ public class GeneratorServerResource extends ServerResource implements
 		System.out.println("Starting Persist Generator");
 		gpc.persistGenerator(generator.getGenerator_minSupportLevel(),
 				generator.getGenerator_minConfidenceLevel());
-		System.out.println("Finished Persist Generator");
+		//System.out.println("Finished Persist Generator");
 		int gpc_errors = gpc.getErrorLogs().getErrorMsgs().size();
 		errorCount += gpc_errors;
 		if (errorCount != 0) {

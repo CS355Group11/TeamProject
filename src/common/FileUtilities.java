@@ -164,7 +164,7 @@ public class FileUtilities {
 									errorLogs.getErrorMsgs().add(formatError +"Too many items in transaction set (Must be 25 or less items)");
 									
 								}
-								
+								//int uniqueItems = transactionSet.GetUniqueItems().getItemSet().size();
 								//if(uniqueItems > 25){
 								//	errorLogs.getErrorMsgs().add(formatError +"Too many unique items in transaction set");
 									
@@ -221,6 +221,11 @@ public class FileUtilities {
 		
 
 	}
+	
+	
+
+	
+	
 
 	/*
 	 * Output items

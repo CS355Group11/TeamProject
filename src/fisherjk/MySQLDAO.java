@@ -71,16 +71,16 @@ public class MySQLDAO implements DAOInterface {
 		   try
 		   {
 			  stmt = conn.createStatement();
-			  System.out.println("Statement : " + stmt);
+			  //System.out.println("Statement : " + stmt);
 			  resultCode = stmt.executeUpdate(query);
-			  System.out.println("ResultSet : " + rset);
+			  //System.out.println("ResultSet : " + rset);
 			  
 			  if (resultCode == 0) {
 				   errorLogs.getErrorMsgs().add("DATABASE ERROR: Insert failed");
 				   System.out.println("Insert failed");
 			   }
 			   else {
-				   System.out.println("Insert successful");
+				   //System.out.println("Insert successful");
 			   }
 			  
 		   }
@@ -98,7 +98,7 @@ public class MySQLDAO implements DAOInterface {
 	public int executeQuery(String query) {
 		System.out.println("Result SET QUERY");
 		int id = 0;
-		System.out.println("MySQL DAO executeResultSet");
+		//System.out.println("MySQL DAO executeResultSet");
 		 // --- 3) prepare and execute statement
 		   stmt = null;		// SQL statement object
 		   rset = null;		// statement result set object
@@ -106,13 +106,13 @@ public class MySQLDAO implements DAOInterface {
 		   System.out.println("query: " + query);
 		   try
 		   {
-			  System.out.println("Creating a statement");
+			 // System.out.println("Creating a statement");
 			  stmt = conn.createStatement();
 			  rset = stmt.executeQuery(query);
 		   }
 		   catch (Exception e)
 		   {
-			   System.out.println("Could not execute SQL Result statement");
+			   //System.out.println("Could not execute SQL Result statement");
 			   errorLogs.getErrorMsgs().add("DATABASE ERROR: Could not execute SQL RESULT statement");
 			   System.out.println(e.getMessage());
 			   
