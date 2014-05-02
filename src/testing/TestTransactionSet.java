@@ -48,15 +48,18 @@ public class TestTransactionSet extends TestCase{
 	@Test
 	public void testGetStart_Date() {
 		TransactionSet transSet = new TransactionSet();
-		transSet.setStart_date("4/14/2014");
-		assertEquals("4/14/2014", transSet.getStart_date());
+		String date = "4/14/2014";
+		transSet.setStart_date(date);
+		assertEquals(date, transSet.getStart_date());
 
 	}
 
 	@Test
 	public void testSetStart_Date() {
 		TransactionSet transSet = new TransactionSet();
-		transSet.setStart_date("4/14/2014");
+		String date = "4/15/2014";
+		transSet.setStart_date(date);
+		assertEquals(date, transSet.getStart_date());
 	}
 
 
@@ -71,6 +74,8 @@ public class TestTransactionSet extends TestCase{
 	public void testSetEnd_Date() {
 		TransactionSet transSet = new TransactionSet();
 		transSet.setEnd_date("4/14/2014");
+		assertEquals("4/14/2014", transSet.getEnd_date());
+		
 	}
 
 	@Test
@@ -89,6 +94,7 @@ public class TestTransactionSet extends TestCase{
 		TransactionSet transSet = new TransactionSet();
 		ArrayList<Vendor> venArray = new ArrayList<Vendor>();
 		transSet.setVendorSet(venArray);
+		assertEquals(venArray, transSet.getVendorSet());
 	}
 
 	@Test
@@ -105,7 +111,11 @@ public class TestTransactionSet extends TestCase{
 	@Test
 	public void testSetTimestamp() {
 		TransactionSet transSet = new TransactionSet();
+		TransactionSet transSet2 = new TransactionSet();
 		transSet.setTimestamp();
+		transSet2.setTimestamp();
+		boolean test = transSet.getTimestamp().equals(transSet2.getTimestamp());
+		assertTrue(test);
 	}
 
 	@Test

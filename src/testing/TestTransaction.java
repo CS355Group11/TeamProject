@@ -34,6 +34,7 @@ public class TestTransaction extends TestCase{
 	public void testSetTransaction(){
 		Transaction trans = new Transaction();
 		trans.setTransactionDate("4/14/2014");
+		assertEquals("4/14/2014", trans.getTransactionDate());
 	}
 
 	@Test
@@ -52,7 +53,9 @@ public class TestTransaction extends TestCase{
 	@Test
 	public void testGetTransactionSet_ID(){
 		Transaction trans = new Transaction();
-		trans.setTransactionSet_ID(232423);
+		int id = 232423;
+		trans.setTransactionSet_ID(id);
+		assertEquals(id, trans.getTransactionSet_ID());
 	}
 
 
@@ -76,20 +79,28 @@ public class TestTransaction extends TestCase{
 		Transaction trans = new Transaction();
 		Vendor vendor = new Vendor("Test_Vendor");
 		trans.setVendor(vendor);
+		assertEquals(vendor, trans.getVendor());
 	}
 
 	@Test
 	public void testGetTimeStamp(){
 		Transaction trans = new Transaction();
+		Transaction trans2 = new Transaction();
 		trans.setTimestamp();
 		trans.getTimestamp();
+		trans2.setTimestamp();
+		assertEquals(trans.getTimestamp(), trans2.getTimestamp());
 	}
 
 
 	@Test
 	public void testSetTimeStamp(){
 		Transaction trans = new Transaction();
+		Transaction trans2 = new Transaction();
 		trans.setTimestamp();
+		trans.getTimestamp();
+		trans2.setTimestamp();
+		assertEquals(trans.getTimestamp(), trans2.getTimestamp());
 	}
 
 	@Test
