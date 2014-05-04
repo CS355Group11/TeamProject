@@ -1,3 +1,0 @@
-Format Error: Too many unique items in transaction set
-Format Error: Transaction Set is not well-formed
-No Rules could be generated under these parameter levels. Increase Transaction Set Size or MCL/MSL.
