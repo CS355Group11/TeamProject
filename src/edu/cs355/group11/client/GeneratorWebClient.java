@@ -416,6 +416,22 @@ public class GeneratorWebClient extends JFrame {
 			Matcher outputRuleFileMatcher = inputFilePattern.matcher(outputRuleFilePath);
 			Matcher outputErrorFileMatcher = inputFilePattern.matcher(outputErrorFilePath);
 
+			Pattern defPathPattern = Pattern.compile(pathName);
+			Pattern defNamePattern = Pattern.compile(fileName);
+			Matcher defPathMatcher = defPathPattern.matcher(inputFilePath);
+			Matcher defNameMatcher = defNamePattern.matcher(inputFilePath);
+			String defPath = "";
+			String defName = "";
+			if(defPathMatcher.find()){
+				defPath = defPathMatcher.group();
+			}
+			if(defNameMatcher.find()){
+				defName = defNameMatcher.group();
+				
+			}
+			
+			System.out.println("defPath = " + defPath);
+			System.out.println("defName = " + defName);
 			if(inputFileMatcher.find()){
 				//System.out.println("GROUPED INPUT FILE NAME: " + inputFileMatcher.group(0));
 				inputFilePath = inputFileMatcher.group(0);
@@ -434,7 +450,7 @@ public class GeneratorWebClient extends JFrame {
 			}else if(outputRuleFilePath.equals("")){
 				//System.out.println("In this block");
 				
-				this.outputRuleFilePath = "rules_of_" + this.inputFilePath;		
+				this.outputRuleFilePath = defPath+"rules_of_" + defName;		
 			}else{
 				System.out.println("No output rule extension is found");
 				this.outputRuleFilePath += ".txt";	
@@ -447,8 +463,8 @@ public class GeneratorWebClient extends JFrame {
 				this.outputErrorFilePath =  outputErrorFileMatcher.group(0);
 			
 			}else if(outputErrorFilePath.equals("")){
-					System.out.println("In this block");
-					this.outputErrorFilePath = "errors_of_" + this.inputFilePath;			
+					//System.out.println("In this block");
+					this.outputErrorFilePath = defPath+"errors_of_" + defName;				
 			}else{
 				System.out.println("No output error extension is found");
 				this.outputErrorFilePath += ".txt";

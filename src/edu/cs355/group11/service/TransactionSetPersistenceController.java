@@ -16,9 +16,9 @@ public class TransactionSetPersistenceController {
 		if(dao.getErrorLogs().getErrorMsgs().size() == 0){
 		dao.executeUpdate(sqlStatement);
 		}
-		if(dao.getErrorLogs().getErrorMsgs().size() == 0){
+		//if(dao.getErrorLogs().getErrorMsgs().size() == 0){
 		dao.disconnect();
-		}
+		//}
 		
 	}
 

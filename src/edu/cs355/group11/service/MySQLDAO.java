@@ -89,6 +89,7 @@ public class MySQLDAO implements DAOInterface {
 		   catch (Exception e)
 		   {
 			   System.out.println("DATABASE ERROR: Could not execute SQL INSERT statement");
+			   errorLogs.getErrorMsgs().add(query);
 			   errorLogs.getErrorMsgs().add("DATABASE ERROR: Could not execute SQL INSERT statement");
 			   System.out.println(e.getMessage());
 			 //  System.exit(1);
