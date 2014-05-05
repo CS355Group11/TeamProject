@@ -39,16 +39,16 @@ public class VendorPersistenceController {
 	
 	// generateInsertStmt - generate an SQL insert statement for a particular vendor object
 	public String generateInsertStmt(Vendor vendor) {
-		System.out.println("Generating Insert Statement for vendor");
+		//System.out.println("Generating Insert Statement for vendor");
 		String result = null;
 		String vendor_name = vendor.getVendor_name();
 		if(vendor_name == ""){
 			vendor_name = "Not Provided";
 		}
 		String insert= "INSERT INTO Vendor (Vendor_name) VALUES(\""+vendor_name+"\");";
-		System.out.println("insert statment " + insert);
+		//System.out.println("insert statment " + insert);
 		result = insert;
-		System.out.println("Finished generateInsertStatement for vendor: " + vendor_name);
+		//System.out.println("Finished generateInsertStatement for vendor: " + vendor_name);
 		return result;
 	}
 	public ErrorLogs getErrorLogs(){

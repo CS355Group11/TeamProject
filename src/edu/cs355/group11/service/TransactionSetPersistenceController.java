@@ -35,7 +35,7 @@ public class TransactionSetPersistenceController {
 	// generateInsertStmt - generate an SQL insert statement for a particular transactionSet object
 	public String generateInsertStmt(TransactionSet transactionSet) {
 		//code to convert transactionSet object to SQL insert statement string for that transactionSet
-		System.out.println("Generating Insert Statement for transactionSet");
+		//System.out.println("Generating Insert Statement for transactionSet");
 		String result = null;
 		String start = transactionSet.getStart_date();
 		String end = transactionSet.getEnd_date();
@@ -59,8 +59,8 @@ public class TransactionSetPersistenceController {
 		String convert_end_date = "STR_TO_DATE(\""+endDateTime+"\", \"%Y-%m-%d %H:%i:%S\")";
 		String insert= "INSERT INTO TransactionSet (TransactionSet_start_datetime, TransactionSet_end_datetime) VALUES(" + convert_start_date +", " +convert_end_date+")";
 		result = insert;
-		System.out.println("result: " + result);
-		System.out.println("Finished Insert Statement for transactionSet");
+		//System.out.println("result: " + result);
+		//System.out.println("Finished Insert Statement for transactionSet");
 		return result;
 	}
 	

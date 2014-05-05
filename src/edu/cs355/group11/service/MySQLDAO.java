@@ -27,14 +27,14 @@ public class MySQLDAO implements DAOInterface {
 	   ErrorLogs errorLogs = new ErrorLogs();
 	
 	public int connect() {
-		System.out.println("Connecting to the database...");
+		//System.out.println("Connecting to the database...");
 		int errorCode = 0;
 		// load MySQL driver
 		 // --- 1) get the Class object for the driver 
 		   try
 		   {
 			  Class.forName ("com.mysql.jdbc.Driver");
-			  System.out.println("Found/loaded MySQL Connector JDBC driver");	   
+			 // System.out.println("Found/loaded MySQL Connector JDBC driver");	   
 		   }
 		   catch (ClassNotFoundException e)
 		   {
@@ -48,13 +48,13 @@ public class MySQLDAO implements DAOInterface {
 		   conn = null;
 		   try
 		   {
-			  System.out.println("Connected to DB");
+			  //System.out.println("Connected to DB");
 			  conn = DriverManager.getConnection("jdbc:mysql://dario.cs.uwec.edu/cs355group11",user,pass);
 		   }
 		   catch (SQLException sqle)
 		   {
 			  errorLogs.getErrorMsgs().add("DATABASE ERROR: Could not make connection to database");
-			  System.out.println ("DATABASE ERROR: Could not make connection to database");
+			  //System.out.println ("DATABASE ERROR: Could not make connection to database");
 			  System.out.println(sqle.getMessage());
 			  errorCode = 1;
 			 // System.exit(1);
@@ -64,25 +64,25 @@ public class MySQLDAO implements DAOInterface {
 
 	public int executeUpdate(String query) {
 		int resultCode = 0;			// result code from SQL update
-		System.out.println("MySQL DAO execute");
+		//System.out.println("MySQL DAO execute");
 		 // --- 3) prepare and execute statement
 		   stmt = null;		// SQL statement object
 		   rset = null;		// statement result set object
 		   //    get resultset
-		   System.out.println("query: " + query);
+		  // System.out.println("query: " + query);
 		   try
 		   {
 			  stmt = conn.createStatement();
-			  System.out.println("Statement : " + stmt);
+			  //System.out.println("Statement : " + stmt);
 			  resultCode = stmt.executeUpdate(query);
-			  System.out.println("ResultSet : " + rset);
+			 // System.out.println("ResultSet : " + rset);
 			  
 			  if (resultCode == 0) {
 				   errorLogs.getErrorMsgs().add("DATABASE ERROR: Insert failed");
 				   System.out.println("Insert failed");
 			   }
 			   else {
-				   System.out.println("Insert successful");
+				   //System.out.println("Insert successful");
 			   }
 			  
 		   }
@@ -99,23 +99,23 @@ public class MySQLDAO implements DAOInterface {
 	}
 	
 	public int executeQuery(String query) {
-		System.out.println("Result SET QUERY");
+		//System.out.println("Result SET QUERY");
 		int id = 0;
-		System.out.println("MySQL DAO executeResultSet");
+		//System.out.println("MySQL DAO executeResultSet");
 		 // --- 3) prepare and execute statement
 		   stmt = null;		// SQL statement object
 		   rset = null;		// statement result set object
 		   //    get resultset
-		   System.out.println("query: " + query);
+		   //System.out.println("query: " + query);
 		   try
 		   {
-			  System.out.println("Creating a statement");
+			 // System.out.println("Creating a statement");
 			  stmt = conn.createStatement();
 			  rset = stmt.executeQuery(query);
 		   }
 		   catch (Exception e)
 		   {
-			   System.out.println("Could not execute SQL Result statement");
+			   //System.out.println("Could not execute SQL Result statement");
 			   errorLogs.getErrorMsgs().add("DATABASE ERROR: Could not execute SQL RESULT statement");
 			   System.out.println(e.getMessage());
 			   
@@ -142,7 +142,7 @@ public class MySQLDAO implements DAOInterface {
 	}
 	
 	public int disconnect() {
-		System.out.println("Disconnecting...");
+		//System.out.println("Disconnecting...");
 		// disconnect MySQL connection, statement, resultset
 		 // --- 5) clean up statement and connection
 		int errorCode = 0;
@@ -155,7 +155,7 @@ public class MySQLDAO implements DAOInterface {
 			   }
 			   if(conn != null){
 			   conn.close();
-			   System.out.println("Disconnected Successfully");
+			  // System.out.println("Disconnected Successfully");
 			   }
 		   } 
 		   catch (SQLException sqle) {

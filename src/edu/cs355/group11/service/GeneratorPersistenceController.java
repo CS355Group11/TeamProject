@@ -32,14 +32,14 @@ public class GeneratorPersistenceController {
 	
 	// generateInsertStmt - generate an SQL insert statement for a particular Generator object
 	public String generateInsertStmt(double minSupportLevel, double minConfidenceLevel) {
-		System.out.println("Generating Insert Statement for vendor");
+		//System.out.println("Generating Insert Statement for vendor");
 		String result = null;
 		String queryID = "SELECT MAX(TransactionSet_ID) FROM TransactionSet;";
 		int generator_TransactionSet_ID =  dao.executeQuery(queryID);
 		String insert= "INSERT INTO Generator (Generator_min_support, Generator_min_confidence, Generator_TransactionSet_ID) VALUES("+minSupportLevel+", "+minConfidenceLevel+", " + generator_TransactionSet_ID+");";
-		System.out.println("insert statment " + insert);
+		//System.out.println("insert statment " + insert);
 		result = insert;
-		System.out.println("Finished generateInsertStatement for generator: ");
+		//System.out.println("Finished generateInsertStatement for generator: ");
 		return result;
 	}
 	public ErrorLogs getErrorLogs(){

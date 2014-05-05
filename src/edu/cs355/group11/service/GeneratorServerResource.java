@@ -115,7 +115,9 @@ public class GeneratorServerResource extends ServerResource implements
 		}
 		timer.stopTimer();
 		System.out.println("TGEN Total Time elapsed time in msec.: "+ (tGen.getTotal()));
+		System.out.println("TRULE Total Time elapsed time in msec.: "+ (tRule.getTotal()));
 		System.out.println("TDB Total Time elapsed time in msec.: "+ (timerDB.getTotal()));
+		System.out.println("Timer Total Time elapsed time in msec.: "+ (timer.getTotal()));
 		//this.errorLogs = errorLogs;
 	}
 
@@ -139,14 +141,13 @@ public class GeneratorServerResource extends ServerResource implements
 		tpc.setDAO(daoString);
 		rspc.setDAO(daoString);
 		rpc.setDAO(daoString);
-
-		System.out.println("Starting Persist Vendor");
-
+		System.out.println("Starting Database Persistence Controllers...");
+		System.out.println("Starting Persist Vendor...");
 		for (int i = 0; i < transactionSet.getVendorSet().size(); i++) {
 			Vendor vendor = transactionSet.getVendorSet().get(i);
 			vpc.persistVendor(vendor);
-			System.out
-					.println("vendor " + i + " is " + vendor.getVendor_name());
+			//System.out
+					//.println("vendor " + i + " is " + vendor.getVendor_name());
 		}
 		int vpc_errors = vpc.getErrorLogs().getErrorMsgs().size();
 		System.out.println("Finished Persist Vendor");
@@ -160,9 +161,9 @@ public class GeneratorServerResource extends ServerResource implements
 
 		
 		// iterate through tranactionset to get individual transactions
-		int i = 0;
+		//int i = 0;
 
-		System.out.println("Starting Persist TransactionSet");
+		System.out.println("Starting Persist TransactionSet...");
 		tspc.persistTransactionSet(transactionSet);
 		int tspc_errors = tspc.getErrorLogs().getErrorMsgs().size();
 		errorCount += tspc_errors;
@@ -173,22 +174,24 @@ public class GeneratorServerResource extends ServerResource implements
 			System.out.println("size: " + errorLogs.getErrorMsgs().size());
 			return errorLogs;
 		}
-		System.out.println("errorCount: " + errorCount);
+		//System.out.println("errorCount: " + errorCount);
 		//tpc.connect();
+		System.out.println("Starting Persist Transaction...");
 		for (Transaction transaction : transactionSet.getTransactionSet()) {
-			System.out.println("Size: "
-					+ transactionSet.getTransactionSet().size());
+			//System.out.println("Size: "
+					//+ transactionSet.getTransactionSet().size());
 			// for(int i = 0; i < transactionSet.getTransactionSet().size();
 			// i++){
-			System.out.println("Starting Persist Transaction: #" + i);
+			//System.out.println("Starting Persist Transaction: #" + i);
 			// tpc.persistTransaction(transactionSet.getTransactionSet().get(i));
 			tpc.persistTransaction(transaction);
-			i++;
-			System.out.println("Finished Persist Transaction: #" + i);
+			//i++;
+			//System.out.println("Finished Persist Transaction: #" + i);
 		}
+		System.out.println("Finished Persist Transaction");
 		int tpc_errors = tpc.getErrorLogs().getErrorMsgs().size();
 		errorCount += tpc_errors;
-		System.out.println("errorCount: " + errorCount);
+		//System.out.println("errorCount: " + errorCount);
 		
 		if (errorCount != 0) {
 			errorLogs.add("DATABASE ERROR: TRANSACTION TABLE");
@@ -198,10 +201,10 @@ public class GeneratorServerResource extends ServerResource implements
 		}
 
 		//tpc.disconnect();
-		System.out.println("Starting Persist Generator");
+		System.out.println("Starting Persist Generator...");
 		gpc.persistGenerator(generator.getGenerator_minSupportLevel(),
 				generator.getGenerator_minConfidenceLevel());
-		System.out.println("Finished Persist Generator");
+		//System.out.println("Finished Persist Generator");
 		int gpc_errors = gpc.getErrorLogs().getErrorMsgs().size();
 		errorCount += gpc_errors;
 		if (errorCount != 0) {
@@ -209,16 +212,16 @@ public class GeneratorServerResource extends ServerResource implements
 			errorLogs.add(gpc.getErrorLogs());
 			return errorLogs;
 		}
-
+		System.out.println("Finished Persist Generator");
 		// }
-		int j = 0;
+		//int j = 0;
 
 		// iterate through ruleset to get individual rules
-		System.out.println("Starting Persist RuleSet");
+		System.out.println("Starting Persist RuleSet...");
 		rspc.persistRuleSet(ruleSet);
 		int rspc_errors = rspc.getErrorLogs().getErrorMsgs().size();
 		errorCount += rspc_errors;
-		System.out.println("errorCount: " + errorCount);
+		//System.out.println("errorCount: " + errorCount);
 		if (errorCount != 0) {
 			errorLogs.add("DATABASE ERROR: RULESET TABLE");
 			errorLogs.add(rspc.getErrorLogs());
@@ -227,14 +230,16 @@ public class GeneratorServerResource extends ServerResource implements
 		}
 
 		System.out.println("Finished Persist RuleSet");
+		System.out.println("Starting Persist Rule...");
 		for (Rule rule : ruleSet.getRuleSet()) {
-			System.out.println("Starting Persist Rule: #" + j);
+			//System.out.println("Starting Persist Rule: #" + j);
 			rpc.persistRule(rule);
-			System.out.println("Finished Persist Rule: #" + j);
+			//System.out.println("Finished Persist Rule: #" + j);
 		}
+		System.out.println("Finished Persist Rule");
 		int rpc_errors = rpc.getErrorLogs().getErrorMsgs().size();
 		errorCount += rpc_errors;
-		System.out.println("errorCount: " + errorCount);
+		//System.out.println("errorCount: " + errorCount);
 		if (errorCount != 0) {
 			errorLogs.add("DATABASE ERROR: RULE TABLE");
 			errorLogs.add(rpc.getErrorLogs());
@@ -243,8 +248,8 @@ public class GeneratorServerResource extends ServerResource implements
 		}
 
 		System.out.println("Final errorCount: " + errorCount);
-		System.out.println("Finished DAO Controller");
-		System.out.println("size: " + errorLogs.getErrorMsgs().size());
+		System.out.println("Finished DAO Peristence Controllers");
+		//System.out.println("size: " + errorLogs.getErrorMsgs().size());
 		return errorLogs;
 	}
 
